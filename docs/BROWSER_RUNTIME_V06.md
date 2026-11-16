@@ -21,7 +21,8 @@ const runtime = new CactusBrowserRuntime({
   wasmUrl: "/vendor/cactus/needle.wasm",
   timeoutMs: 120_000,
   idleTimeoutMs: 300_000,
-  onProgress: (event) => console.log(event.model, event.stage, event.percentage),
+  onProgress: (event) =>
+    console.log(event.model, event.stage, event.percentage),
 });
 
 const controller = new AbortController();

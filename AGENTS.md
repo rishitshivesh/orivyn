@@ -120,6 +120,7 @@ Read this file before changing any code. These are binding project rules for peo
 - Don't claim npm publishability until package build outputs, exports, versioning, and npm packaging have been verified.
 
 ## v0.6 local runtime quality
+
 - Use upstream model progress callbacks rather than inferred completion percentages or fake timers.
 - Normalize microphone audio to 16 kHz mono Float32 PCM before Whistle. Audio stays on-device; never upload it during local mode.
 - Every browser inference operation supports cancellation, a bounded deadline, and an explicit error state. Aborted WASM sessions must not be reused.

@@ -1,6 +1,14 @@
-import type { ProposalRequest, ProposalResponse, ToolProposal } from "@orivyn/core";
+import type {
+  ProposalRequest,
+  ProposalResponse,
+  ToolProposal,
+} from "@orivyn/core";
 import type { BrowserInferenceRuntime, LocalSpeechRuntime } from "./index";
-import type { LocalModelKind, LocalModelProgress, ProgressListener } from "./progress";
+import type {
+  LocalModelKind,
+  LocalModelProgress,
+  ProgressListener,
+} from "./progress";
 import { assertLocalTools, inspectLocalProposals } from "./validate";
 
 /** All model execution stays in Cactus's WASM workers. No remote inference fallback. */
@@ -14,7 +22,9 @@ export interface CactusBrowserAssets {
   idleTimeoutMs?: number;
 }
 
-export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeechRuntime {
+export class CactusBrowserRuntime
+  implements BrowserInferenceRuntime, LocalSpeechRuntime
+{
   readonly name = "cactus-browser";
   private needle: import("cactus-needle/browser").Needle | null = null;
   private whistle: import("cactus-needle/browser").Whistle | null = null;
@@ -49,11 +59,19 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
   constructor(private readonly options: CactusBrowserAssets = {}) {}
 
   async available(): Promise<boolean> {
-    return typeof window !== "undefined" && window.isSecureContext &&
-      typeof WebAssembly !== "undefined" && typeof Worker !== "undefined";
+    return (
+      typeof window !== "undefined" &&
+      window.isSecureContext &&
+      typeof WebAssembly !== "undefined" &&
+      typeof Worker !== "undefined"
+    );
   }
 
-  private report(model: LocalModelKind, stage: LocalModelProgress["stage"], other: Partial<LocalModelProgress> = {}) {
+  private report(
+    model: LocalModelKind,
+    stage: LocalModelProgress["stage"],
+    other: Partial<LocalModelProgress> = {},
+  ) {
     this.options.onProgress?.({ model, stage, ...other });
   }
 
@@ -65,14 +83,22 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
   }
 
   /** Active cancellation also terminates the upstream WASM session. */
-  private async bounded<T>(operation: (signal: AbortSignal) => Promise<T>, parent?: AbortSignal): Promise<T> {
+  private async bounded<T>(
+    operation: (signal: AbortSignal) => Promise<T>,
+    parent?: AbortSignal,
+  ): Promise<T> {
     const deadline = AbortSignal.timeout(this.options.timeoutMs ?? 120_000);
     const signal = parent ? AbortSignal.any([parent, deadline]) : deadline;
     try {
       return await operation(signal);
     } catch (cause) {
-      if (deadline.aborted) throw new Error("Local model timed out. Check asset requests, model download and device memory.", { cause });
-      if (signal.aborted) throw new Error("Local model operation cancelled", { cause });
+      if (deadline.aborted)
+        throw new Error(
+          "Local model timed out. Check asset requests, model download and device memory.",
+          { cause },
+        );
+      if (signal.aborted)
+        throw new Error("Local model operation cancelled", { cause });
       throw cause;
     }
   }
@@ -85,11 +111,16 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
       ...this.urls(),
       stateless: true,
       abortSignal: signal,
-      onDownloadProgress: (progress) => this.report("needle", "download", {
-        loaded: progress.loaded,
-        ...(typeof progress.total === "number" ? { total: progress.total } : {}),
-        ...(typeof progress.percentage === "number" ? { percentage: progress.percentage } : {}),
-      }),
+      onDownloadProgress: (progress) =>
+        this.report("needle", "download", {
+          loaded: progress.loaded,
+          ...(typeof progress.total === "number"
+            ? { total: progress.total }
+            : {}),
+          ...(typeof progress.percentage === "number"
+            ? { percentage: progress.percentage }
+            : {}),
+        }),
     });
     if (this.closed || signal.aborted) {
       await session.close();
@@ -107,11 +138,16 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
     const session = await createWhistle({
       ...this.urls(),
       abortSignal: signal,
-      onDownloadProgress: (progress) => this.report("whistle", "download", {
-        loaded: progress.loaded,
-        ...(typeof progress.total === "number" ? { total: progress.total } : {}),
-        ...(typeof progress.percentage === "number" ? { percentage: progress.percentage } : {}),
-      }),
+      onDownloadProgress: (progress) =>
+        this.report("whistle", "download", {
+          loaded: progress.loaded,
+          ...(typeof progress.total === "number"
+            ? { total: progress.total }
+            : {}),
+          ...(typeof progress.percentage === "number"
+            ? { percentage: progress.percentage }
+            : {}),
+        }),
     });
     if (this.closed || signal.aborted) {
       await session.close();
@@ -122,12 +158,20 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
     return session;
   }
 
-  async propose(request: ProposalRequest, signal?: AbortSignal): Promise<ProposalResponse> {
+  async propose(
+    request: ProposalRequest,
+    signal?: AbortSignal,
+  ): Promise<ProposalResponse> {
     if (this.closed) throw new Error("Local runtime has been closed");
-    if (this.busy) throw new Error("A local model operation is already in progress");
+    if (this.busy)
+      throw new Error("A local model operation is already in progress");
     assertLocalTools(request.tools);
-    if (!request.input.trim() || request.input.length > 2000) throw new Error("Input must contain 1–2000 characters");
-    if (!await this.available()) throw new Error("Local inference requires HTTPS/localhost and WebAssembly workers");
+    if (!request.input.trim() || request.input.length > 2000)
+      throw new Error("Input must contain 1–2000 characters");
+    if (!(await this.available()))
+      throw new Error(
+        "Local inference requires HTTPS/localhost and WebAssembly workers",
+      );
     this.clearIdleTimer();
     this.busy = true;
     try {
@@ -138,26 +182,40 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
         for (const item of request.tools) {
           defs[item.name] = tool({
             description: item.description,
-            inputSchema: item.parameters as Parameters<typeof tool>[0]["inputSchema"],
+            inputSchema: item.parameters as Parameters<
+              typeof tool
+            >[0]["inputSchema"],
           });
         }
         this.report("needle", "infer");
-        const output = await agent.generate({ prompt: request.input, tools: defs, abortSignal: boundedSignal });
+        const output = await agent.generate({
+          prompt: request.input,
+          tools: defs,
+          abortSignal: boundedSignal,
+        });
         const proposals: ToolProposal[] = output.toolCalls.map((call) => ({
-          name: call.toolName, arguments: call.input as Record<string, unknown>,
-          confidence: typeof output.confidence === "number" ? output.confidence : null,
+          name: call.toolName,
+          arguments: call.input as Record<string, unknown>,
+          confidence:
+            typeof output.confidence === "number" ? output.confidence : null,
         }));
         const inspection = inspectLocalProposals(request.tools, proposals);
         this.report("needle", "ready");
         return {
-          request_id: crypto.randomUUID(), provider: this.name,
+          request_id: crypto.randomUUID(),
+          provider: this.name,
           status: inspection.accepted.length ? "proposed" : "no_match",
           proposals: inspection.accepted,
-          diagnostics: { raw_calls: proposals.length, rejected: inspection.rejected },
+          diagnostics: {
+            raw_calls: proposals.length,
+            rejected: inspection.rejected,
+          },
         };
       }, signal);
     } catch (error) {
-      this.report("needle", "error", { message: error instanceof Error ? error.message : "Inference failed" });
+      this.report("needle", "error", {
+        message: error instanceof Error ? error.message : "Inference failed",
+      });
       // Abort terminates upstream workers. Never reuse a possibly closed session.
       const old = this.needle;
       this.needle = null;
@@ -169,23 +227,38 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
     }
   }
 
-  async transcribe(audio: { samples: Float32Array; sampleRate: number }, signal?: AbortSignal): Promise<string> {
+  async transcribe(
+    audio: { samples: Float32Array; sampleRate: number },
+    signal?: AbortSignal,
+  ): Promise<string> {
     if (this.closed) throw new Error("Local runtime has been closed");
-    if (this.busy) throw new Error("A local model operation is already in progress");
-    if (audio.sampleRate !== 16_000) throw new Error("Whistle requires 16 kHz mono PCM input");
-    if (!audio.samples.length || audio.samples.length > 30 * 16_000) throw new Error("Audio must be 1–30 seconds");
-    if (!await this.available()) throw new Error("Local transcription requires HTTPS/localhost and WebAssembly workers");
+    if (this.busy)
+      throw new Error("A local model operation is already in progress");
+    if (audio.sampleRate !== 16_000)
+      throw new Error("Whistle requires 16 kHz mono PCM input");
+    if (!audio.samples.length || audio.samples.length > 30 * 16_000)
+      throw new Error("Audio must be 1–30 seconds");
+    if (!(await this.available()))
+      throw new Error(
+        "Local transcription requires HTTPS/localhost and WebAssembly workers",
+      );
     this.busy = true;
     try {
       return await this.bounded(async (boundedSignal) => {
         const session = await this.getWhistle(boundedSignal);
         this.report("whistle", "transcribe");
-        const result = await session.transcribe(audio, { language: "en", abortSignal: boundedSignal });
+        const result = await session.transcribe(audio, {
+          language: "en",
+          abortSignal: boundedSignal,
+        });
         this.report("whistle", "ready");
         return result.text;
       }, signal);
     } catch (error) {
-      this.report("whistle", "error", { message: error instanceof Error ? error.message : "Transcription failed" });
+      this.report("whistle", "error", {
+        message:
+          error instanceof Error ? error.message : "Transcription failed",
+      });
       const old = this.whistle;
       this.whistle = null;
       if (old) await old.close().catch(() => undefined);

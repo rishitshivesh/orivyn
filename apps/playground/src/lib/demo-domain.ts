@@ -138,9 +138,20 @@ export function matchDemoIntent(
   const negated =
     /^(don.t|do not|never|avoid)\b/.test(query) ||
     /\b(and|then)\s+(explain|describe|compare|summarize|tell me)\b/.test(query);
-  const unresolvedSelection = /\b(this|that|selected|current)\s+(song|track|project|item)\b/.test(query);
-  const multipleDestinations = /\b(music|songs?|audio|tracks?)\b.*\b(career|jobs?|resume)\b|\b(career|jobs?|resume)\b.*\b(music|songs?|audio|tracks?)\b/.test(query);
-  if (!actionVerb || explanation || negated || unresolvedSelection || multipleDestinations) return [];
+  const unresolvedSelection =
+    /\b(this|that|selected|current)\s+(song|track|project|item)\b/.test(query);
+  const multipleDestinations =
+    /\b(music|songs?|audio|tracks?)\b.*\b(career|jobs?|resume)\b|\b(career|jobs?|resume)\b.*\b(music|songs?|audio|tracks?)\b/.test(
+      query,
+    );
+  if (
+    !actionVerb ||
+    explanation ||
+    negated ||
+    unresolvedSelection ||
+    multipleDestinations
+  )
+    return [];
   const allowed = new Set(enabled);
   const reset =
     /\b(reset|clear (?:all|filters)|start over|default view)\b/.test(query);

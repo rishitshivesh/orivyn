@@ -262,7 +262,13 @@ export default function Playground() {
                   <ArrowRight className="size-4" />
                 </Button>
               </div>
-              {runtime === "browser" && <ModelProgress progress={local.progress} working={loading || local.status === "loading"} onCancel={local.cancel} />}
+              {runtime === "browser" && (
+                <ModelProgress
+                  progress={local.progress}
+                  working={loading || local.status === "loading"}
+                  onCancel={local.cancel}
+                />
+              )}
               {message && (
                 <p
                   role="status"
