@@ -56,3 +56,16 @@ Server testing additionally requires the FastAPI configuration documented in `do
 ## Release verification
 
 Run the full dependency-backed quality gate, check the local app in a real browser, exercise all example commands in each mode, inspect WASM/worker downloads and permission handling, and only then treat the interface as production-ready.
+
+## Agent Lab (v0.3)
+
+`/agent` introduces a separate intelligence interface. It does not replace the low-level Playground.
+
+- Known command syntax is routed locally using the existing demo action matcher with a conservative command-vs-question guard. Actions are offered for review and applied to the visible demo only after clicking **Apply to demo**.
+- Questions (including those that mention Music/Kubernetes) are not treated as navigation. They require opting into remote transmission.
+- When consent is checked, the operator enters a private Playground token. The Console forwards the bounded user/assistant history to the server configured conversational provider and streams the response.
+- Chat history is kept only in React state for the current tab. **Clear** removes it; there is no database persistence.
+- Unsupported requests, missing keys and provider errors show clear messages. A stopped response cancels the client request.
+- No knowledge retrieval, citations, E.D.I.T.H. persona, voice synthesis or multi-step orchestrator are implemented by this first run.
+
+See [CONVERSATION.md](./CONVERSATION.md).

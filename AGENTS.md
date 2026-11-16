@@ -77,3 +77,13 @@ Read this file before changing any code. These are binding project rules for peo
 - Explicitly validate model output again immediately before executing the action; never execute model-generated arbitrary URLs or JavaScript.
 - Add regression fixtures for supported commands, disabled tools and malformed parameters whenever tool definitions change.
 - Keep docs/AGENT_STRATEGY.md synchronized with reasoning and routing behavior.
+
+## Conversational inference and routing
+- Separate `orivyn_api.conversation` from the Cactus tool-proposal runtime. LLM conversations never execute arbitrary tools.
+- The OpenAI-compatible provider is disabled by default. Keep provider API keys server-only; never transmit them to browsers or return them from capabilities.
+- The API accepts bounded user/assistant turns but does not persist them. Never invent conversation memory or knowledge-retrieval citations.
+- The Agent Lab must explicitly request consent before sending prompts or history to the backend. No silent browser-to-cloud fallback.
+- Stream through SSE and handle meta/delta/done/error, aborted requests and incomplete streams.
+- Routing must be conservative: explanation/questions should never be reinterpreted as app navigation because they mention a navigation keyword.
+- Add regression tests for routing, provider auth, disabled configuration, streaming and OpenAPI documentation.
+- Update docs/CONVERSATION.md, docs/API_REFERENCE.md, and docs/DEPLOYMENT.md for any conversational endpoint or provider change.

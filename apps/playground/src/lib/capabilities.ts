@@ -10,6 +10,7 @@ export type PlatformCapabilities = {
   server_inference_enabled: boolean;
   browser_inference_available: boolean;
   tool_execution_enabled: boolean;
+  conversation_enabled?: boolean;
   max_input_chars: number;
   max_tools: number;
   features: string[];

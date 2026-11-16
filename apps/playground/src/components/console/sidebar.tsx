@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, ArrowUpRight, BookOpenText, Boxes, FlaskConical, LayoutDashboard, Network, Orbit } from "lucide-react";
+import { Activity, ArrowUpRight, BookOpenText, Boxes, FlaskConical, MessageSquareText, LayoutDashboard, Network, Orbit } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navigation = [
   { href: "/", label: "Overview", icon: LayoutDashboard },
   { href: "/playground", label: "Playground", icon: FlaskConical },
+  { href: "/agent", label: "Agent Lab", icon: MessageSquareText },
   { href: "/tools", label: "Tool registry", icon: Boxes },
   { href: "/runtimes", label: "Runtimes", icon: Network },
   { href: "/guide", label: "Developer guide", icon: BookOpenText },
@@ -51,7 +52,7 @@ export function Sidebar() {
       </nav>
       <div className="mt-auto hidden border-t border-white/[0.07] px-5 py-5 lg:block">
         <div className="mb-4 flex items-center gap-2 text-xs text-slate-500">
-          <Activity className="size-3.5" /> Foundation · v0.1.0
+          <Activity className="size-3.5" /> Intelligence · v0.3.0
         </div>
         <a
           href="https://github.com/rishitshivesh/orivyn"

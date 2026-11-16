@@ -18,6 +18,8 @@ Do not maintain a manually copied OpenAPI JSON file. The schema is generated fro
 | GET | `/health/ready` | None | Configured provider, **not** proof of loaded model |
 | GET | `/v1/capabilities` | None | Public platform feature and limit metadata |
 | POST | `/v1/proposals` | `X-Orivyn-Key` | Produce and validate non-executed tool proposals |
+| POST | `/v1/chat` | `X-Orivyn-Key` | Complete a bounded conversation with an OpenAI-compatible provider |
+| POST | `/v1/chat/stream` | `X-Orivyn-Key` | Stream `meta`, `delta`, `done`, `error` SSE events |
 | GET | `/openapi.json` | None | Generated machine-readable OpenAPI |
 | GET | `/docs` | None | Scalar reference documentation |
 
@@ -103,3 +105,64 @@ Installed as the lightweight `scalar-fastapi` dependency. FastAPI disables Swagg
 - Add tests for success, failure and auth boundaries.
 - Update this endpoint catalog and the integration guide.
 - Ensure no secrets are exposed in OpenAPI examples or response bodies.
+
+## Conversational APIs (v0.3)
+
+Both chat endpoints require the private `X-Orivyn-Key` service key and an explicitly configured OpenAI-compatible server provider. They do **not** execute tools, store conversations, retrieve documents or automatically fail over to another model.
+
+### POST /v1/chat
+
+```bash
+curl http://127.0.0.1:8080/v1/chat \
+  -H "Content-Type: application/json" \
+  -H "X-Orivyn-Key: $ORIVYN_API_KEY" \
+  -d '{"app_id":"playground","messages":[{"role":"user","content":"Explain RBAC concisely"}]}'
+```
+
+Returns `{request_id,provider,model,content,finish_reason}`. Messages may have roles `user` or `assistant`, at most 20 turns, with the final role required to be `user`. Each turn has an 8,000-character bound; optional `instructions` is bounded to 2,000 characters. The caller controls history. The server has no memory store.
+
+### POST /v1/chat/stream
+
+Same body and authentication. Returns Server-Sent Events:
+
+```text
+event: meta
+data: {"request_id":"...","provider":"openai-compatible","model":"..."}
+
+event: delta
+data: {"text":"Hello"}
+
+event: done
+data: {"request_id":"..."}
+```
+
+After an upstream streaming failure, the server emits `event: error` with a generic message. Stream errors can occur **after** HTTP 200 has been sent, so SSE clients must handle `error` and incomplete streams.
+
+### Provider configuration
+
+The backend uses a standard OpenAI-compatible `/chat/completions` endpoint. Required variables:
+
+```env
+ORIVYN_CHAT_PROVIDER=openai-compatible
+ORIVYN_CHAT_BASE_URL=https://api.openai.com/v1
+ORIVYN_CHAT_API_KEY=<secret>
+ORIVYN_CHAT_MODEL=<available-model-id>
+```
+
+Provider model names depend on the endpoint you configure. Orivyn does not validate whether a remote model is available until a real request. Never set the provider key in `NEXT_PUBLIC_*`.
+
+### Frontend proxy
+
+`POST /api/chat` is the Next.js Console's private streaming proxy. It requires `Authorization: Bearer <ORIVYN_PLAYGROUND_ACCESS_TOKEN>`, forwards the request with the server-owned service key and returns SSE. The Agent Lab exposes a consent toggle before remote transmission.
+
+### Error conditions
+
+- `401`: missing/invalid service key
+- `422`: invalid conversation schema or length
+- `503`: provider is not configured
+- `502`: provider unavailable or invalid upstream response
+- During SSE `200`: provider failure as `event: error`
+
+The security model is **single-operator, early-stage only**. Per-app identity, rate limiting and abuse controls are still mandatory before public exposure.
+
+Provider compatibility: set `ORIVYN_CHAT_TOKEN_PARAMETER=max_tokens` (default) or `max_completion_tokens` according to the configured model. The server does not expose the provider key to clients.

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import type { OrivynClient } from "@orivyn/client";
-import type { ProposalRequest, ProposalResponse } from "@orivyn/core";
+import type { ChatRequest, ChatResponse, ProposalRequest, ProposalResponse } from "@orivyn/core";
 
 /** Client hook. Never installs service keys into the browser bundle. */
 export function useOrivyn(client: OrivynClient) {
@@ -24,4 +24,28 @@ export function useOrivyn(client: OrivynClient) {
   }, [client]);
 
   return { busy, result, error, propose };
+}
+
+/** Non-streaming chat hook for trusted app-owned API proxies (never embed server keys). */
+export function useOrivynChat(client: OrivynClient) {
+  const [busy, setBusy] = useState(false);
+  const [result, setResult] = useState<ChatResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const chat = useCallback(async (request: ChatRequest) => {
+    setBusy(true);
+    setError(null);
+    try {
+      const response = await client.chat(request);
+      setResult(response);
+      return response;
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Chat request failed");
+      throw cause;
+    } finally {
+      setBusy(false);
+    }
+  }, [client]);
+
+  return { chat, busy, result, error };
 }

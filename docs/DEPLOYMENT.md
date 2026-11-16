@@ -80,3 +80,27 @@ curl -I http://localhost:3000/vendor/cactus/needle.wasm
 ```
 
 Expect HTTP 200 on both. These files are generated and intentionally ignored by Git. First inference additionally requires downloading the Needle model weights. No Python, FastAPI, GPU, or API key is needed for browser-only mode.
+
+## Optional conversational provider (v0.3)
+
+Conversation inference is independent of Cactus and **disabled by default**. To enable an OpenAI-compatible provider, configure the backend:
+
+```env
+ORIVYN_CHAT_PROVIDER=openai-compatible
+ORIVYN_CHAT_BASE_URL=https://api.openai.com/v1
+ORIVYN_CHAT_API_KEY=<provider-secret>
+ORIVYN_CHAT_MODEL=<model-id>
+ORIVYN_CHAT_TIMEOUT_SECONDS=60
+ORIVYN_CHAT_MAX_OUTPUT_TOKENS=1024
+ORIVYN_CHAT_TOKEN_PARAMETER=max_tokens
+```
+
+In Dokploy, set these as private Compose environment values. `ORIVYN_CHAT_API_KEY` must not appear in the Console app, source files or client bundles. Choose a provider/model supported by your server account.
+
+For a privately operated local OpenAI-compatible server, `ORIVYN_CHAT_ALLOW_INSECURE_LOCAL=true` permits `http://127.0.0.1:<port>` or `http://localhost:<port>` only. This is not a production network tunnel setting: containers have their own loopback and typically need explicit service-network wiring.
+
+Configure the existing Console proxy values `ORIVYN_API_BASE`, `ORIVYN_API_KEY`, and a distinct `ORIVYN_PLAYGROUND_ACCESS_TOKEN`. Then open `/agent`, opt into remote conversation, supply the Playground token, and send a question.
+
+The API's `/docs` Scalar page automatically includes `POST /v1/chat` and `POST /v1/chat/stream`. The API status endpoint reports a boolean for conversation availability without revealing credentials. The Console requires upstream access for conversational answers, and local demo actions work without a provider.
+
+**Production gate:** Put the Console behind an access gateway. The current key is shared and has no per-application permissions or quotas. Require tenant identity, rate limits, audit redaction and upstream token budgets before exposing the conversation endpoints to arbitrary visitors.

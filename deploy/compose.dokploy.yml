@@ -11,6 +11,10 @@ services:
       ORIVYN_API_KEY: ${ORIVYN_API_KEY:?Set a private service key}
       ORIVYN_ALLOWED_ORIGINS: ${ORIVYN_ALLOWED_ORIGINS:-}
       CACTUS_TELEMETRY: "0"
+      ORIVYN_CHAT_PROVIDER: ${ORIVYN_CHAT_PROVIDER:-disabled}
+      ORIVYN_CHAT_BASE_URL: ${ORIVYN_CHAT_BASE_URL:-https://api.openai.com/v1}
+      ORIVYN_CHAT_API_KEY: ${ORIVYN_CHAT_API_KEY:-}
+      ORIVYN_CHAT_MODEL: ${ORIVYN_CHAT_MODEL:-}
     expose:
       - "8080"
     volumes:

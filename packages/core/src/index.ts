@@ -37,3 +37,23 @@ export function isBrowserReadTool(tool: ToolDefinition): boolean {
 export function uniqueToolNames(tools: readonly ToolDefinition[]): boolean {
   return new Set(tools.map((tool) => tool.name)).size === tools.length;
 }
+
+/** Conversation is stateful in the consumer; the server does not persist history. */
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export interface ChatRequest {
+  app_id: string;
+  messages: ChatMessage[];
+  instructions?: string;
+}
+
+export interface ChatResponse {
+  request_id: string;
+  provider: string;
+  model: string;
+  content: string;
+  finish_reason: string | null;
+}

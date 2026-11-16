@@ -4,7 +4,7 @@
 
 Orivyn is a frontend-first, model-agnostic intelligence platform designed around **typed, non-executed tool proposals**. Consumer applications retain authorization, data ownership and final action execution.
 
-## Current build: Foundation / Console Preview (v0.1)
+## Current build: Intelligence Preview (v0.3)
 
 The repository contains a Next.js console interface, a FastAPI API with Scalar OpenAPI documentation, reusable TypeScript packages, and optional browser/server Cactus inference.
 
@@ -96,3 +96,7 @@ Only Node.js 22.18+, pnpm, an HTTPS/localhost origin and a WebAssembly/module-wo
 The Playground now has a **Reliable actions** mode for a small, explicit demo command grammar. It never claims to be an LLM. The Needle and Backend modes continue to propose tool calls via inference. In all modes, **Apply to demo** validates and applies the proposal to a visible demo application state, never to your real Portfolio OS.
 
 See [Agent strategy](docs/AGENT_STRATEGY.md) and [Interface](docs/INTERFACE.md) for intended E.D.I.T.H. reasoning vs tool-routing responsibilities.
+
+## Agent Lab and conversational inference (v0.3)
+
+The `/agent` console route offers conservative local action routing and opt-in server-side conversation. Configure an OpenAI-compatible backend provider only when desired. `POST /v1/chat` and `POST /v1/chat/stream` are now documented by Scalar. See [Conversation engine](docs/CONVERSATION.md) for the complete setup and security boundaries. There is no provider configured by default, and this release does not yet include retrieval or durable memory.

@@ -48,7 +48,7 @@ export default function Overview() {
           { label: "API connection", value: loading ? "Checking" : connected ? "Connected" : "Offline", detail: connected ? "Health endpoint responding" : "Start or configure the backend", icon: Activity, tone: connected ? "text-emerald-300" : "text-amber-300" },
           { label: "Configured provider", value: capability?.provider ?? "Unknown", detail: capability?.server_inference_enabled ? "Server inference configured" : "Model inference not enabled", icon: Cpu, tone: "text-white" },
           { label: "Active packages", value: "04", detail: "Core, Client, React, Browser", icon: Blocks, tone: "text-white" },
-          { label: "Execution boundary", value: "Protected", detail: "No tool execution by models", icon: ShieldCheck, tone: "text-[#bec0ff]" },
+          { label: "Conversation", value: capability?.conversation_enabled ? "Enabled" : "Disabled", detail: "Explicit provider configuration", icon: ShieldCheck, tone: "text-[#bec0ff]" },
         ].map((card) => (
           <Card key={card.label}>
             <CardContent className="space-y-3 p-5">
@@ -100,7 +100,7 @@ export default function Overview() {
         </Card>
       </div>
 
-      <section className="mt-9">
+      <section className="mt-9"><div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-indigo-400/15 bg-indigo-400/[0.035] p-4"><div><p className="text-sm font-semibold text-slate-100">New: Agent Lab</p><p className="mt-1 text-xs text-slate-400">Local action routing and opt-in streaming conversations</p></div><Link href="/agent" className="text-xs text-indigo-300 hover:text-white">Open Agent Lab →</Link></div>
         <div className="mb-4 flex items-center justify-between"><h2 className="text-lg font-semibold tracking-tight">Packages and integrations</h2><Link href="/guide" className="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-white">Integration guide <ExternalLink className="size-3" /></Link></div>
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
           {modules.map((item) => <Card key={item.name}><CardContent className="p-5"><div className="mb-6 flex items-start justify-between gap-2"><item.icon className="size-5 text-[#a4a6ff]" /><Badge>{item.state}</Badge></div><p className="font-medium text-white">{item.name}</p><p className="mt-1 text-xs text-slate-500">{item.path}</p><p className="mt-4 text-xs leading-5 text-slate-400">{item.description}</p></CardContent></Card>)}

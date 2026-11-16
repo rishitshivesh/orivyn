@@ -6,6 +6,7 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from scalar_fastapi import add_scalar_reference, Theme
 
+from orivyn_api.conversation.routes import router as conversation_router
 from orivyn_api.providers.factory import create_provider
 from orivyn_api.schemas import ProposalRequest, ProposalResponse
 from orivyn_api.security import require_api_key
@@ -15,7 +16,7 @@ from orivyn_api.validation import ToolSchemaError, validate_proposals, validate_
 settings = get_settings()
 app = FastAPI(
     title="Orivyn API",
-    version="0.1.0",
+    version="0.3.0",
     description=(
         "Frontend-first intelligence platform. Tool calls are **proposals**, never "
         "executed actions. Applications enforce their own authorization and validation."
@@ -26,9 +27,11 @@ app = FastAPI(
         {"name": "Health", "description": "Liveness and configuration checks."},
         {"name": "Platform", "description": "Discover available runtime capabilities."},
         {"name": "Inference", "description": "Schema-validated read-only tool proposals."},
+        {"name": "Conversation", "description": "Authenticated, explicitly configured conversation APIs."},
     ],
 )
 add_scalar_reference(app, route="/docs", theme=Theme.KEPLER)
+app.include_router(conversation_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.allowed_origins,
@@ -74,7 +77,8 @@ def capabilities() -> dict[str, object]:
         "tool_execution_enabled": False,
         "max_input_chars": settings.orivyn_max_input_chars,
         "max_tools": settings.orivyn_max_tools,
-        "features": ["tool-proposals", "schema-validation", "scalar-openapi"],
+        "features": ["tool-proposals", "schema-validation", "scalar-openapi", "conversation-api", "chat-sse"],
+        "conversation_enabled": bool(settings.orivyn_chat_provider == "openai-compatible" and settings.orivyn_chat_api_key and settings.orivyn_chat_model),
     }
 
 

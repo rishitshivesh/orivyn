@@ -51,4 +51,4 @@ def test_capabilities_reflect_provider_config() -> None:
     payload = response.json()
     assert payload["tool_execution_enabled"] is False
     assert payload["browser_inference_available"] is False
-    assert payload["version"] == "0.1.0"
+    assert payload["version"] == app.version

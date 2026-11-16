@@ -9,11 +9,12 @@ dependencies = [
   "pydantic-settings>=2.8,<3",
   "jsonschema>=4.23,<5",
   "scalar-fastapi>=1.9.3,<2",
+  "httpx>=0.28,<1",
 ]
 
 [project.optional-dependencies]
 cactus = ["cactus-compute>=4,<5"]
-dev = ["httpx>=0.28,<1", "pytest>=8,<10", "ruff>=0.11,<1"]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
 
 [build-system]
 requires = ["hatchling>=1.27"]
