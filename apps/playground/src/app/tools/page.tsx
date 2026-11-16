@@ -7,7 +7,7 @@ import { sampleTools } from "@/lib/capabilities";
 export default function Tools() {
   return (
     <>
-      <PageHeading eyebrow="Workspace / Registry" title="Tool registry" description="Capabilities your application explicitly exposes to inference. These examples are local code definitions, not saved registrations." action={<Badge>2 example tools</Badge>} />
+      <PageHeading eyebrow="Workspace / Registry" title="Tool registry" description="Capabilities your application explicitly exposes to inference. These examples are local code definitions, not saved registrations." action={<Badge>{sampleTools.length} example tools</Badge>} />
       <div className="grid gap-4 lg:grid-cols-2">{sampleTools.map((tool) => (
         <Card key={tool.name}><CardContent className="p-6">
           <div className="mb-7 flex items-start justify-between"><div className="flex size-10 items-center justify-center rounded-xl border border-indigo-400/15 bg-indigo-400/10"><Wrench className="size-5 text-[#b4b5ff]" /></div><Badge tone="success">read · browser</Badge></div>

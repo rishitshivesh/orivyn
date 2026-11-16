@@ -1,32 +1,8 @@
 import type { ToolDefinition } from "@orivyn/core";
+import { demoTools } from "./demo-domain";
 
-/** Built-in examples, not persistent registered applications. */
-export const sampleTools: ToolDefinition[] = [
-  {
-    name: "navigate",
-    description: "Navigate to a public application page",
-    parameters: {
-      type: "object",
-      properties: { page: { type: "string", enum: ["projects", "music", "career"] } },
-      required: ["page"],
-      additionalProperties: false,
-    },
-    execution: "browser",
-    risk: "read",
-  },
-  {
-    name: "filter_projects",
-    description: "Filter visible public projects by technology",
-    parameters: {
-      type: "object",
-      properties: { technology: { type: "string" } },
-      required: ["technology"],
-      additionalProperties: false,
-    },
-    execution: "browser",
-    risk: "read",
-  },
-];
+/** Backwards-compatible export of sample tool contracts for the registry screen. */
+export const sampleTools: ToolDefinition[] = demoTools;
 
 export type PlatformCapabilities = {
   version: string;

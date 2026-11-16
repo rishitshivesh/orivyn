@@ -1,39 +1,58 @@
-# Orivyn Console interface
+# Orivyn Console
 
-The frontend is a Next.js App Router application in `apps/playground`, with local shadcn-style controls and a responsive console shell.
+## Current capabilities
 
-## Pages
+The Playground has three deliberately distinct input routes:
 
-| Route | Description |
-| --- | --- |
-| `/` | Dashboard with API configuration/capability status |
-| `/playground` | Local/remote runtime selector, tool proposal lab, local Whistle voice input, validated JSON output |
-| `/tools` | Read-only example tool definitions and JSON Schema |
-| `/runtimes` | Architecture and server provider diagnostics |
-| `/guide` | SDK, API and development documentation |
+| Route | How it works | Accuracy and scope |
+| --- | --- | --- |
+| Reliable actions | Deterministic parsing of a limited known command grammar | Fast, predictable for supported demo intents; not general natural-language understanding |
+| Needle | Browser WebAssembly inference with explicit tool schemas | Local, private, subject to small-model accuracy limitations |
+| Backend | FastAPI tool-proposal API with optional Cactus provider | Requires service credentials and provider configuration |
 
-## Local inference
+Neither inference route is a conversational reasoning model. No route performs privileged operations.
 
-The Playground defaults to local browser inference. After an explicit click, the optional `cactus-needle/browser` adapter loads Needle into a WebAssembly module worker. It accepts only read-only browser-targeted tools, validates resulting JSON arguments, and returns proposals, not executed actions. Whistle can be activated independently using an explicit microphone click. See [BROWSER_RUNTIME.md](./BROWSER_RUNTIME.md).
+## Screens
 
-## Backend inference
+- `/`: platform status, architecture and packages.
+- `/playground`: command input, runtime selection, microphone transcription, tool allowlist, reviewable proposals, and **real demo actions**.
+- `/tools`: tool definitions and JSON Schema. These are demo-level definitions, not a persistent registry.
+- `/runtimes`: runtime boundaries and configured server provider.
+- `/guide`: documentation and Scalar OpenAPI links.
 
-The explicit Backend API tab uses the protected Next.js route `POST /api/proposals` with a Playground access token and private backend credential. Unlike browser mode, input is sent to the server.
+## Demo action architecture
 
-## Development
+The Playground is an isolated frontend demo, **not a link into a real user's Portfolio OS**.
+
+- `src/lib/demo-domain.ts`: typed pages, filters, example projects, tool definitions, deterministic supported-intent parser.
+- `src/lib/demo-execution.ts`: allowlisted reducer that validates every proposed argument against a JSON Schema before applying UI state changes.
+- `src/components/console/demo-preview.tsx`: visible application surface updated by accepted actions.
+- `src/app/playground/page.tsx`: input, user approval, runtime comparison and result inspection.
+- `src/lib/capabilities.ts`: shared UI metadata; example tool definitions are imported rather than duplicated.
+
+Only registered read-only browser handlers are executable. Every proposed call is a request, not authorization. The user explicitly clicks **Apply to demo** before the state changes. Backend requests remain proposals and never trigger privileged actions automatically.
+
+The deterministic matcher handles page navigation, infrastructure/technology filtering, and resetting. Other intents are reported unsupported, not fabricated. It doesn't turn Needle into an open-ended conversational LLM.
+
+## Known limitations
+
+- Demo preview content is illustrative and unrelated to the actual Portfolio CMS.
+- Persistent app registration, data-bound action manifests, generic SDK action execution, and E.D.I.T.H. retrieval/reasoning are future milestones.
+- Browser model loading and the model's tool-call accuracy require runtime evaluation. For unsupported input, the model can produce no eligible call.
+- Loader screens are deferred per product preference.
+
+## Developer commands
 
 ```bash
-corepack enable
 pnpm install
 pnpm dev:web
+pnpm check
+pnpm typecheck
+pnpm test
 ```
 
-No API or token is required to access local browser mode. To test server mode, configure the FastAPI runtime, API key and Playground proxy token as described in [DEPLOYMENT.md](./DEPLOYMENT.md).
+Server testing additionally requires the FastAPI configuration documented in `docs/DEPLOYMENT.md`.
 
-## Truthful feature inventory
+## Release verification
 
-Working as source implementations, pending real-browser verification: example tool selection, local Needle proposal adapter, Whistle audio capture/transcription, JSON response display, runtime selection. Existing backend provider and Scalar docs are separately configured. **Not implemented:** a persistent management registry, full app registration/auth UI, voice streaming, executing frontend actions, external agent router, payments workflows or model benchmarking.
-
-## Build verification
-
-This revision was prepared through GitHub repository connector rather than an environment with installed workspace dependencies. Actual Chromium/Next.js production build, voice test, Biome format and TypeScript typecheck have not been completed in this editing environment. Run those before production use.
+Run the full dependency-backed quality gate, check the local app in a real browser, exercise all example commands in each mode, inspect WASM/worker downloads and permission handling, and only then treat the interface as production-ready.

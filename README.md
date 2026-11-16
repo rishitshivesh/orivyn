@@ -15,7 +15,7 @@ The repository contains a Next.js console interface, a FastAPI API with Scalar O
 - `/runtimes`: Server/browser/external runtime topology and capability status.
 - `/guide`: Developer documentation and API reference shortcuts.
 
-The example tool registry is static; browser Needle/Whistle adapters are implemented but require real-browser production build verification. The API does not execute tools. Payment and auth actions are not implemented. Read `docs/INTERFACE.md` for the complete delivered/planned feature matrix.
+The example tool registry is static; the Playground now supports explicit, schema-validated demo action execution (navigation/filter/reset) after user review. Browser Needle/Whistle adapters still require real-browser production build verification. The API does not execute tools. Payment and auth actions are not implemented. Read `docs/INTERFACE.md` for the complete delivered/planned feature matrix.
 
 ## Repository layout
 
@@ -90,3 +90,9 @@ No GitHub Actions or workflow automation is included.
 ## Local browser runtime prerequisites
 
 Only Node.js 22.18+, pnpm, an HTTPS/localhost origin and a WebAssembly/module-worker capable browser are required. No Python service, Docker or GPU is needed for the local Playground. The `dev:web` and frontend build scripts copy the bundled Cactus worker/WASM assets to the public directory automatically. Needle and Whistle model weights are downloaded on first use and cached where the browser supports it. See [Browser runtime setup](docs/BROWSER_RUNTIME.md).
+
+## Reliable commands and action execution
+
+The Playground now has a **Reliable actions** mode for a small, explicit demo command grammar. It never claims to be an LLM. The Needle and Backend modes continue to propose tool calls via inference. In all modes, **Apply to demo** validates and applies the proposal to a visible demo application state, never to your real Portfolio OS.
+
+See [Agent strategy](docs/AGENT_STRATEGY.md) and [Interface](docs/INTERFACE.md) for intended E.D.I.T.H. reasoning vs tool-routing responsibilities.
