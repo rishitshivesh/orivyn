@@ -2,22 +2,40 @@
 
 **Intelligence, wherever it belongs.**
 
-A frontend-first, model-agnostic platform for connecting natural-language intent to safe, typed application capabilities. Local browser execution, managed backend inference, and third-party provider adapters are distinct execution targets.
+Orivyn is a frontend-first, model-agnostic intelligence platform designed around **typed, non-executed tool proposals**. Consumer applications retain authorization, data ownership and final action execution.
 
-## Status
-**Foundation (v0.1, early implementation).** The core tool contract, HTTP SDK, React hook, FastAPI proposal endpoint, and opt-in Cactus adapter are being introduced. The Console and browser inference UI are not yet production-ready. Do not deploy this publicly as a trusted action execution system until the hardening checklist is complete.
+## Current build: Foundation / Console Preview (v0.1)
 
-## Structure
-- `apps/api`: FastAPI proposal and capability API with lazily loaded model adapters
-- `apps/playground`: Next.js App Router user interface
-- `packages/core`: typed tool contracts and client-side validation
-- `packages/client`: transport client for the API
-- `packages/react`: React hooks for application integration
-- `packages/browser`: local browser runtime interface
-- `docs/`: architecture and Dokploy runbooks
+The repository contains a Next.js console interface, a FastAPI API with Scalar OpenAPI documentation, reusable TypeScript packages, and optional Cactus model inference.
 
-## Develop
-Requires Node 22+, pnpm 10+, Python 3.12+, [uv](https://docs.astral.sh/uv/).
+**Delivered interface**
+- `/`: Overview with live backend status.
+- `/playground`: Natural-language tool proposal lab.
+- `/tools`: Explicit example tool definitions and JSON Schemas.
+- `/runtimes`: Server/browser/external runtime topology and capability status.
+- `/guide`: Developer documentation and API reference shortcuts.
+
+The example tool registry is static; the browser inference runtime is currently an interface only. The API does not execute tools. Payment and auth actions are not implemented. Read `docs/INTERFACE.md` for the complete delivered/planned feature matrix.
+
+## Repository layout
+
+```text
+apps/
+  api/            FastAPI, validation, inference provider adapter, Scalar reference
+  playground/     Next.js Console and read-only sample tool Playground
+packages/
+  core/           Typed action/proposal contracts
+  client/         Server transport
+  react/          React hook
+  browser/        Browser adapter interface (no WASM implementation yet)
+deploy/           Docker Compose / Dokploy
+docs/             Architecture, API, UI, integrations, deployment
+AGENTS.md         Engineering and documentation requirements
+```
+
+## Start locally
+
+Requires Node 22+, pnpm 10+, Python 3.12+ and uv.
 
 ```bash
 corepack enable
@@ -25,24 +43,45 @@ pnpm install
 uv sync --project apps/api --extra dev
 cp apps/api/.env.example apps/api/.env
 cp apps/playground/.env.example apps/playground/.env.local
+```
+
+Terminal one:
+```bash
 pnpm dev:api
-# in another terminal:
+```
+
+Terminal two:
+```bash
 pnpm dev:web
 ```
 
-Health: http://localhost:8080/health/live; API documentation: http://localhost:8080/docs; Playground: http://localhost:3000.
+- Console: http://localhost:3000
+- Scalar OpenAPI: http://localhost:8080/docs
+- OpenAPI JSON: http://localhost:8080/openapi.json
+- API health: http://localhost:8080/health/live
 
-The native Cactus engine and model weights are **optional**. Enable via `uv sync --project apps/api --extra cactus` then `ORIVYN_INFERENCE_PROVIDER=cactus`; model downloads happen on first request. No inference should load for a simple health check.
+Model inference is disabled by default. To enable optional Cactus inference, install `uv sync --project apps/api --extra dev --extra cactus`, configure `ORIVYN_INFERENCE_PROVIDER=cactus`, `ORIVYN_API_KEY`, and a separate `ORIVYN_PLAYGROUND_ACCESS_TOKEN` in the Next.js environment. Models may download on first inference.
 
-## Verification
+## Quality checks
+
 ```bash
 pnpm format
 pnpm check
 pnpm typecheck
 pnpm test
+uv run --project apps/api ruff format apps/api
 uv run --project apps/api ruff check apps/api
-uv run --project apps/api ruff format --check apps/api
 uv run --project apps/api pytest apps/api/tests
 ```
 
-Read [AGENTS.md](./AGENTS.md) before contributing. No GitHub Actions are configured.
+**Verification transparency:** Source authored through the GitHub connector has not undergone a successful local dependency install, full Biome/TypeScript/Python test run, browser visual inspection, or Docker build in this environment. Run these checks before production use.
+
+## Documentation
+- [Engineering rules](AGENTS.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Console interface](docs/INTERFACE.md)
+- [API reference](docs/API_REFERENCE.md)
+- [Application integrations](docs/INTEGRATIONS.md)
+- [Deployment](docs/DEPLOYMENT.md)
+
+No GitHub Actions or workflow automation is included.

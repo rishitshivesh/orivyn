@@ -3,7 +3,13 @@ name = "orivyn-api"
 version = "0.1.0"
 description = "Orivyn optional server runtime and capability API"
 requires-python = ">=3.12,<3.14"
-dependencies = ["fastapi>=0.115,<1", "uvicorn>=0.34,<1", "pydantic-settings>=2.8,<3", "jsonschema>=4.23,<5"]
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn>=0.34,<1",
+  "pydantic-settings>=2.8,<3",
+  "jsonschema>=4.23,<5",
+  "scalar-fastapi>=1.9.3,<2",
+]
 
 [project.optional-dependencies]
 cactus = ["cactus-compute>=4,<5"]

@@ -1,9 +1,10 @@
-"""Orivyn FastAPI application."""
+"""Public HTTP surface and server-side tool proposal endpoint."""
 import asyncio
 import uuid
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from scalar_fastapi import add_scalar_reference, Theme
 
 from orivyn_api.providers.factory import create_provider
 from orivyn_api.schemas import ProposalRequest, ProposalResponse
@@ -12,7 +13,22 @@ from orivyn_api.settings import get_settings
 from orivyn_api.validation import ToolSchemaError, validate_proposals, validate_tools
 
 settings = get_settings()
-app = FastAPI(title="Orivyn API", version="0.1.0")
+app = FastAPI(
+    title="Orivyn API",
+    version="0.1.0",
+    description=(
+        "Frontend-first intelligence platform. Tool calls are **proposals**, never "
+        "executed actions. Applications enforce their own authorization and validation."
+    ),
+    docs_url=None,
+    redoc_url=None,
+    openapi_tags=[
+        {"name": "Health", "description": "Liveness and configuration checks."},
+        {"name": "Platform", "description": "Discover available runtime capabilities."},
+        {"name": "Inference", "description": "Schema-validated read-only tool proposals."},
+    ],
+)
+add_scalar_reference(app, route="/docs", theme=Theme.KEPLER)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.allowed_origins,
@@ -22,17 +38,65 @@ app.add_middleware(
 _inference_slots = asyncio.Semaphore(1)
 
 
-@app.get("/health/live")
+@app.get(
+    "/health/live",
+    tags=["Health"],
+    summary="Liveness",
+    description="Does not load models or contact external services.",
+)
 def live() -> dict[str, str]:
     return {"status": "ok"}
 
 
-@app.get("/health/ready")
+@app.get(
+    "/health/ready",
+    tags=["Health"],
+    summary="Configuration readiness",
+    description="Shows configured inference provider. Does **not** imply weights are loaded.",
+)
 def ready() -> dict[str, str]:
     return {"status": "configured", "provider": settings.orivyn_inference_provider}
 
 
-@app.post("/v1/proposals", response_model=ProposalResponse, dependencies=[Depends(require_api_key)])
+@app.get(
+    "/v1/capabilities",
+    tags=["Platform"],
+    summary="Discover currently available platform capabilities",
+    description="Public, non-sensitive metadata for console display and debugging.",
+)
+def capabilities() -> dict[str, object]:
+    enabled = settings.orivyn_inference_provider != "disabled"
+    return {
+        "version": app.version,
+        "provider": settings.orivyn_inference_provider,
+        "server_inference_enabled": enabled,
+        "browser_inference_available": False,
+        "tool_execution_enabled": False,
+        "max_input_chars": settings.orivyn_max_input_chars,
+        "max_tools": settings.orivyn_max_tools,
+        "features": ["tool-proposals", "schema-validation", "scalar-openapi"],
+    }
+
+
+@app.post(
+    "/v1/proposals",
+    response_model=ProposalResponse,
+    dependencies=[Depends(require_api_key)],
+    tags=["Inference"],
+    summary="Generate validated tool proposals",
+    description=(
+        "Requires private X-Orivyn-Key service credential. The server permits only "
+        "read-only browser tools in this foundation build. **No tool is executed.**"
+    ),
+    responses={
+        401: {"description": "Invalid service credentials"},
+        403: {"description": "Requested tool has disallowed execution or risk level"},
+        413: {"description": "Input or tool count exceeded server limit"},
+        422: {"description": "Invalid tool schema or request"},
+        503: {"description": "Service not configured or inference unavailable"},
+        504: {"description": "Inference timed out"},
+    },
+)
 async def proposals(body: ProposalRequest) -> ProposalResponse:
     if len(body.input) > settings.orivyn_max_input_chars:
         raise HTTPException(status_code=413, detail="Input too long")

@@ -3,6 +3,8 @@ services:
     build:
       context: ..
       dockerfile: apps/playground/Dockerfile
+      args:
+        NEXT_PUBLIC_ORIVYN_API_URL: ${NEXT_PUBLIC_ORIVYN_API_URL:-http://localhost:8080}
     restart: unless-stopped
     environment:
       ORIVYN_API_BASE: ${ORIVYN_API_BASE:?Set internal API origin}

@@ -51,3 +51,10 @@ Read this file before changing any code. These are binding project rules for peo
 - Follow existing implementation patterns from music-streaming-backend: backend-owned long-lived service credentials, short-lived scoped browser capabilities, key rotation and auditability for sensitive integrations.
 - Avoid porting music domain logic or unnecessary services.
 - No placeholders masquerading as working features. Label planned/incomplete features explicitly.
+
+## Documentation ownership
+- Every new public API route must have OpenAPI tags, summary, precise request/response/error models and a test proving it appears in /openapi.json.
+- Scalar at /docs is the interactive reference. Do not reintroduce Swagger UI.
+- Keep docs/API_REFERENCE.md updated when routes change; keep docs/INTERFACE.md updated when UI routes, behavior, or controls change.
+- Document real, incomplete, and planned functionality separately. Never fabricate uptime, token usage, registered apps, model metrics or test results.
+- Every new frontend route should expose accessible states for loading, errors, empty results and disabled capabilities.
