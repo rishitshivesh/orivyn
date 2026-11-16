@@ -4,8 +4,10 @@ RUN corepack enable && corepack prepare pnpm@10.20.0 --activate
 COPY package.json pnpm-workspace.yaml turbo.json ./
 COPY apps/playground/package.json apps/playground/package.json
 COPY packages/core/package.json packages/core/package.json
+COPY packages/browser/package.json packages/browser/package.json
 RUN pnpm install --no-frozen-lockfile
 COPY packages/core packages/core
+COPY packages/browser packages/browser
 COPY apps/playground apps/playground
 ARG NEXT_PUBLIC_ORIVYN_API_URL=http://localhost:8080
 ENV NEXT_PUBLIC_ORIVYN_API_URL=$NEXT_PUBLIC_ORIVYN_API_URL

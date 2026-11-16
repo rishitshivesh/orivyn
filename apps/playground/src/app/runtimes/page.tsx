@@ -13,10 +13,10 @@ export default function Runtimes() {
   const provider = status?.connected ? status.capabilities.provider : "Unknown";
   return (
     <>
-      <PageHeading eyebrow="Workspace / Execution" title="Runtime topology" description="Orivyn is designed to choose execution based on device capability, operation sensitivity and application policy. Only the server proposal adapter exists today." action={<Button variant="outline" onClick={() => void refresh()}><Activity className="size-4" /> Refresh health</Button>} />
+      <PageHeading eyebrow="Workspace / Execution" title="Runtime topology" description="Orivyn is designed to choose execution based on device capability, operation sensitivity and application policy. The local Needle/Whistle adapter is now included; verify browser/WASM compatibility before production use." action={<Button variant="outline" onClick={() => void refresh()}><Activity className="size-4" /> Refresh health</Button>} />
       <div className="grid gap-4 lg:grid-cols-3">
         {[
-          { title: "Browser runtime", icon: Cpu, tag: "Not installed", description: "Inference on visitor devices using WebAssembly workers. No private service keys. Web worker adapter is still a contract.", lines: ["Zero model-backed browser calls", "Model capability detection pending", "Opt-in audio and consent pending"] },
+          { title: "Browser runtime", icon: Cpu, tag: "Integrated · unverified", description: "Needle and Whistle run on the visitor device through the cactus-needle WebAssembly workers. Models load only on first use; no private service keys.", lines: ["Local tool proposals implemented", "Opt-in Whistle audio recording", "Browser integration QA required"] },
           { title: "Server runtime", icon: Server, tag: loading ? "Checking" : enabled ? "Configured" : "Disabled", description: "FastAPI runs bounded, schema-validated proposals. Native Cactus loads lazily only after a request.", lines: [`Provider: ${provider}`, "Private service key required", "Tool execution disabled"] },
           { title: "External providers", icon: HardDrive, tag: "Future adapter", description: "Hosted model inference will require an explicit per-app policy and transparent data transfer decisions.", lines: ["No automatic external fallback", "No provider keys in the browser", "Provider adapter registry planned"] },
         ].map((runtime) => <Card key={runtime.title}><CardContent className="flex h-full flex-col p-6">

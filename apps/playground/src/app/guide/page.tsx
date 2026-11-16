@@ -8,6 +8,7 @@ const documents = [
   { name: "Architecture", description: "Execution boundaries, runtime selection and threat model.", href: "docs/ARCHITECTURE.md" },
   { name: "Integrations", description: "Server SDK usage, app-owned authorization and tool contracts.", href: "docs/INTEGRATIONS.md" },
   { name: "Interface guide", description: "Console routes, existing functionality and planned capabilities.", href: "docs/INTERFACE.md" },
+  { name: "Browser inference", description: "Needle, Whistle, privacy and local runtime setup.", href: "docs/BROWSER_RUNTIME.md" },
   { name: "API reference guide", description: "Endpoint inventory, Scalar, examples and error behavior.", href: "docs/API_REFERENCE.md" },
   { name: "Deployment", description: "Local development, Docker, Dokploy and production gates.", href: "docs/DEPLOYMENT.md" },
   { name: "Engineering rules", description: "Modularity, linting, documentation and safety requirements.", href: "AGENTS.md" },

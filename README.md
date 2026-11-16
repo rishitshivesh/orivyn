@@ -6,7 +6,7 @@ Orivyn is a frontend-first, model-agnostic intelligence platform designed around
 
 ## Current build: Foundation / Console Preview (v0.1)
 
-The repository contains a Next.js console interface, a FastAPI API with Scalar OpenAPI documentation, reusable TypeScript packages, and optional Cactus model inference.
+The repository contains a Next.js console interface, a FastAPI API with Scalar OpenAPI documentation, reusable TypeScript packages, and optional browser/server Cactus inference.
 
 **Delivered interface**
 - `/`: Overview with live backend status.
@@ -15,7 +15,7 @@ The repository contains a Next.js console interface, a FastAPI API with Scalar O
 - `/runtimes`: Server/browser/external runtime topology and capability status.
 - `/guide`: Developer documentation and API reference shortcuts.
 
-The example tool registry is static; the browser inference runtime is currently an interface only. The API does not execute tools. Payment and auth actions are not implemented. Read `docs/INTERFACE.md` for the complete delivered/planned feature matrix.
+The example tool registry is static; browser Needle/Whistle adapters are implemented but require real-browser production build verification. The API does not execute tools. Payment and auth actions are not implemented. Read `docs/INTERFACE.md` for the complete delivered/planned feature matrix.
 
 ## Repository layout
 
@@ -60,7 +60,7 @@ pnpm dev:web
 - OpenAPI JSON: http://localhost:8080/openapi.json
 - API health: http://localhost:8080/health/live
 
-Model inference is disabled by default. To enable optional Cactus inference, install `uv sync --project apps/api --extra dev --extra cactus`, configure `ORIVYN_INFERENCE_PROVIDER=cactus`, `ORIVYN_API_KEY`, and a separate `ORIVYN_PLAYGROUND_ACCESS_TOKEN` in the Next.js environment. Models may download on first inference.
+Backend model inference is disabled by default. Browser Needle/Whistle requires explicit local use and external model asset downloads. To enable optional server-side Cactus inference, install `uv sync --project apps/api --extra dev --extra cactus`, configure `ORIVYN_INFERENCE_PROVIDER=cactus`, `ORIVYN_API_KEY`, and a separate `ORIVYN_PLAYGROUND_ACCESS_TOKEN` in the Next.js environment. Models may download on first inference.
 
 ## Quality checks
 
@@ -82,6 +82,7 @@ uv run --project apps/api pytest apps/api/tests
 - [Console interface](docs/INTERFACE.md)
 - [API reference](docs/API_REFERENCE.md)
 - [Application integrations](docs/INTEGRATIONS.md)
+- [Browser inference and voice](docs/BROWSER_RUNTIME.md)
 - [Deployment](docs/DEPLOYMENT.md)
 
 No GitHub Actions or workflow automation is included.

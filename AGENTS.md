@@ -58,3 +58,11 @@ Read this file before changing any code. These are binding project rules for peo
 - Keep docs/API_REFERENCE.md updated when routes change; keep docs/INTERFACE.md updated when UI routes, behavior, or controls change.
 - Document real, incomplete, and planned functionality separately. Never fabricate uptime, token usage, registered apps, model metrics or test results.
 - Every new frontend route should expose accessible states for loading, errors, empty results and disabled capabilities.
+
+## Browser runtime implementation
+- Cactus Needle/Whistle are integrated through `@orivyn/browser`; consumers import Orivyn wrappers rather than third-party internal APIs.
+- Never call `Needle.run()` to execute tools. Use `generate()`/propose only and validate results before application execution.
+- Voice requires explicit microphone permission and local recording. Stop capture tracks in finally blocks. No audio upload to the Orivyn API in local mode.
+- Keep browser model weights lazy and don't silently fall back to backend or paid providers.
+- Before releasing local runtime, run Next.js production bundling and test both actual WASM tool proposals and speech transcription in Chromium. Follow with Safari/mobile compatibility tests.
+- Read docs/BROWSER_RUNTIME.md when changing model runtime behavior; update it alongside any integration or privacy change.

@@ -12,7 +12,7 @@ const modules = [
   { name: "Core contracts", path: "@orivyn/core", icon: Braces, state: "Available", description: "Typed tools and request/response contracts" },
   { name: "HTTP client", path: "@orivyn/client", icon: Globe2, state: "Available", description: "Reusable server transport" },
   { name: "React integration", path: "@orivyn/react", icon: Layers3, state: "Foundation", description: "React hook for tool proposals" },
-  { name: "Browser runtime", path: "@orivyn/browser", icon: Cpu, state: "Interface only", description: "Runtime adapter; WASM engine pending" },
+  { name: "Browser runtime", path: "@orivyn/browser", icon: Cpu, state: "Integrated · unverified", description: "Needle + Whistle WebAssembly adapter" },
 ];
 
 export default function Overview() {
@@ -91,7 +91,7 @@ export default function Overview() {
               {[
                 { label: "API gateway", value: loading ? "Checking" : connected ? "Reachable" : "Unavailable", okay: connected },
                 { label: "Server provider", value: capability?.provider ?? "Not detected", okay: capability?.server_inference_enabled ?? false },
-                { label: "Browser inference", value: capability?.browser_inference_available ? "Available" : "Not installed", okay: false },
+                { label: "Browser inference", value: "Integrated · browser QA pending", okay: false },
                 { label: "Tool execution", value: "Disabled (safe default)", okay: true },
               ].map((item) => <div key={item.label} className="flex items-center justify-between gap-3 border-b border-white/[0.06] pb-3 text-xs last:border-0"><span className="text-slate-400">{item.label}</span><span className="flex items-center gap-2 text-slate-200"><span className={`size-1.5 rounded-full ${item.okay ? "bg-emerald-400" : "bg-amber-400"}`} />{item.value}</span></div>)}
             </div>
@@ -106,7 +106,7 @@ export default function Overview() {
           {modules.map((item) => <Card key={item.name}><CardContent className="p-5"><div className="mb-6 flex items-start justify-between gap-2"><item.icon className="size-5 text-[#a4a6ff]" /><Badge>{item.state}</Badge></div><p className="font-medium text-white">{item.name}</p><p className="mt-1 text-xs text-slate-500">{item.path}</p><p className="mt-4 text-xs leading-5 text-slate-400">{item.description}</p></CardContent></Card>)}
         </div>
       </section>
-      <div className="mt-8 flex flex-wrap items-center gap-4 text-xs text-slate-500"><Waves className="size-4" /> Voice transcription and real browser model inference are future integrations, not simulated live features. <FlaskConical className="size-3.5" /></div>
+      <div className="mt-8 flex flex-wrap items-center gap-4 text-xs text-slate-500"><Waves className="size-4" /> Local Needle and Whistle adapters are included; verify real browser inference before production deployment. <FlaskConical className="size-3.5" /></div>
     </>
   );
 }

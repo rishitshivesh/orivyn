@@ -1,17 +1,50 @@
-# Integrations and application SDK
+# Orivyn integrations
 
-## Public frontend capabilities
-Use `@orivyn/core` to register typed, allowlisted UI tools. A browser runtime must run in a Web Worker and may not receive service keys. The `@orivyn/browser` package currently defines the adapter interface; a concrete WASM integration has **not** been shipped.
+## Local, browser-first integration
 
-## Server-side proposal flow
-1. An authenticated consumer backend receives user input.
-2. The backend constructs the tool list based on application policy and authenticated user permissions.
-3. It calls Orivyn `POST /v1/proposals` with `X-Orivyn-Key`.
-4. Orivyn returns tool **proposals**, not executed actions.
-5. The consumer checks each proposal against its own allowlist and validates argument schema and permission scope.
-6. For sensitive operations it shows an explicit confirmation and uses its normal backend handler. A proposal must never trigger a direct payment, access-control mutation, or privileged operation.
+Install the workspace package `@orivyn/browser` (or publish its versioned npm package later). It wraps the third-party Needle/Whistle implementation and keeps consumer code independent of Cactus internals.
 
-## Private backend SDK example
+```tsx
+"use client";
+
+import { CactusBrowserRuntime } from "@orivyn/browser";
+
+const runtime = new CactusBrowserRuntime();
+
+// Call after explicit user gesture, preferably a button click:
+const prediction = await runtime.propose({
+  app_id: "portfolio",
+  input: "Open the music app",
+  tools: [{
+    name: "navigate",
+    description: "Navigate to a public route",
+    parameters: {
+      type: "object",
+      properties: { page: { type: "string", enum: ["music", "projects"] } },
+      required: ["page"],
+      additionalProperties: false,
+    },
+    execution: "browser",
+    risk: "read",
+  }],
+});
+
+// Validate again with your app's actual registry, then optionally handle
+// the proposal. Never assume that inference output has authorization.
+console.log(prediction.proposals);
+await runtime.close();
+```
+
+The adapter makes no privileged network request. Avoid importing it into server components. Browser model assets download only on first use. [Detailed browser guide](./BROWSER_RUNTIME.md).
+
+## Protected application integrations
+
+1. Authenticated application backend receives user intent.
+2. Backend supplies only tool schemas that user can access.
+3. Server calls `POST /v1/proposals` with its private `X-Orivyn-Key`.
+4. Orivyn returns proposed calls. Each application validates schema/permission again.
+5. Writes, payments and identity changes require authenticated backend handler and explicit user confirmation.
+
 ```ts
 import { OrivynClient } from "@orivyn/client";
 
@@ -21,7 +54,7 @@ const response = await client.propose({
   input: "Open projects",
   tools: [{
     name: "navigate",
-    description: "Open a public page",
+    description: "Navigate to a public page",
     parameters: { type: "object", properties: { page: { type: "string" } } },
     execution: "browser",
     risk: "read",
@@ -29,11 +62,10 @@ const response = await client.propose({
 }, { headers: { "X-Orivyn-Key": process.env.ORIVYN_API_KEY! } });
 ```
 
-The browser MUST NOT receive the API key. Use an authenticated application-owned route to invoke the backend SDK. The example above is only valid on trusted server infrastructure.
+The current API is intentionally restricted to read-only browser proposals, including when invoked server-side. Backend privileged actions are NOT enabled until registered app policies and authentication are implemented.
 
-## Future extension points
-- Per-app capability manifest, revocable credentials, quotas, fine-grained policies
-- Browser-side Cactus Needle/Whistle inference and microphone opt-in
-- Third-party agent adapters using explicit user consent
-- Scoped ephemeral browser tokens, like the music streaming backend's external integration approach
-- Audited management console for model provisioning and telemetry
+## Planned extension points
+- Authenticated per-app manifest and signing keys, service identity and limits.
+- Audited application integration registry with credential rotation.
+- Typed executor for UI-only actions.
+- Model provider plugins, agent interoperability, and developer middleware.
