@@ -1,0 +1,16 @@
+services:
+  playground:
+    build:
+      context: ..
+      dockerfile: apps/playground/Dockerfile
+    restart: unless-stopped
+    environment:
+      ORIVYN_API_BASE: ${ORIVYN_API_BASE:?Set internal API origin}
+      ORIVYN_API_KEY: ${ORIVYN_API_KEY:?Set private API key}
+      ORIVYN_PLAYGROUND_ACCESS_TOKEN: ${ORIVYN_PLAYGROUND_ACCESS_TOKEN:?Set private console access token}
+    expose:
+      - "3000"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"

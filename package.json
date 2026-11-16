@@ -1,0 +1,23 @@
+{
+  "name": "orivyn",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.20.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev:web": "pnpm --filter @orivyn/playground dev",
+    "dev:api": "uv run --project apps/api uvicorn orivyn_api.main:app --app-dir apps/api/src --reload --port 8080",
+    "build": "turbo build",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "check": "biome check .",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.7",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3"
+  }
+}
