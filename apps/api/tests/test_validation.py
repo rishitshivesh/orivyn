@@ -1,4 +1,5 @@
 """Model output is never trusted without schema checks."""
+
 import pytest
 
 from orivyn_api.schemas import ToolDefinition, ToolProposal

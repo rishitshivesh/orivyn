@@ -1,4 +1,5 @@
 """Public HTTP surface and server-side tool proposal endpoint."""
+
 import asyncio
 import uuid
 
@@ -27,7 +28,10 @@ app = FastAPI(
         {"name": "Health", "description": "Liveness and configuration checks."},
         {"name": "Platform", "description": "Discover available runtime capabilities."},
         {"name": "Inference", "description": "Schema-validated read-only tool proposals."},
-        {"name": "Conversation", "description": "Authenticated, explicitly configured conversation APIs."},
+        {
+            "name": "Conversation",
+            "description": "Authenticated, explicitly configured conversation APIs.",
+        },
     ],
 )
 add_scalar_reference(app, route="/docs", theme=Theme.KEPLER)
@@ -77,8 +81,18 @@ def capabilities() -> dict[str, object]:
         "tool_execution_enabled": False,
         "max_input_chars": settings.orivyn_max_input_chars,
         "max_tools": settings.orivyn_max_tools,
-        "features": ["tool-proposals", "schema-validation", "scalar-openapi", "conversation-api", "chat-sse"],
-        "conversation_enabled": bool(settings.orivyn_chat_provider == "openai-compatible" and settings.orivyn_chat_api_key and settings.orivyn_chat_model),
+        "features": [
+            "tool-proposals",
+            "schema-validation",
+            "scalar-openapi",
+            "conversation-api",
+            "chat-sse",
+        ],
+        "conversation_enabled": bool(
+            settings.orivyn_chat_provider == "openai-compatible"
+            and settings.orivyn_chat_api_key
+            and settings.orivyn_chat_model
+        ),
     }
 
 

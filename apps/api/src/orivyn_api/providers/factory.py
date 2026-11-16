@@ -1,4 +1,5 @@
 """Construct model provider only when requested."""
+
 from orivyn_api.providers.base import ProposalProvider
 from orivyn_api.providers.cactus import CactusProvider
 

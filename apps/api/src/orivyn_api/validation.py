@@ -1,4 +1,5 @@
 """Validate untrusted model-selected tools with application-defined JSON schemas."""
+
 from jsonschema import Draft202012Validator, SchemaError
 
 from orivyn_api.schemas import ToolDefinition, ToolProposal

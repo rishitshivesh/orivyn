@@ -1,4 +1,5 @@
 """Optional Cactus model adapter. Never execute model-selected tools."""
+
 from typing import Any
 
 from orivyn_api.schemas import ToolDefinition, ToolProposal

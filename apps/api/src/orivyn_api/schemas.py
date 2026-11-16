@@ -1,4 +1,5 @@
 """Versioned HTTP contracts."""
+
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field

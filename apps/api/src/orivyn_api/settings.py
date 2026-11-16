@@ -1,4 +1,5 @@
 """Environment configuration."""
+
 from functools import lru_cache
 from pathlib import Path
 
@@ -6,7 +7,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=Path(__file__).resolve().parents[2] / ".env", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=Path(__file__).resolve().parents[2] / ".env", extra="ignore"
+    )
 
     orivyn_inference_provider: str = "disabled"
     orivyn_api_key: str = ""
@@ -24,7 +27,9 @@ class Settings(BaseSettings):
 
     @property
     def allowed_origins(self) -> list[str]:
-        return [origin.strip() for origin in self.orivyn_allowed_origins.split(",") if origin.strip()]
+        return [
+            origin.strip() for origin in self.orivyn_allowed_origins.split(",") if origin.strip()
+        ]
 
 
 @lru_cache

@@ -1,4 +1,5 @@
 """OpenAI-compatible chat adapter with HTTP streaming and no provider-specific SDK."""
+
 import json
 from collections.abc import AsyncIterator
 from urllib.parse import urlsplit
@@ -35,7 +36,9 @@ class ConversationProvider:
             and parsed.hostname in {"localhost", "127.0.0.1"}
         )
         if not (is_https or is_local_http) or parsed.username or parsed.password:
-            raise ConversationUnavailable("Provider URL must use HTTPS or explicitly allowed localhost HTTP")
+            raise ConversationUnavailable(
+                "Provider URL must use HTTPS or explicitly allowed localhost HTTP"
+            )
         return f"{base}/chat/completions"
 
     def _request(self, request: ChatRequest, stream: bool) -> dict:
@@ -65,7 +68,8 @@ class ConversationProvider:
         async with httpx.AsyncClient(timeout=self.settings.orivyn_chat_timeout_seconds) as client:
             try:
                 response = await client.post(
-                    self._endpoint(), headers=self._headers(),
+                    self._endpoint(),
+                    headers=self._headers(),
                     json=self._request(request, stream=False),
                 )
                 response.raise_for_status()
@@ -76,17 +80,24 @@ class ConversationProvider:
                     raise TypeError("Provider returned non-text content")
                 return content, choice.get("finish_reason")
             except (httpx.HTTPError, ValueError, KeyError, IndexError, TypeError) as exc:
-                raise ConversationUnavailable("Conversational provider failed; inspect server logs") from exc
+                raise ConversationUnavailable(
+                    "Conversational provider failed; inspect server logs"
+                ) from exc
 
     async def stream(self, request: ChatRequest) -> AsyncIterator[str]:
         if not self.enabled:
             raise ConversationUnavailable("Conversational provider is not configured")
         timeout = httpx.Timeout(self.settings.orivyn_chat_timeout_seconds)
         try:
-            async with httpx.AsyncClient(timeout=timeout) as client, client.stream(
-                    "POST", self._endpoint(), headers=self._headers(),
+            async with (
+                httpx.AsyncClient(timeout=timeout) as client,
+                client.stream(
+                    "POST",
+                    self._endpoint(),
+                    headers=self._headers(),
                     json=self._request(request, stream=True),
-                ) as response:
+                ) as response,
+            ):
                 response.raise_for_status()
                 async for line in response.aiter_lines():
                     if not line.startswith("data: "):

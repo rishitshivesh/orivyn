@@ -1,4 +1,5 @@
 """Authenticated chat and Server-Sent Events endpoints."""
+
 import json
 import logging
 import uuid
@@ -14,7 +15,9 @@ from orivyn_api.security import require_api_key
 from orivyn_api.settings import get_settings
 
 logger = logging.getLogger(__name__)
-router = APIRouter(prefix="/v1/chat", tags=["Conversation"], dependencies=[Depends(require_api_key)])
+router = APIRouter(
+    prefix="/v1/chat", tags=["Conversation"], dependencies=[Depends(require_api_key)]
+)
 
 
 def get_provider() -> ConversationProvider:
@@ -29,7 +32,8 @@ def get_provider() -> ConversationProvider:
     responses={503: {"description": "No provider configured or provider unavailable"}},
 )
 async def chat(
-    body: ChatRequest, provider: Annotated[ConversationProvider, Depends(get_provider)],
+    body: ChatRequest,
+    provider: Annotated[ConversationProvider, Depends(get_provider)],
 ) -> ChatResponse:
     if not provider.enabled:
         raise HTTPException(status_code=503, detail="Conversational provider is disabled")
@@ -39,8 +43,10 @@ async def chat(
         logger.warning("Chat completion unavailable: %s", exc)
         raise HTTPException(status_code=502, detail="Conversational provider unavailable") from exc
     return ChatResponse(
-        request_id=str(uuid.uuid4()), provider="openai-compatible",
-        model=provider.settings.orivyn_chat_model, content=content,
+        request_id=str(uuid.uuid4()),
+        provider="openai-compatible",
+        model=provider.settings.orivyn_chat_model,
+        content=content,
         finish_reason=reason,
     )
 
@@ -59,17 +65,22 @@ def event(name: str, payload: dict) -> str:
     },
 )
 async def chat_stream(
-    body: ChatRequest, provider: ConversationProvider = Depends(get_provider),
+    body: ChatRequest,
+    provider: ConversationProvider = Depends(get_provider),
 ) -> StreamingResponse:
     if not provider.enabled:
         raise HTTPException(status_code=503, detail="Conversational provider is disabled")
     request_id = str(uuid.uuid4())
 
     async def events() -> AsyncIterator[str]:
-        yield event("meta", {
-            "request_id": request_id, "provider": "openai-compatible",
-            "model": provider.settings.orivyn_chat_model,
-        })
+        yield event(
+            "meta",
+            {
+                "request_id": request_id,
+                "provider": "openai-compatible",
+                "model": provider.settings.orivyn_chat_model,
+            },
+        )
         try:
             async for text in provider.stream(body):
                 yield event("delta", {"text": text})
@@ -79,6 +90,7 @@ async def chat_stream(
             yield event("error", {"message": "Conversational provider unavailable"})
 
     return StreamingResponse(
-        events(), media_type="text/event-stream",
+        events(),
+        media_type="text/event-stream",
         headers={"Cache-Control": "no-cache, no-transform", "X-Accel-Buffering": "no"},
     )

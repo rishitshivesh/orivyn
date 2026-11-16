@@ -1,4 +1,5 @@
 """Provider boundaries and streaming contract without remote network calls."""
+
 from unittest.mock import AsyncMock
 
 from fastapi.testclient import TestClient
@@ -14,11 +15,13 @@ GOOD = {"app_id": "test", "messages": [{"role": "user", "content": "Hello"}]}
 
 
 def fake_provider() -> ConversationProvider:
-    provider = ConversationProvider(Settings(
-        orivyn_chat_provider="openai-compatible",
-        orivyn_chat_api_key="test-only",
-        orivyn_chat_model="example-model",
-    ))
+    provider = ConversationProvider(
+        Settings(
+            orivyn_chat_provider="openai-compatible",
+            orivyn_chat_api_key="test-only",
+            orivyn_chat_model="example-model",
+        )
+    )
     provider.complete = AsyncMock(return_value=("Hello back", "stop"))
     return provider
 
@@ -88,11 +91,13 @@ def test_invalid_turn_sequence_is_rejected() -> None:
 
 def test_disabled_provider_fails_closed() -> None:
     app.dependency_overrides[require_api_key] = lambda: None
-    app.dependency_overrides[get_provider] = lambda: ConversationProvider(Settings(
-        orivyn_chat_provider="disabled",
-        orivyn_chat_api_key="",
-        orivyn_chat_model="",
-    ))
+    app.dependency_overrides[get_provider] = lambda: ConversationProvider(
+        Settings(
+            orivyn_chat_provider="disabled",
+            orivyn_chat_api_key="",
+            orivyn_chat_model="",
+        )
+    )
     try:
         response = client.post("/v1/chat", json=GOOD)
         assert response.status_code == 503
