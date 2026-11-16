@@ -26,21 +26,23 @@ Results include `state`, `applied`, `rejected`, and a `trace` with action name, 
 ```ts
 import { createActionExecutor } from "@orivyn/actions";
 
-const executor = createActionExecutor<{ page: string }>([{
-  definition: {
-    name: "navigate",
-    description: "Switch between known application pages",
-    parameters: {
-      type: "object",
-      properties: { page: { type: "string", enum: ["projects", "music"] } },
-      required: ["page"],
-      additionalProperties: false,
+const executor = createActionExecutor<{ page: string }>([
+  {
+    definition: {
+      name: "navigate",
+      description: "Switch between known application pages",
+      parameters: {
+        type: "object",
+        properties: { page: { type: "string", enum: ["projects", "music"] } },
+        required: ["page"],
+        additionalProperties: false,
+      },
+      execution: "browser",
+      risk: "read",
     },
-    execution: "browser",
-    risk: "read",
+    execute: (state, args) => ({ ...state, page: args.page as string }),
   },
-  execute: (state, args) => ({ ...state, page: args.page as string }),
-}]);
+]);
 
 const report = executor.execute(
   { page: "projects" },
@@ -60,12 +62,12 @@ The page contains ten golden cases with explicit expected tool name and JSON arg
 
 - Select **Needle WASM** to run the actual installed local model, sequentially, in your browser. First use can require model download. This sends no prompt to Orivyn's API.
 - Select **Rules baseline** to measure the deterministic matcher. This is not AI inference.
-- Press **Run benchmark**. Accuracy is the percentage of *executed* cases matching the expected names and arguments exactly. Average latency includes model download on cold start.
+- Press **Run benchmark**. Accuracy is the percentage of _executed_ cases matching the expected names and arguments exactly. Average latency includes model download on cold start.
 - Failed cases show the full expected and actual proposal JSON, plus runtime errors.
 - **Export JSON** creates a local report including input, expected, actual, pass/fail, latency and run timestamp.
-- **Stop after test** prevents the *next* case from starting. It does not interrupt a currently running WASM inference call.
+- **Stop after test** prevents the _next_ case from starting. It does not interrupt a currently running WASM inference call.
 
-No dataset or model performance numbers are hardcoded into the dashboard. Score zeros before running mean *not evaluated*, not a model accuracy result.
+No dataset or model performance numbers are hardcoded into the dashboard. Score zeros before running mean _not evaluated_, not a model accuracy result.
 
 ## What is currently supported
 
@@ -108,4 +110,4 @@ pnpm test
 
 ## Needle call diagnostics
 
-The browser adapter returns optional `diagnostics` on its proposal response: `raw_calls` and a list of rejected name/reason pairs. These describe *model output validation* (unknown tool, invalid arguments, disallowed execution, invalid schema). They do not expose or execute arbitrary model scripts, and only appear in the local result. The benchmark report includes diagnostics when available.
+The browser adapter returns optional `diagnostics` on its proposal response: `raw_calls` and a list of rejected name/reason pairs. These describe _model output validation_ (unknown tool, invalid arguments, disallowed execution, invalid schema). They do not expose or execute arbitrary model scripts, and only appear in the local result. The benchmark report includes diagnostics when available.

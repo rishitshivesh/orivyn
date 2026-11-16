@@ -6,7 +6,10 @@ export async function POST(request: NextRequest) {
   const backendKey = process.env.ORIVYN_API_KEY;
   const backend = process.env.ORIVYN_API_BASE;
   if (!expected || !backendKey || !backend) {
-    return NextResponse.json({ error: "Playground proxy disabled" }, { status: 503 });
+    return NextResponse.json(
+      { error: "Playground proxy disabled" },
+      { status: 503 },
+    );
   }
   const supplied = request.headers.get("authorization");
   if (supplied !== `Bearer ${expected}`) {

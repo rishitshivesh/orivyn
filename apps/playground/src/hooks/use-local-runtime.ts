@@ -6,7 +6,9 @@ import type { ProposalRequest, ProposalResponse } from "@orivyn/core";
 
 export function useLocalRuntime() {
   const runtime = useRef<CactusBrowserRuntime | null>(null);
-  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">(
+    "idle",
+  );
 
   function instance(): CactusBrowserRuntime {
     if (!runtime.current) runtime.current = new CactusBrowserRuntime();
@@ -33,7 +35,10 @@ export function useLocalRuntime() {
     }
   }
 
-  async function transcribe(audio: { samples: Float32Array; sampleRate: number }): Promise<string> {
+  async function transcribe(audio: {
+    samples: Float32Array;
+    sampleRate: number;
+  }): Promise<string> {
     setStatus("loading");
     try {
       const result = await instance().transcribe(audio);

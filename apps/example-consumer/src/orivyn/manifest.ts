@@ -8,7 +8,11 @@ export type CatalogState = {
   selected: string | null;
 };
 
-export const initialCatalogState: CatalogState = { page: "catalog", category: "all", selected: null };
+export const initialCatalogState: CatalogState = {
+  page: "catalog",
+  category: "all",
+  selected: null,
+};
 
 export const catalogManifest = defineApplication({
   id: "orivyn.catalog-demo",
@@ -30,24 +34,33 @@ export const catalogManifest = defineApplication({
     },
     {
       name: "catalog.filter",
-      description: "Filter visible catalog items by category audio, books, workspace or all. Available only on the catalog page.",
+      description:
+        "Filter visible catalog items by category audio, books, workspace or all. Available only on the catalog page.",
       execution: "browser",
       risk: "read",
       parameters: {
         type: "object",
-        properties: { category: { type: "string", enum: ["all", "audio", "books", "workspace"] } },
+        properties: {
+          category: {
+            type: "string",
+            enum: ["all", "audio", "books", "workspace"],
+          },
+        },
         required: ["category"],
         additionalProperties: false,
       },
     },
     {
       name: "catalog.select",
-      description: "Select an item by its exact ID: headphones, keyboard or notebook. Available only on the catalog page.",
+      description:
+        "Select an item by its exact ID: headphones, keyboard or notebook. Available only on the catalog page.",
       execution: "browser",
       risk: "read",
       parameters: {
         type: "object",
-        properties: { id: { type: "string", enum: ["headphones", "keyboard", "notebook"] } },
+        properties: {
+          id: { type: "string", enum: ["headphones", "keyboard", "notebook"] },
+        },
         required: ["id"],
         additionalProperties: false,
       },

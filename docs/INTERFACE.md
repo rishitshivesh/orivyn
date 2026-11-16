@@ -4,11 +4,11 @@
 
 The Playground has three deliberately distinct input routes:
 
-| Route | How it works | Accuracy and scope |
-| --- | --- | --- |
+| Route            | How it works                                             | Accuracy and scope                                                                       |
+| ---------------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | Reliable actions | Deterministic parsing of a limited known command grammar | Fast, predictable for supported demo intents; not general natural-language understanding |
-| Needle | Browser WebAssembly inference with explicit tool schemas | Local, private, subject to small-model accuracy limitations |
-| Backend | FastAPI tool-proposal API with optional Cactus provider | Requires service credentials and provider configuration |
+| Needle           | Browser WebAssembly inference with explicit tool schemas | Local, private, subject to small-model accuracy limitations                              |
+| Backend          | FastAPI tool-proposal API with optional Cactus provider  | Requires service credentials and provider configuration                                  |
 
 Neither inference route is a conversational reasoning model. No route performs privileged operations.
 

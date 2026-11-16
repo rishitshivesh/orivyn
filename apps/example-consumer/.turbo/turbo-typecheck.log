@@ -1,0 +1,776 @@
+
+> @orivyn/example-consumer@0.5.0 typecheck /Users/rishitshivesh/Projects/Personal/orivyn/apps/example-consumer
+> tsc --noEmit
+
+[96mnext.config.ts[0m:[93m1[0m:[93m33[0m - [91merror[0m[90m TS2307: [0mCannot find module 'next' or its corresponding type declarations.
+
+[7m1[0m import type { NextConfig } from "next";
+[7m [0m [91m                                ~~~~~~[0m
+
+[96msrc/app/layout.tsx[0m:[93m2[0m:[93m31[0m - [91merror[0m[90m TS2307: [0mCannot find module 'next' or its corresponding type declarations.
+
+[7m2[0m import type { Metadata } from "next";
+[7m [0m [91m                              ~~~~~~[0m
+
+[96msrc/app/layout.tsx[0m:[93m12[0m:[93m25[0m - [91merror[0m[90m TS2503: [0mCannot find namespace 'React'.
+
+[7m12[0m }: Readonly<{ children: React.ReactNode }>) {
+[7m  [0m [91m                        ~~~~~[0m
+
+[96msrc/app/layout.tsx[0m:[93m14[0m:[93m5[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m14[0m     <html lang="en">
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~[0m
+
+[96msrc/app/layout.tsx[0m:[93m14[0m:[93m5[0m - [91merror[0m[90m TS2875: [0mThis JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. Make sure you have types for the appropriate package installed.
+
+[7m14[0m     <html lang="en">
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~[0m
+[7m15[0m       <body>{children}</body>
+[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m16[0m     </html>
+[7m  [0m [91m~~~~~~~~~~~[0m
+
+[96msrc/app/layout.tsx[0m:[93m15[0m:[93m7[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m15[0m       <body>{children}</body>
+[7m  [0m [91m      ~~~~~~[0m
+
+[96msrc/app/layout.tsx[0m:[93m15[0m:[93m23[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m15[0m       <body>{children}</body>
+[7m  [0m [91m                      ~~~~~~~[0m
+
+[96msrc/app/layout.tsx[0m:[93m16[0m:[93m5[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m16[0m     </html>
+[7m  [0m [91m    ~~~~~~~[0m
+
+[96msrc/app/page.tsx[0m:[93m10[0m:[93m5[0m - [91merror[0m[90m TS2875: [0mThis JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. Make sure you have types for the appropriate package installed.
+
+[7m 10[0m     <CatalogProvider
+[7m   [0m [91m    ~~~~~~~~~~~~~~~~[0m
+[7m 11[0m       initialState={initialCatalogState}
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m 15[0m       <CatalogWorkspace />
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m 16[0m     </CatalogProvider>
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m3[0m:[93m45[0m - [91merror[0m[90m TS2307: [0mCannot find module 'react' or its corresponding type declarations.
+
+[7m3[0m import { useEffect, useRef, useState } from "react";
+[7m [0m [91m                                            ~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m13[0m:[93m8[0m - [91merror[0m[90m TS2307: [0mCannot find module 'lucide-react' or its corresponding type declarations.
+
+[7m13[0m } from "lucide-react";
+[7m  [0m [91m       ~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m14[0m:[93m38[0m - [91merror[0m[90m TS2307: [0mCannot find module '@orivyn/browser' or its corresponding type declarations.
+
+[7m14[0m import { CactusBrowserRuntime } from "@orivyn/browser";
+[7m  [0m [91m                                     ~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m15[0m:[93m35[0m - [91merror[0m[90m TS2307: [0mCannot find module '@orivyn/core' or its corresponding type declarations.
+
+[7m15[0m import type { ToolProposal } from "@orivyn/core";
+[7m  [0m [91m                                  ~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m81[0m:[93m10[0m - [91merror[0m[90m TS7006: [0mParameter 'item' implicitly has an 'any' type.
+
+[7m81[0m         (item) =>
+[7m  [0m [91m         ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m98[0m:[93m5[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m98[0m     <main className="mx-auto max-w-6xl space-y-8 px-5 py-10 md:px-8 md:py-14">
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m98[0m:[93m5[0m - [91merror[0m[90m TS2875: [0mThis JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. Make sure you have types for the appropriate package installed.
+
+[7m 98[0m     <main className="mx-auto max-w-6xl space-y-8 px-5 py-10 md:px-8 md:py-14">
+[7m   [0m [91m    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m 99[0m       <header className="flex flex-wrap items-center justify-between gap-4">
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m343[0m       </footer>
+[7m   [0m [91m~~~~~~~~~~~~~~~[0m
+[7m344[0m     </main>
+[7m   [0m [91m~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m99[0m:[93m7[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m99[0m       <header className="flex flex-wrap items-center justify-between gap-4">
+[7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m100[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m100[0m         <div className="flex items-center gap-3">
+[7m   [0m [91m        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m101[0m:[93m11[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m101[0m           <div className="rounded-xl border border-violet-400/20 bg-violet-400/10 p-2.5">
+[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m103[0m:[93m11[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m103[0m           </div>
+[7m   [0m [91m          ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m104[0m:[93m11[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m104[0m           <div>
+[7m   [0m [91m          ~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m105[0m:[93m13[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m105[0m             <p className="text-xl font-semibold tracking-tight">
+[7m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m107[0m:[93m13[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m107[0m             </p>
+[7m   [0m [91m            ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m108[0m:[93m13[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m108[0m             <p className="text-xs text-slate-500">
+[7m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m110[0m:[93m13[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m110[0m             </p>
+[7m   [0m [91m            ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m111[0m:[93m11[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m111[0m           </div>
+[7m   [0m [91m          ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m112[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m112[0m         </div>
+[7m   [0m [91m        ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m114[0m:[93m7[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m114[0m       </header>
+[7m   [0m [91m      ~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m115[0m:[93m7[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m115[0m       <div className="space-y-3">
+[7m   [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m116[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m116[0m         <p className="text-xs font-semibold uppercase tracking-[.2em] text-violet-300">
+[7m   [0m [91m        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m118[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m118[0m         </p>
+[7m   [0m [91m        ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m119[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m119[0m         <h1 className="text-3xl font-semibold tracking-tight md:text-5xl">
+[7m   [0m [91m        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m121[0m:[93m11[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m121[0m           <br />
+[7m   [0m [91m          ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m122[0m:[93m11[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m122[0m           <span className="text-violet-300">
+[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m124[0m:[93m11[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m124[0m           </span>
+[7m   [0m [91m          ~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m125[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m125[0m         </h1>
+[7m   [0m [91m        ~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m126[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m126[0m         <p className="max-w-2xl text-sm leading-7 text-slate-400">
+[7m   [0m [91m        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m130[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m130[0m         </p>
+[7m   [0m [91m        ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m131[0m:[93m7[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m131[0m       </div>
+[7m   [0m [91m      ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m132[0m:[93m7[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m132[0m       <div className="grid gap-5 lg:grid-cols-[1.45fr_1fr]">
+[7m   [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m133[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m133[0m         <section className="space-y-4">
+[7m   [0m [91m        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m136[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m136[0m               <div className="flex gap-2">
+[7m   [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m155[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m155[0m               </div>
+[7m   [0m [91m              ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m163[0m:[93m19[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m163[0m                   <div className="flex items-center gap-2 text-xs text-slate-400">
+[7m   [0m [91m                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m165[0m:[93m19[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m165[0m                   </div>
+[7m   [0m [91m                  ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m166[0m:[93m19[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m166[0m                   <div className="flex flex-wrap gap-2">
+[7m   [0m [91m                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m185[0m:[93m19[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m185[0m                   </div>
+[7m   [0m [91m                  ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m188[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m188[0m               <div className="grid gap-3 sm:grid-cols-2">
+[7m   [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m192[0m:[93m23[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m192[0m                       <div className="flex items-center justify-between">
+[7m   [0m [91m                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m197[0m:[93m23[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m197[0m                       </div>
+[7m   [0m [91m                      ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m198[0m:[93m23[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m198[0m                       <h2 className="text-lg font-semibold">{item.name}</h2>
+[7m   [0m [91m                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m198[0m:[93m72[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m198[0m                       <h2 className="text-lg font-semibold">{item.name}</h2>
+[7m   [0m [91m                                                                       ~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m199[0m:[93m23[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m199[0m                       <p className="text-xs leading-6 text-slate-400">
+[7m   [0m [91m                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m201[0m:[93m23[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m201[0m                       </p>
+[7m   [0m [91m                      ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m202[0m:[93m23[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m202[0m                       <div className="flex items-center justify-between">
+[7m   [0m [91m                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m203[0m:[93m25[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m203[0m                         <p className="text-sm">{item.price}</p>
+[7m   [0m [91m                        ~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m203[0m:[93m60[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m203[0m                         <p className="text-sm">{item.price}</p>
+[7m   [0m [91m                                                           ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m213[0m:[93m23[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m213[0m                       </div>
+[7m   [0m [91m                      ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m217[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m217[0m               </div>
+[7m   [0m [91m              ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m222[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m222[0m                 <h2 className="text-lg font-semibold">About Lumen</h2>
+[7m   [0m [91m                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m222[0m:[93m66[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m222[0m                 <h2 className="text-lg font-semibold">About Lumen</h2>
+[7m   [0m [91m                                                                 ~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m223[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m223[0m                 <p className="text-sm leading-7 text-slate-400">
+[7m   [0m [91m                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m228[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m228[0m                 </p>
+[7m   [0m [91m                ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m232[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m232[0m         </section>
+[7m   [0m [91m        ~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m233[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m233[0m         <aside className="space-y-4">
+[7m   [0m [91m        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m236[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m236[0m               <h2 className="flex items-center gap-2 text-sm font-semibold">
+[7m   [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m239[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m239[0m               </h2>
+[7m   [0m [91m              ~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m240[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m240[0m               <label className="block space-y-2">
+[7m   [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m241[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m241[0m                 <span className="text-xs text-slate-400">
+[7m   [0m [91m                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m243[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m243[0m                 </span>
+[7m   [0m [91m                ~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m246[0m:[93m30[0m - [91merror[0m[90m TS7006: [0mParameter 'event' implicitly has an 'any' type.
+
+[7m246[0m                   onChange={(event) => setPrompt(event.target.value)}
+[7m   [0m [91m                             ~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m249[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m249[0m               </label>
+[7m   [0m [91m              ~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m257[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m257[0m               <p role="status" className="text-xs leading-6 text-slate-400">
+[7m   [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m259[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m259[0m               </p>
+[7m   [0m [91m              ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m260[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m260[0m               <div className="space-y-2 border-t border-white/10 pt-3">
+[7m   [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m261[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m261[0m                 <p className="text-xs font-medium">
+[7m   [0m [91m                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m263[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m263[0m                 </p>
+[7m   [0m [91m                ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m264[0m:[93m42[0m - [91merror[0m[90m TS7006: [0mParameter 'tool' implicitly has an 'any' type.
+
+[7m264[0m                 {app.manifest.tools.map((tool) => (
+[7m   [0m [91m                                         ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m265[0m:[93m19[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m265[0m                   <div
+[7m   [0m [91m                  ~~~~[0m
+[7m266[0m                     key={tool.name}
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m267[0m                     className="flex items-center justify-between gap-2 text-xs"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m268[0m                   >
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m269[0m:[93m21[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m269[0m                     <span className="font-mono text-slate-400">
+[7m   [0m [91m                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m271[0m:[93m21[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m271[0m                     </span>
+[7m   [0m [91m                    ~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m272[0m:[93m21[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m272[0m                     <span
+[7m   [0m [91m                    ~~~~~[0m
+[7m273[0m                       className={
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m277[0m                       }
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m278[0m                     >
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m274[0m:[93m45[0m - [91merror[0m[90m TS7006: [0mParameter 'item' implicitly has an 'any' type.
+
+[7m274[0m                         app.available.some((item) => item.name === tool.name)
+[7m   [0m [91m                                            ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m279[0m:[93m44[0m - [91merror[0m[90m TS7006: [0mParameter 'item' implicitly has an 'any' type.
+
+[7m279[0m                       {app.available.some((item) => item.name === tool.name)
+[7m   [0m [91m                                           ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m282[0m:[93m21[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m282[0m                     </span>
+[7m   [0m [91m                    ~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m283[0m:[93m19[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m283[0m                   </div>
+[7m   [0m [91m                  ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m285[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m285[0m               </div>
+[7m   [0m [91m              ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m286[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m286[0m               <div className="flex items-start gap-2 rounded-lg border border-white/10 bg-[#0e1119] p-3 text-xs leading-6 text-slate-400">
+[7m   [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m290[0m:[93m15[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m290[0m               </div>
+[7m   [0m [91m              ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m296[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m296[0m                 <h3 className="text-sm font-semibold">
+[7m   [0m [91m                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m298[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m298[0m                 </h3>
+[7m   [0m [91m                ~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m299[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m299[0m                 <pre className="max-h-48 overflow-auto whitespace-pre-wrap break-words rounded-lg bg-black/30 p-3 text-xs text-slate-300">
+[7m   [0m [91m                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m301[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m301[0m                 </pre>
+[7m   [0m [91m                ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m311[0m:[93m17[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m311[0m                 <h3 className="mb-3 text-sm font-semibold">Execution trace</h3>
+[7m   [0m [91m                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m311[0m:[93m75[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m311[0m                 <h3 className="mb-3 text-sm font-semibold">Execution trace</h3>
+[7m   [0m [91m                                                                          ~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m312[0m:[93m29[0m - [91merror[0m[90m TS7006: [0mParameter 'entry' implicitly has an 'any' type.
+
+[7m312[0m                 {trace.map((entry, index) => (
+[7m   [0m [91m                            ~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m312[0m:[93m36[0m - [91merror[0m[90m TS7006: [0mParameter 'index' implicitly has an 'any' type.
+
+[7m312[0m                 {trace.map((entry, index) => (
+[7m   [0m [91m                                   ~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m313[0m:[93m19[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m313[0m                   <p
+[7m   [0m [91m                  ~~[0m
+[7m314[0m                     key={index}
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m315[0m                     className="py-1 font-mono text-xs text-slate-400"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m316[0m                   >
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m318[0m:[93m19[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m318[0m                   </p>
+[7m   [0m [91m                  ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m331[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m331[0m         </aside>
+[7m   [0m [91m        ~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m332[0m:[93m7[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m332[0m       </div>
+[7m   [0m [91m      ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m333[0m:[93m7[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m333[0m       <footer className="flex items-center justify-between gap-4 border-t border-white/10 pt-5 text-xs text-slate-500">
+[7m   [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m334[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m334[0m         <span>Orivyn runtime · isolated per application</span>
+[7m   [0m [91m        ~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m334[0m:[93m56[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m334[0m         <span>Orivyn runtime · isolated per application</span>
+[7m   [0m [91m                                                       ~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m335[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m335[0m         <a
+[7m   [0m [91m        ~~[0m
+[7m336[0m           href="https://github.com/rishitshivesh/orivyn"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m339[0m           className="inline-flex items-center gap-2 text-violet-300"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m340[0m         >
+[7m   [0m [91m~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m342[0m:[93m9[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m342[0m         </a>
+[7m   [0m [91m        ~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m343[0m:[93m7[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m343[0m       </footer>
+[7m   [0m [91m      ~~~~~~~~~[0m
+
+[96msrc/components/catalog-workspace.tsx[0m:[93m344[0m:[93m5[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m344[0m     </main>
+[7m   [0m [91m    ~~~~~~~[0m
+
+[96msrc/components/ui/badge.tsx[0m:[93m1[0m:[93m24[0m - [91merror[0m[90m TS2307: [0mCannot find module 'react' or its corresponding type declarations.
+
+[7m1[0m import * as React from "react";
+[7m [0m [91m                       ~~~~~~~[0m
+
+[96msrc/components/ui/badge.tsx[0m:[93m4[0m:[93m5[0m - [91merror[0m[90m TS2875: [0mThis JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. Make sure you have types for the appropriate package installed.
+
+[7m4[0m     <span
+[7m [0m [91m    ~~~~~[0m
+[7m5[0m       {...props}
+[7m [0m [91m~~~~~~~~~~~~~~~~[0m
+[7m6[0m       className="inline-flex rounded-full border border-[#aaa3ff]/25 bg-[#aaa3ff]/10 px-2.5 py-1 text-xs font-medium text-[#d4d0ff]"
+[7m [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m7[0m     />
+[7m [0m [91m~~~~~~[0m
+
+[96msrc/components/ui/badge.tsx[0m:[93m4[0m:[93m5[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m4[0m     <span
+[7m [0m [91m    ~~~~~[0m
+[7m5[0m       {...props}
+[7m [0m [91m~~~~~~~~~~~~~~~~[0m
+[7m6[0m       className="inline-flex rounded-full border border-[#aaa3ff]/25 bg-[#aaa3ff]/10 px-2.5 py-1 text-xs font-medium text-[#d4d0ff]"
+[7m [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m7[0m     />
+[7m [0m [91m~~~~~~[0m
+
+[96msrc/components/ui/button.tsx[0m:[93m1[0m:[93m24[0m - [91merror[0m[90m TS2307: [0mCannot find module 'react' or its corresponding type declarations.
+
+[7m1[0m import * as React from "react";
+[7m [0m [91m                       ~~~~~~~[0m
+
+[96msrc/components/ui/button.tsx[0m:[93m2[0m:[93m22[0m - [91merror[0m[90m TS2307: [0mCannot find module '@radix-ui/react-slot' or its corresponding type declarations.
+
+[7m2[0m import { Slot } from "@radix-ui/react-slot";
+[7m [0m [91m                     ~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/ui/button.tsx[0m:[93m3[0m:[93m40[0m - [91merror[0m[90m TS2307: [0mCannot find module 'class-variance-authority' or its corresponding type declarations.
+
+[7m3[0m import { cva, type VariantProps } from "class-variance-authority";
+[7m [0m [91m                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/ui/button.tsx[0m:[93m30[0m:[93m5[0m - [91merror[0m[90m TS2875: [0mThis JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. Make sure you have types for the appropriate package installed.
+
+[7m30[0m     <Comp className={cn(styles({ variant, size }), className)} {...props} />
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/ui/card.tsx[0m:[93m1[0m:[93m24[0m - [91merror[0m[90m TS2307: [0mCannot find module 'react' or its corresponding type declarations.
+
+[7m1[0m import * as React from "react";
+[7m [0m [91m                       ~~~~~~~[0m
+
+[96msrc/components/ui/card.tsx[0m:[93m5[0m:[93m5[0m - [91merror[0m[90m TS2875: [0mThis JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. Make sure you have types for the appropriate package installed.
+
+[7m  5[0m     <div
+[7m   [0m [91m    ~~~~[0m
+[7m  6[0m       className={cn(
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m 10[0m       {...props}
+[7m   [0m [91m~~~~~~~~~~~~~~~~[0m
+[7m 11[0m     />
+[7m   [0m [91m~~~~~~[0m
+
+[96msrc/components/ui/card.tsx[0m:[93m5[0m:[93m5[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m  5[0m     <div
+[7m   [0m [91m    ~~~~[0m
+[7m  6[0m       className={cn(
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m 10[0m       {...props}
+[7m   [0m [91m~~~~~~~~~~~~~~~~[0m
+[7m 11[0m     />
+[7m   [0m [91m~~~~~~[0m
+
+[96msrc/components/ui/card.tsx[0m:[93m18[0m:[93m10[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m18[0m   return <div className={cn("p-5", className)} {...props} />;
+[7m  [0m [91m         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/ui/input.tsx[0m:[93m1[0m:[93m24[0m - [91merror[0m[90m TS2307: [0mCannot find module 'react' or its corresponding type declarations.
+
+[7m1[0m import * as React from "react";
+[7m [0m [91m                       ~~~~~~~[0m
+
+[96msrc/components/ui/input.tsx[0m:[93m5[0m:[93m5[0m - [91merror[0m[90m TS2875: [0mThis JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. Make sure you have types for the appropriate package installed.
+
+[7m  5[0m     <input
+[7m   [0m [91m    ~~~~~~[0m
+[7m  6[0m       className={cn(
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m 10[0m       {...props}
+[7m   [0m [91m~~~~~~~~~~~~~~~~[0m
+[7m 11[0m     />
+[7m   [0m [91m~~~~~~[0m
+
+[96msrc/components/ui/input.tsx[0m:[93m5[0m:[93m5[0m - [91merror[0m[90m TS7026: [0mJSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+
+[7m  5[0m     <input
+[7m   [0m [91m    ~~~~~~[0m
+[7m  6[0m       className={cn(
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m 10[0m       {...props}
+[7m   [0m [91m~~~~~~~~~~~~~~~~[0m
+[7m 11[0m     />
+[7m   [0m [91m~~~~~~[0m
+
+[96msrc/lib/utils.ts[0m:[93m1[0m:[93m39[0m - [91merror[0m[90m TS2307: [0mCannot find module 'clsx' or its corresponding type declarations.
+
+[7m1[0m import { clsx, type ClassValue } from "clsx";
+[7m [0m [91m                                      ~~~~~~[0m
+
+[96msrc/lib/utils.ts[0m:[93m2[0m:[93m25[0m - [91merror[0m[90m TS2307: [0mCannot find module 'tailwind-merge' or its corresponding type declarations.
+
+[7m2[0m import { twMerge } from "tailwind-merge";
+[7m [0m [91m                        ~~~~~~~~~~~~~~~~[0m
+
+[96msrc/orivyn/hooks.ts[0m:[93m1[0m:[93m33[0m - [91merror[0m[90m TS2307: [0mCannot find module '@orivyn/react' or its corresponding type declarations.
+
+[7m1[0m import { createOrivynApp } from "@orivyn/react";
+[7m [0m [91m                                ~~~~~~~~~~~~~~~[0m
+
+[96msrc/orivyn/manifest.ts[0m:[93m1[0m:[93m35[0m - [91merror[0m[90m TS2307: [0mCannot find module '@orivyn/runtime' or its corresponding type declarations.
+
+[7m1[0m import { defineApplication } from "@orivyn/runtime";
+[7m [0m [91m                                  ~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/orivyn/tool-registration.tsx[0m:[93m15[0m:[93m15[0m - [91merror[0m[90m TS7006: [0mParameter 'state' implicitly has an 'any' type.
+
+[7m15[0m     execute: (state, args) => ({
+[7m  [0m [91m              ~~~~~[0m
+
+[96msrc/orivyn/tool-registration.tsx[0m:[93m15[0m:[93m22[0m - [91merror[0m[90m TS7006: [0mParameter 'args' implicitly has an 'any' type.
+
+[7m15[0m     execute: (state, args) => ({
+[7m  [0m [91m                     ~~~~[0m
+
+[96msrc/orivyn/tool-registration.tsx[0m:[93m23[0m:[93m17[0m - [91merror[0m[90m TS7006: [0mParameter 'context' implicitly has an 'any' type.
+
+[7m23[0m     available: (context) => context.route === "/catalog",
+[7m  [0m [91m                ~~~~~~~[0m
+
+[96msrc/orivyn/tool-registration.tsx[0m:[93m24[0m:[93m15[0m - [91merror[0m[90m TS7006: [0mParameter 'state' implicitly has an 'any' type.
+
+[7m24[0m     execute: (state, args) => ({
+[7m  [0m [91m              ~~~~~[0m
+
+[96msrc/orivyn/tool-registration.tsx[0m:[93m24[0m:[93m22[0m - [91merror[0m[90m TS7006: [0mParameter 'args' implicitly has an 'any' type.
+
+[7m24[0m     execute: (state, args) => ({
+[7m  [0m [91m                     ~~~~[0m
+
+[96msrc/orivyn/tool-registration.tsx[0m:[93m32[0m:[93m17[0m - [91merror[0m[90m TS7006: [0mParameter 'context' implicitly has an 'any' type.
+
+[7m32[0m     available: (context) => context.route === "/catalog",
+[7m  [0m [91m                ~~~~~~~[0m
+
+[96msrc/orivyn/tool-registration.tsx[0m:[93m33[0m:[93m15[0m - [91merror[0m[90m TS7006: [0mParameter 'state' implicitly has an 'any' type.
+
+[7m33[0m     execute: (state, args) => ({
+[7m  [0m [91m              ~~~~~[0m
+
+[96msrc/orivyn/tool-registration.tsx[0m:[93m33[0m:[93m22[0m - [91merror[0m[90m TS7006: [0mParameter 'args' implicitly has an 'any' type.
+
+[7m33[0m     execute: (state, args) => ({
+[7m  [0m [91m                     ~~~~[0m
+
+
+Found 134 errors in 12 files.
+
+Errors  Files
+     1  next.config.ts[90m:1[0m
+     7  src/app/layout.tsx[90m:2[0m
+     1  src/app/page.tsx[90m:10[0m
+    99  src/components/catalog-workspace.tsx[90m:3[0m
+     3  src/components/ui/badge.tsx[90m:1[0m
+     4  src/components/ui/button.tsx[90m:1[0m
+     4  src/components/ui/card.tsx[90m:1[0m
+     3  src/components/ui/input.tsx[90m:1[0m
+     2  src/lib/utils.ts[90m:1[0m
+     1  src/orivyn/hooks.ts[90m:1[0m
+     1  src/orivyn/manifest.ts[90m:1[0m
+     8  src/orivyn/tool-registration.tsx[90m:15[0m
+[41m[30m ELIFECYCLE [39m[49m [31mCommand failed with exit code 2.[39m
+[43m[30m WARN [39m[49m  Local package.json exists, but node_modules missing, did you mean to install?

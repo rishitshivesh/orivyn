@@ -20,7 +20,13 @@ services:
     volumes:
       - model_cache:/home/orivyn/.cache
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8080/health/live',timeout=3)"]
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8080/health/live',timeout=3)",
+        ]
       interval: 30s
       timeout: 5s
       start_period: 30s

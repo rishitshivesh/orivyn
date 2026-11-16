@@ -28,15 +28,27 @@ test("explanations with app keywords route to conversation", () => {
 });
 
 test("unrecognized local request does not invent a tool", () => {
-  assert.equal(routeAgentInput("Open a billing account", tools).kind, "conversation");
+  assert.equal(
+    routeAgentInput("Open a billing account", tools).kind,
+    "conversation",
+  );
 });
 
 test("disabled action is never emitted", () => {
-  assert.equal(routeAgentInput("Open music", ["filter_projects"]).kind, "conversation");
+  assert.equal(
+    routeAgentInput("Open music", ["filter_projects"]).kind,
+    "conversation",
+  );
 });
 
 test("polite local commands are supported but explanatory requests are not hijacked", () => {
   assert.equal(routeAgentInput("Please open music", tools).kind, "action");
-  assert.equal(routeAgentInput("Can you explain Kubernetes?", tools).kind, "conversation");
-  assert.equal(routeAgentInput("Open my projects and explain them", tools).kind, "conversation");
+  assert.equal(
+    routeAgentInput("Can you explain Kubernetes?", tools).kind,
+    "conversation",
+  );
+  assert.equal(
+    routeAgentInput("Open my projects and explain them", tools).kind,
+    "conversation",
+  );
 });

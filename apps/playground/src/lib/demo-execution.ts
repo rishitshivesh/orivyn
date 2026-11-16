@@ -29,7 +29,8 @@ export const demoRegistrations: readonly RuntimeRegistration<DemoState>[] = [
       ...state,
       page: "projects",
       category: (args.category as DemoCategory | undefined) ?? state.category,
-      technology: (args.technology as DemoTechnology | undefined) ?? state.technology,
+      technology:
+        (args.technology as DemoTechnology | undefined) ?? state.technology,
     }),
   },
   {
@@ -49,9 +50,11 @@ export function executeDemoProposals(
   return {
     ...result,
     applied: result.applied.map((name) =>
-      name === "navigate" ? `Opened ${result.state.page}` :
-      name === "filter_projects" ? "Applied project filters" :
-      "Restored default view",
+      name === "navigate"
+        ? `Opened ${result.state.page}`
+        : name === "filter_projects"
+          ? "Applied project filters"
+          : "Restored default view",
     ),
   };
 }

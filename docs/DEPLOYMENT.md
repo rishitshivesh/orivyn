@@ -1,12 +1,14 @@
 # Deployment: Docker and Dokploy
 
 ## Prerequisites
+
 - Docker/Compose support on the target host; avoid building native Cactus models on an unsupported CPU architecture.
 - Provision a dedicated external DNS hostname for the API.
 - Keep the API behind TLS termination, ideally Cloudflare + Dokploy reverse proxy.
 - For backend access from other applications, implement service authentication/tenant isolation before public exposure. **The foundation inference endpoint is intentionally disabled until a key is configured.** This is not an authorization server.
 
 ## Dokploy API configuration
+
 1. Create a Compose application from `rishitshivesh/orivyn`.
 2. Use compose path `deploy/compose.dokploy.yml`, repository root as build context.
 3. Set `ORIVYN_API_KEY` to a randomly generated secret (server-to-server only).
@@ -20,6 +22,7 @@
 11. Probe `POST /v1/proposals` using a server-side key. Never put that key in `NEXT_PUBLIC_*` or any browser bundle.
 
 ## Dokploy Console / Playground
+
 Deploy `deploy/compose.playground.yml` as a separate Compose application with root as build context.
 
 ```env
@@ -34,12 +37,14 @@ If API and Console live in **separate Dokploy Compose applications**, `http://ap
 The Console status endpoint performs public metadata reads; the proposal proxy holds the API key only on the server. The Console interface itself is not yet a full identity-secured management platform. Put it behind an access gateway (e.g. Cloudflare Access) before making it publicly reachable. A token is required for proposal requests, but other views contain non-sensitive metadata and examples.
 
 ## Local API
+
 ```bash
 uv sync --project apps/api --extra dev
 uv run --project apps/api uvicorn orivyn_api.main:app --app-dir apps/api/src --host 127.0.0.1 --port 8080
 ```
 
 ## Local frontend
+
 ```bash
 corepack enable
 pnpm install
@@ -48,12 +53,14 @@ pnpm dev:web
 ```
 
 ## Local Compose
+
 ```bash
 cp apps/api/.env.example apps/api/.env
 docker compose -f deploy/compose.dokploy.yml up --build
 ```
 
 ## Verification
+
 ```bash
 pnpm format
 pnpm check
@@ -65,6 +72,7 @@ uv run --project apps/api pytest apps/api/tests
 ```
 
 ## Production hardening gate
+
 Block public use until implemented/tested: per-application identity and key rotation, quotas and request budgets, origin restrictions, audit logging/redaction, model worker bounds/timeouts, versioned tool manifests, HTTPS proxy setup, secret rotation, and denial-of-service testing. The Async API timeout bounds response wait but cannot forcibly terminate native inference already running in a thread.
 
 ## Local browser inference asset verification

@@ -4,7 +4,10 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const endpoint = process.env.ORIVYN_API_BASE;
   if (!endpoint) {
-    return NextResponse.json({ connected: false, reason: "API origin not configured" });
+    return NextResponse.json({
+      connected: false,
+      reason: "API origin not configured",
+    });
   }
 
   try {
@@ -19,9 +22,15 @@ export async function GET() {
       }),
     ]);
     if (!health.ok || !capabilities.ok) {
-      return NextResponse.json({ connected: false, reason: "API health check failed" });
+      return NextResponse.json({
+        connected: false,
+        reason: "API health check failed",
+      });
     }
-    return NextResponse.json({ connected: true, capabilities: await capabilities.json() });
+    return NextResponse.json({
+      connected: true,
+      capabilities: await capabilities.json(),
+    });
   } catch {
     return NextResponse.json({ connected: false, reason: "API unreachable" });
   }

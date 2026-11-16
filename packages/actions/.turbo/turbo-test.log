@@ -1,0 +1,24 @@
+
+> @orivyn/actions@0.1.0 test /Users/rishitshivesh/Projects/Personal/orivyn/packages/actions
+> node --experimental-strip-types --test tests/*.test.mjs
+
+
+[33mInterrupted while running:[39m
+
+⚠ tests/actions.test.mjs [90m(tests/actions.test.mjs:1:1)[39m
+[31m✖ tests/actions.test.mjs [90m(187.169917ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 1[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 190.617875[39m
+
+[31m✖ failing tests:[39m
+
+test at tests/actions.test.mjs:1:1
+[31m✖ tests/actions.test.mjs [90m(187.169917ms)[39m[39m
+  [32m'Promise resolution is still pending but the event loop has already resolved'[39m
+[41m[30m ELIFECYCLE [39m[49m [31mTest failed. See above for more details.[39m

@@ -3,12 +3,18 @@ import type { ProposalRequest, ProposalResponse } from "@orivyn/core";
 export interface BrowserInferenceRuntime {
   readonly name: string;
   available(): Promise<boolean>;
-  propose(request: ProposalRequest, signal?: AbortSignal): Promise<ProposalResponse>;
+  propose(
+    request: ProposalRequest,
+    signal?: AbortSignal,
+  ): Promise<ProposalResponse>;
   close(): Promise<void>;
 }
 
 export interface LocalSpeechRuntime {
-  transcribe(audio: { samples: Float32Array; sampleRate: number }): Promise<string>;
+  transcribe(audio: {
+    samples: Float32Array;
+    sampleRate: number;
+  }): Promise<string>;
 }
 
 export { CactusBrowserRuntime } from "./cactus-runtime";

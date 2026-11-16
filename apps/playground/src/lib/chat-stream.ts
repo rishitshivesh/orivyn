@@ -1,5 +1,8 @@
 export type ChatEvent =
-  | { event: "meta"; data: { request_id: string; provider: string; model: string } }
+  | {
+      event: "meta";
+      data: { request_id: string; provider: string; model: string };
+    }
   | { event: "delta"; data: { text: string } }
   | { event: "done"; data: { request_id: string } }
   | { event: "error"; data: { message: string } };
@@ -22,12 +25,18 @@ export async function consumeChatStream(
       if (line.startsWith("event: ")) name = line.slice(7);
       if (line.startsWith("data: ")) data.push(line.slice(6));
     }
-    if (!["meta", "delta", "done", "error"].includes(name) || !data.length) return;
+    if (!["meta", "delta", "done", "error"].includes(name) || !data.length)
+      return;
     try {
       const payload = JSON.parse(data.join("\n"));
       onEvent({ event: name, data: payload } as ChatEvent);
       if (name === "done") completed = true;
-      if (name === "error") throw new Error(typeof payload.message === "string" ? payload.message : "Provider failed");
+      if (name === "error")
+        throw new Error(
+          typeof payload.message === "string"
+            ? payload.message
+            : "Provider failed",
+        );
     } catch (error) {
       if (name === "error") throw error;
       throw new Error("Invalid provider stream response");
@@ -37,7 +46,9 @@ export async function consumeChatStream(
   try {
     while (true) {
       const { value, done } = await reader.read();
-      buffer += done ? decoder.decode() : decoder.decode(value, { stream: true });
+      buffer += done
+        ? decoder.decode()
+        : decoder.decode(value, { stream: true });
       buffer = buffer.replace(/\r\n/g, "\n");
       let boundary = buffer.indexOf("\n\n");
       while (boundary !== -1) {

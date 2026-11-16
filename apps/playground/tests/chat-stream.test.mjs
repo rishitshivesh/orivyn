@@ -17,26 +17,47 @@ test("parses SSE when frames span chunks", async () => {
   });
   const events = [];
   await consumeChatStream(stream, (event) => events.push(event));
-  assert.deepEqual(events.map((item) => item.event), ["meta", "delta", "delta", "done"]);
-  assert.equal(events.filter((item) => item.event === "delta").map((item) => item.data.text).join(""), "Hello there");
+  assert.deepEqual(
+    events.map((item) => item.event),
+    ["meta", "delta", "delta", "done"],
+  );
+  assert.equal(
+    events
+      .filter((item) => item.event === "delta")
+      .map((item) => item.data.text)
+      .join(""),
+    "Hello there",
+  );
 });
 
 test("rejects silently truncated SSE streams", async () => {
   const stream = new ReadableStream({
     start(controller) {
-      controller.enqueue(new TextEncoder().encode('event: delta\ndata: {"text":"partial"}\n\n'));
+      controller.enqueue(
+        new TextEncoder().encode('event: delta\ndata: {"text":"partial"}\n\n'),
+      );
       controller.close();
     },
   });
-  await assert.rejects(consumeChatStream(stream, () => {}), /ended before completion/);
+  await assert.rejects(
+    consumeChatStream(stream, () => {}),
+    /ended before completion/,
+  );
 });
 
 test("surfaces upstream error events", async () => {
   const stream = new ReadableStream({
     start(controller) {
-      controller.enqueue(new TextEncoder().encode('event: error\ndata: {"message":"Provider unavailable"}\n\n'));
+      controller.enqueue(
+        new TextEncoder().encode(
+          'event: error\ndata: {"message":"Provider unavailable"}\n\n',
+        ),
+      );
       controller.close();
     },
   });
-  await assert.rejects(consumeChatStream(stream, () => {}), /Provider unavailable/);
+  await assert.rejects(
+    consumeChatStream(stream, () => {}),
+    /Provider unavailable/,
+  );
 });

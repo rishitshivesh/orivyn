@@ -24,6 +24,7 @@ Orivyn is an **intelligence execution platform**. It must not assume a single sm
 ## Evaluation suite to build
 
 Use fixtures spanning navigation, project filters, negation, ambiguous commands, out-of-scope questions, unsafe requests, and hidden/disabled tools. Measure:
+
 - exact eligible-tool accuracy;
 - schema-validation reject rate;
 - action outcome correctness;

@@ -12,25 +12,29 @@ Do not maintain a manually copied OpenAPI JSON file. The schema is generated fro
 
 ## Endpoint catalog
 
-| Method | Route | Authentication | Description |
-| --- | --- | --- | --- |
-| GET | `/health/live` | None | Liveness without loading model weights |
-| GET | `/health/ready` | None | Configured provider, **not** proof of loaded model |
-| GET | `/v1/capabilities` | None | Public platform feature and limit metadata |
-| POST | `/v1/proposals` | `X-Orivyn-Key` | Produce and validate non-executed tool proposals |
-| POST | `/v1/chat` | `X-Orivyn-Key` | Complete a bounded conversation with an OpenAI-compatible provider |
-| POST | `/v1/chat/stream` | `X-Orivyn-Key` | Stream `meta`, `delta`, `done`, `error` SSE events |
-| GET | `/openapi.json` | None | Generated machine-readable OpenAPI |
-| GET | `/docs` | None | Scalar reference documentation |
+| Method | Route              | Authentication | Description                                                        |
+| ------ | ------------------ | -------------- | ------------------------------------------------------------------ |
+| GET    | `/health/live`     | None           | Liveness without loading model weights                             |
+| GET    | `/health/ready`    | None           | Configured provider, **not** proof of loaded model                 |
+| GET    | `/v1/capabilities` | None           | Public platform feature and limit metadata                         |
+| POST   | `/v1/proposals`    | `X-Orivyn-Key` | Produce and validate non-executed tool proposals                   |
+| POST   | `/v1/chat`         | `X-Orivyn-Key` | Complete a bounded conversation with an OpenAI-compatible provider |
+| POST   | `/v1/chat/stream`  | `X-Orivyn-Key` | Stream `meta`, `delta`, `done`, `error` SSE events                 |
+| GET    | `/openapi.json`    | None           | Generated machine-readable OpenAPI                                 |
+| GET    | `/docs`            | None           | Scalar reference documentation                                     |
 
 ### GET /health/live
+
 Response `200`: `{"status":"ok"}`. Must work without DB, external providers, or model weights.
 
 ### GET /health/ready
+
 Response `200`: `{"status":"configured","provider":"disabled"}` by default. This is **configuration introspection**, not model warmup readiness.
 
 ### GET /v1/capabilities
+
 Response `200`:
+
 ```json
 {
   "version": "0.1.0",
@@ -46,6 +50,7 @@ Response `200`:
 Metadata is public, must never include service keys, credentials, user data, or model prompts.
 
 ### POST /v1/proposals
+
 Private service-to-service route. Only **read-only browser-targeted** tools are permitted in the foundation.
 
 ```bash
@@ -71,6 +76,7 @@ curl -X POST http://127.0.0.1:8080/v1/proposals \
 ```
 
 Successful response shape:
+
 ```json
 {
   "request_id": "server-generated-uuid",
@@ -90,6 +96,7 @@ Errors: `401` invalid key, `403` unsupported risk or target, `413` too-large inp
 ## Console's Next.js proxy routes
 
 `apps/playground` also exposes two internal routes:
+
 - `GET /api/status`: Reads FastAPI public health and capabilities server-side, returns `{connected, capabilities? | reason?}`. Used by the dashboard and runtime page.
 - `POST /api/proposals`: Requires `Authorization: Bearer <ORIVYN_PLAYGROUND_ACCESS_TOKEN>`; forwards to backend using the private server-only `X-Orivyn-Key`. It is intentionally not part of FastAPI's OpenAPI document, and **not** a replacement for an application auth system.
 
@@ -100,6 +107,7 @@ These routes are separately implemented by Next.js. Future work may include a co
 Installed as the lightweight `scalar-fastapi` dependency. FastAPI disables Swagger UI and ReDoc and registers Scalar at `/docs`. The backend's `/openapi.json` remains unchanged. Scalar's browser-side try-it client must be used with care; never enter production service secrets on an untrusted/shared computer.
 
 ## API development checklist
+
 - Implement Pydantic request and response models.
 - Add precise operation summaries, tags and response status descriptions.
 - Add tests for success, failure and auth boundaries.

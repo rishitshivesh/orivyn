@@ -3,6 +3,7 @@
 Read this file before changing any code. These are binding project rules for people and coding agents.
 
 ## Architecture
+
 - Orivyn is a generic, frontend-first, self-hostable intelligence platform, not an E.D.I.T.H.-specific backend.
 - Every file has one clear responsibility. Keep modules small and cohesive; do not duplicate business rules, schema definitions, error handling, or network clients.
 - Prefer simple functions, composition, typed interfaces, and shared utilities. No clever abstractions without concrete reuse.
@@ -15,6 +16,7 @@ Read this file before changing any code. These are binding project rules for peo
 - Optimize for minimal dependencies, startup time, memory footprint, and predictable deployments. Never start all models just to serve a health check.
 
 ## Frontend
+
 - React + Next.js App Router, Tailwind, shadcn/ui components only for application controls.
 - Reuse shadcn primitives, never ad hoc lookalike controls. Semantic layout elements are fine; avoid raw HTML inputs/buttons where shadcn equivalents exist.
 - Accessible keyboard navigation and responsive mobile/desktop layouts are mandatory.
@@ -22,6 +24,7 @@ Read this file before changing any code. These are binding project rules for peo
 - Streaming, voice, and browser workers must not block the main UI thread.
 
 ## Backend
+
 - FastAPI Python service isolated in apps/api; use pyproject.toml and a private .venv via uv.
 - Keep inference behind a provider adapter. Do not load weights during import.
 - /health/live must work with no weights, database, or external providers.
@@ -30,6 +33,7 @@ Read this file before changing any code. These are binding project rules for peo
 - Never use model guesses for permission checks, payment authorization, security scoring, money movement, or account access decisions.
 
 ## Packages and SDK
+
 - Keep the public API small, versioned, ESM-compatible, and documented.
 - Shared contracts live in @orivyn/core. @orivyn/client is transport only. @orivyn/react wraps client hooks. @orivyn/browser is for local execution.
 - Avoid circular dependencies. Do not copy model/runtime implementation into SDK packages.
@@ -37,6 +41,7 @@ Read this file before changing any code. These are binding project rules for peo
 - Application registration must permit dynamic capability configuration and future external agents.
 
 ## Quality gate before every commit
+
 1. Read changed files and verify they match the intended behavior.
 2. Run `pnpm format` then `pnpm check` (Biome), `pnpm typecheck`, and relevant tests.
 3. Run `uv run --project apps/api ruff check apps/api`, `uv run --project apps/api ruff format --check apps/api`, and `uv run --project apps/api pytest apps/api/tests`.
@@ -46,6 +51,7 @@ Read this file before changing any code. These are binding project rules for peo
 7. Never add secrets, generated artifacts, build output, models, caches, or virtual environments to git.
 
 ## Collaboration and release
+
 - Make coherent, tested increments. Prefer implementation + tests + docs in one change.
 - Add docs under docs/ and keep deployment commands runnable.
 - Follow existing implementation patterns from music-streaming-backend: backend-owned long-lived service credentials, short-lived scoped browser capabilities, key rotation and auditability for sensitive integrations.
@@ -53,6 +59,7 @@ Read this file before changing any code. These are binding project rules for peo
 - No placeholders masquerading as working features. Label planned/incomplete features explicitly.
 
 ## Documentation ownership
+
 - Every new public API route must have OpenAPI tags, summary, precise request/response/error models and a test proving it appears in /openapi.json.
 - Scalar at /docs is the interactive reference. Do not reintroduce Swagger UI.
 - Keep docs/API_REFERENCE.md updated when routes change; keep docs/INTERFACE.md updated when UI routes, behavior, or controls change.
@@ -60,6 +67,7 @@ Read this file before changing any code. These are binding project rules for peo
 - Every new frontend route should expose accessible states for loading, errors, empty results and disabled capabilities.
 
 ## Browser runtime implementation
+
 - Cactus Needle/Whistle are integrated through `@orivyn/browser`; consumers import Orivyn wrappers rather than third-party internal APIs.
 - Never call `Needle.run()` to execute tools. Use `generate()`/propose only and validate results before application execution.
 - Voice requires explicit microphone permission and local recording. Stop capture tracks in finally blocks. No audio upload to the Orivyn API in local mode.
@@ -71,6 +79,7 @@ Read this file before changing any code. These are binding project rules for peo
 - The Playground's `sync-cactus-assets.mjs` must run before development and production builds. Verify the standalone Docker image carries `public/vendor/cactus`.
 
 ## Action quality and regression coverage
+
 - Treat tiny tool-calling models as routers only, not conversational or knowledge models.
 - Prefer deterministic parsing for known UI commands; return unsupported for unmatched inputs rather than hallucinating action calls.
 - Every UI tool needs a real host-owned handler and a visible outcome. Tool schemas alone are not functional integrations.
@@ -79,6 +88,7 @@ Read this file before changing any code. These are binding project rules for peo
 - Keep docs/AGENT_STRATEGY.md synchronized with reasoning and routing behavior.
 
 ## Conversational inference and routing
+
 - Separate `orivyn_api.conversation` from the Cactus tool-proposal runtime. LLM conversations never execute arbitrary tools.
 - The OpenAI-compatible provider is disabled by default. Keep provider API keys server-only; never transmit them to browsers or return them from capabilities.
 - The API accepts bounded user/assistant turns but does not persist them. Never invent conversation memory or knowledge-retrieval citations.
@@ -89,14 +99,16 @@ Read this file before changing any code. These are binding project rules for peo
 - Update docs/CONVERSATION.md, docs/API_REFERENCE.md, and docs/DEPLOYMENT.md for any conversational endpoint or provider change.
 
 ## Local-first tooling and evaluation
+
 - The user-facing core of Orivyn is browser tool selection and typed, app-owned action execution. Keep hosted chat and external reasoning out of the critical path.
 - Register host-owned tool handlers in `@orivyn/actions`; never duplicate JSON Schema validation logic across applications.
-- Reject unknown, disabled, privileged and malformed tool calls *at execution time*, even when inference previously validated a proposal.
+- Reject unknown, disabled, privileged and malformed tool calls _at execution time_, even when inference previously validated a proposal.
 - Benchmark small models against versioned, explicit golden fixtures with exact action names and arguments. Include abstention and disabled-tool cases; don't misrepresent deterministic matches as model inference.
 - Display per-test failures and observed latency, not manufactured performance indicators. Never claim browser/WASM benchmark success without running it on the device.
 - Keep docs/LOCAL_TOOLS.md updated when action contracts, evaluation fixtures or runtime behavior change.
 
 ## v0.5 application platform
+
 - Manifest schemas and routing policy live in `@orivyn/runtime`. React bindings belong in `@orivyn/react`; host business UI is responsible for handlers and visual results.
 - Use `defineApplication` to validate app identity, version, tool names and browser-only read-level risk. Do not place protected payment/auth/identity actions in browser manifests.
 - A model sees only dynamically registered, enabled, context-eligible tools. Recheck the same eligibility immediately before host execution.

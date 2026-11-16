@@ -5,6 +5,7 @@
 Orivyn's first local runtime adapter uses the independently maintained Apache-2.0 `cactus-needle` package. It exposes Needle tool proposals and Whistle speech recognition in browser WebAssembly workers.
 
 Source:
+
 - `packages/browser/src/cactus-runtime.ts`: lazy model sessions and local proposals.
 - `packages/browser/src/validate.ts`: tool allowlist, JSON Schema validation and read-only boundary.
 - `apps/playground/src/hooks/use-local-runtime.ts`: React lifecycle around one runtime.
@@ -21,6 +22,7 @@ Orivyn now runs `apps/playground/scripts/sync-cactus-assets.mjs` before `next de
 For third-party consumers, use `new CactusBrowserRuntime({ workerUrl: "/your-worker.js", wasmUrl: "/your-needle.wasm" })` when asset paths differ. The host application must expose both URLs. Do not import a worker/wasm from an unstable, deep `node_modules` relative URL.
 
 You can inspect the assets after starting the app:
+
 ```bash
 curl -I http://localhost:3000/vendor/cactus/worker.js
 curl -I http://localhost:3000/vendor/cactus/needle.wasm

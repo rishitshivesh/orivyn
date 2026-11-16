@@ -15,12 +15,16 @@ export function syncCactusAssets(destination) {
     ["cactus-needle/browser/needle.wasm", "needle.wasm"],
   ]) {
     const source = require.resolve(name);
-    if (statSync(source).size === 0) throw new Error(`Empty Cactus asset: ${name}`);
+    if (statSync(source).size === 0)
+      throw new Error(`Empty Cactus asset: ${name}`);
     copyFileSync(source, join(target, targetName));
     process.stdout.write(`Orivyn asset: ${join(target, targetName)}\n`);
   }
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (
+  process.argv[1] &&
+  resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
   syncCactusAssets(process.argv[2]);
 }

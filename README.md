@@ -9,6 +9,7 @@ Orivyn is a frontend-first, model-agnostic intelligence platform designed around
 The repository contains a Next.js console interface, a FastAPI API with Scalar OpenAPI documentation, reusable TypeScript packages, and optional browser/server Cactus inference.
 
 **Delivered interface**
+
 - `/`: Overview with live backend status.
 - `/playground`: Natural-language tool proposal lab.
 - `/tools`: Explicit example tool definitions and JSON Schemas.
@@ -46,11 +47,13 @@ cp apps/playground/.env.example apps/playground/.env.local
 ```
 
 Terminal one:
+
 ```bash
 pnpm dev:api
 ```
 
 Terminal two:
+
 ```bash
 pnpm dev:web
 ```
@@ -77,6 +80,7 @@ uv run --project apps/api pytest apps/api/tests
 **Verification transparency:** Source authored through the GitHub connector has not undergone a successful local dependency install, full Biome/TypeScript/Python test run, browser visual inspection, or Docker build in this environment. Run these checks before production use.
 
 ## Documentation
+
 - [Engineering rules](AGENTS.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Console interface](docs/INTERFACE.md)

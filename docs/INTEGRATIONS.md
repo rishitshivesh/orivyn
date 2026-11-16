@@ -15,18 +15,20 @@ const runtime = new CactusBrowserRuntime();
 const prediction = await runtime.propose({
   app_id: "portfolio",
   input: "Open the music app",
-  tools: [{
-    name: "navigate",
-    description: "Navigate to a public route",
-    parameters: {
-      type: "object",
-      properties: { page: { type: "string", enum: ["music", "projects"] } },
-      required: ["page"],
-      additionalProperties: false,
+  tools: [
+    {
+      name: "navigate",
+      description: "Navigate to a public route",
+      parameters: {
+        type: "object",
+        properties: { page: { type: "string", enum: ["music", "projects"] } },
+        required: ["page"],
+        additionalProperties: false,
+      },
+      execution: "browser",
+      risk: "read",
     },
-    execution: "browser",
-    risk: "read",
-  }],
+  ],
 });
 
 // Validate again with your app's actual registry, then optionally handle
@@ -49,22 +51,31 @@ The adapter makes no privileged network request. Avoid importing it into server 
 import { OrivynClient } from "@orivyn/client";
 
 const client = new OrivynClient(process.env.ORIVYN_API_BASE!);
-const response = await client.propose({
-  app_id: "portfolio",
-  input: "Open projects",
-  tools: [{
-    name: "navigate",
-    description: "Navigate to a public page",
-    parameters: { type: "object", properties: { page: { type: "string" } } },
-    execution: "browser",
-    risk: "read",
-  }],
-}, { headers: { "X-Orivyn-Key": process.env.ORIVYN_API_KEY! } });
+const response = await client.propose(
+  {
+    app_id: "portfolio",
+    input: "Open projects",
+    tools: [
+      {
+        name: "navigate",
+        description: "Navigate to a public page",
+        parameters: {
+          type: "object",
+          properties: { page: { type: "string" } },
+        },
+        execution: "browser",
+        risk: "read",
+      },
+    ],
+  },
+  { headers: { "X-Orivyn-Key": process.env.ORIVYN_API_KEY! } },
+);
 ```
 
 The current API is intentionally restricted to read-only browser proposals, including when invoked server-side. Backend privileged actions are NOT enabled until registered app policies and authentication are implemented.
 
 ## Planned extension points
+
 - Authenticated per-app manifest and signing keys, service identity and limits.
 - Audited application integration registry with credential rotation.
 - Typed executor for UI-only actions.

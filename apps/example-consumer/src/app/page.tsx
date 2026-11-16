@@ -7,7 +7,10 @@ import { CatalogToolRegistration } from "@/orivyn/tool-registration";
 
 export default function Home() {
   return (
-    <CatalogProvider initialState={initialCatalogState} context={{ route: "/catalog" }}>
+    <CatalogProvider
+      initialState={initialCatalogState}
+      context={{ route: "/catalog" }}
+    >
       <CatalogToolRegistration />
       <CatalogWorkspace />
     </CatalogProvider>

@@ -6,7 +6,10 @@ export async function recordCommand(
   onReady: (stop: () => void) => void,
   durationMs = 20_000,
 ): Promise<{ samples: Float32Array; sampleRate: number }> {
-  if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === "undefined") {
+  if (
+    !navigator.mediaDevices?.getUserMedia ||
+    typeof MediaRecorder === "undefined"
+  ) {
     throw new Error("Microphone recording is unavailable in this browser");
   }
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -41,7 +44,8 @@ export async function recordCommand(
     const samples = new Float32Array(decoded.length);
     for (let channel = 0; channel < decoded.numberOfChannels; channel++) {
       const pcm = decoded.getChannelData(channel);
-      for (let i = 0; i < samples.length; i++) samples[i] += pcm[i] / decoded.numberOfChannels;
+      for (let i = 0; i < samples.length; i++)
+        samples[i] += pcm[i] / decoded.numberOfChannels;
     }
     return { samples, sampleRate: decoded.sampleRate };
   } finally {

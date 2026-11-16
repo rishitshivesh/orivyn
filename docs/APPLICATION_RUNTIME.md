@@ -86,21 +86,32 @@ function Workspace() {
   // Proposals are *never* auto-executed. A host UI calls app.apply(proposals)
   // after approval; the executor repeats schema/eligibility validation.
   return (
-    <button onClick={() => app.apply([{
-      name: "catalog.open",
-      arguments: { page: "about" },
-      confidence: null,
-    }])}>
+    <button
+      onClick={() =>
+        app.apply([
+          {
+            name: "catalog.open",
+            arguments: { page: "about" },
+            confidence: null,
+          },
+        ])
+      }
+    >
       {app.state.page}
     </button>
   );
 }
 
 export default function App() {
-  return <Provider initialState={{ page: "catalog" }} context={{ route: "/catalog" }}>
-    <Registration />
-    <Workspace />
-  </Provider>;
+  return (
+    <Provider
+      initialState={{ page: "catalog" }}
+      context={{ route: "/catalog" }}
+    >
+      <Registration />
+      <Workspace />
+    </Provider>
+  );
 }
 ```
 
@@ -109,6 +120,7 @@ The above is a minimal API example, not the production UI component style. In sh
 ### Hooks and runtime methods
 
 `createOrivynApp<State>(manifest)` returns:
+
 - `Provider`: one independent runtime per mount
 - `useOrivyn()`: state snapshot, context, available tools, enabled names, manifest, `setEnabled`, `updateContext`, `createRequest`, `propose`, `apply`, `busy`, `error`
 - `useOrivynTool(registration)`: mount/unmount lifecycle for application-owned handler and optional context predicate
@@ -154,6 +166,7 @@ pnpm --filter @orivyn/example-consumer build
 ```
 
 Then check:
+
 1. `/applications`: enable/disable, change route and verify eligible tools.
 2. `localhost:3001`: catalog navigation and filtering using local host-created proposals.
 3. `localhost:3001`: local Needle inference, inspect and apply valid actions.

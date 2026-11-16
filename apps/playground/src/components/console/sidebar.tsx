@@ -2,7 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, ArrowUpRight, BookOpenText, Boxes, FlaskConical, MessageSquareText, ChartNoAxesCombined, AppWindow, LayoutDashboard, Network, Orbit } from "lucide-react";
+import {
+  Activity,
+  ArrowUpRight,
+  BookOpenText,
+  Boxes,
+  FlaskConical,
+  MessageSquareText,
+  ChartNoAxesCombined,
+  AppWindow,
+  LayoutDashboard,
+  Network,
+  Orbit,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -26,12 +38,21 @@ export function Sidebar() {
           <Orbit className="size-6" strokeWidth={1.6} />
         </div>
         <div>
-          <p className="text-[19px] font-semibold tracking-[-0.075em] text-white">orivyn<span className="text-[#a5a7ff]">.</span></p>
-          <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">Developer platform</p>
+          <p className="text-[19px] font-semibold tracking-[-0.075em] text-white">
+            orivyn<span className="text-[#a5a7ff]">.</span>
+          </p>
+          <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500">
+            Developer platform
+          </p>
         </div>
       </div>
-      <p className="hidden px-7 pb-3 pt-4 text-[10px] font-semibold uppercase tracking-[0.19em] text-slate-600 lg:block">Workspace</p>
-      <nav aria-label="Main navigation" className="flex gap-1 overflow-auto px-3 pb-3 lg:flex-col lg:px-4">
+      <p className="hidden px-7 pb-3 pt-4 text-[10px] font-semibold uppercase tracking-[0.19em] text-slate-600 lg:block">
+        Workspace
+      </p>
+      <nav
+        aria-label="Main navigation"
+        className="flex gap-1 overflow-auto px-3 pb-3 lg:flex-col lg:px-4"
+      >
         {navigation.map(({ href, label, icon: Icon }) => {
           const active = pathname === href;
           return (

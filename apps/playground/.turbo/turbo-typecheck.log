@@ -1,0 +1,5 @@
+
+> @orivyn/playground@0.5.0 typecheck /Users/rishitshivesh/Projects/Personal/orivyn/apps/playground
+> tsc --noEmit
+
+[41m[30m ELIFECYCLE [39m[49m [31mCommand failed.[39m

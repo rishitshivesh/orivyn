@@ -1,4 +1,8 @@
-import type { ProposalRequest, ProposalResponse, ToolProposal } from "@orivyn/core";
+import type {
+  ProposalRequest,
+  ProposalResponse,
+  ToolProposal,
+} from "@orivyn/core";
 import type { BrowserInferenceRuntime, LocalSpeechRuntime } from "./index";
 import { assertLocalTools, inspectLocalProposals } from "./validate";
 
@@ -13,7 +17,9 @@ export interface CactusBrowserAssets {
   wasmUrl?: string;
 }
 
-export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeechRuntime {
+export class CactusBrowserRuntime
+  implements BrowserInferenceRuntime, LocalSpeechRuntime
+{
   constructor(private readonly assets: CactusBrowserAssets = {}) {}
 
   private assetUrls() {
@@ -29,12 +35,20 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
   private closed = false;
 
   async available(): Promise<boolean> {
-    return typeof window !== "undefined" && window.isSecureContext && typeof WebAssembly !== "undefined" && typeof Worker !== "undefined";
+    return (
+      typeof window !== "undefined" &&
+      window.isSecureContext &&
+      typeof WebAssembly !== "undefined" &&
+      typeof Worker !== "undefined"
+    );
   }
 
   private async getNeedle(): Promise<import("cactus-needle/browser").Needle> {
     if (this.closed) throw new Error("Local runtime has been closed");
-    if (!await this.available()) throw new Error("Local inference requires HTTPS/localhost and WebAssembly workers");
+    if (!(await this.available()))
+      throw new Error(
+        "Local inference requires HTTPS/localhost and WebAssembly workers",
+      );
     if (!this.needle) {
       const { Needle } = await import("cactus-needle/browser");
       this.needle = new Needle({ stateless: true, ...this.assetUrls() });
@@ -42,9 +56,13 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
     return this.needle;
   }
 
-  async propose(request: ProposalRequest, signal?: AbortSignal): Promise<ProposalResponse> {
+  async propose(
+    request: ProposalRequest,
+    signal?: AbortSignal,
+  ): Promise<ProposalResponse> {
     assertLocalTools(request.tools);
-    if (!request.input.trim() || request.input.length > 2000) throw new Error("Input must contain 1–2000 characters");
+    if (!request.input.trim() || request.input.length > 2000)
+      throw new Error("Input must contain 1–2000 characters");
     if (signal?.aborted) throw new Error("Inference cancelled");
     const agent = await this.getNeedle();
     // Do not expose callbacks: generate returns predictions without executing tools.
@@ -53,14 +71,21 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
     for (const definition of request.tools) {
       defs[definition.name] = tool({
         description: definition.description,
-        inputSchema: definition.parameters as Parameters<typeof tool>[0]["inputSchema"],
+        inputSchema: definition.parameters as Parameters<
+          typeof tool
+        >[0]["inputSchema"],
       });
     }
-    const output = await agent.generate({ prompt: request.input, tools: defs, abortSignal: signal });
+    const output = await agent.generate({
+      prompt: request.input,
+      tools: defs,
+      abortSignal: signal,
+    });
     const proposals: ToolProposal[] = output.toolCalls.map((call) => ({
       name: call.toolName,
       arguments: call.input as Record<string, unknown>,
-      confidence: typeof output.confidence === "number" ? output.confidence : null,
+      confidence:
+        typeof output.confidence === "number" ? output.confidence : null,
     }));
     const inspection = inspectLocalProposals(request.tools, proposals);
     const validated = inspection.accepted;
@@ -69,13 +94,20 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
       provider: this.name,
       status: validated.length ? "proposed" : "no_match",
       proposals: validated,
-      diagnostics: { raw_calls: proposals.length, rejected: inspection.rejected },
+      diagnostics: {
+        raw_calls: proposals.length,
+        rejected: inspection.rejected,
+      },
     };
   }
 
-  async transcribe(audio: { samples: Float32Array; sampleRate: number }): Promise<string> {
+  async transcribe(audio: {
+    samples: Float32Array;
+    sampleRate: number;
+  }): Promise<string> {
     if (this.closed) throw new Error("Local runtime has been closed");
-    if (!await this.available()) throw new Error("Local transcription requires HTTPS/localhost");
+    if (!(await this.available()))
+      throw new Error("Local transcription requires HTTPS/localhost");
     if (!this.whistle) {
       const { Whistle } = await import("cactus-needle/browser");
       this.whistle = new Whistle(this.assetUrls());
