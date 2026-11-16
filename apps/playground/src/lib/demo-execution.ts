@@ -1,5 +1,6 @@
 import type { ToolProposal } from "@orivyn/core";
 import { createActionExecutor } from "@orivyn/actions";
+import type { RuntimeRegistration } from "@orivyn/runtime";
 import {
   demoTools,
   initialDemoState,
@@ -15,13 +16,15 @@ const tool = (name: string) => {
   return definition;
 };
 
-export const demoExecutor = createActionExecutor<DemoState>([
+/** One registration set shared by the Playground and Application Studio. */
+export const demoRegistrations: readonly RuntimeRegistration<DemoState>[] = [
   {
     definition: tool("navigate"),
     execute: (state, args) => ({ ...state, page: args.page as DemoPage }),
   },
   {
     definition: tool("filter_projects"),
+    available: (context) => context.route === "/projects",
     execute: (state, args) => ({
       ...state,
       page: "projects",
@@ -33,15 +36,16 @@ export const demoExecutor = createActionExecutor<DemoState>([
     definition: tool("reset_view"),
     execute: () => ({ ...initialDemoState }),
   },
-]);
+];
 
-/** Demo adapter. Every action is checked again by the generic Orivyn executor. */
+const executor = createActionExecutor<DemoState>(demoRegistrations);
+
 export function executeDemoProposals(
   current: DemoState,
   proposals: readonly ToolProposal[],
   enabledNames: readonly string[],
 ) {
-  const result = demoExecutor.execute(current, proposals, enabledNames);
+  const result = executor.execute(current, proposals, enabledNames);
   return {
     ...result,
     applied: result.applied.map((name) =>

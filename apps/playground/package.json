@@ -1,6 +1,6 @@
 {
   "name": "@orivyn/playground",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "dev": "node scripts/sync-cactus-assets.mjs && next dev",
@@ -22,7 +22,8 @@
     "lucide-react": "^0.468.0",
     "cactus-needle": "^0.3.0",
     "ajv": "^8.17.1",
-    "@orivyn/actions": "workspace:*"
+    "@orivyn/actions": "workspace:*",
+    "@orivyn/runtime": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",

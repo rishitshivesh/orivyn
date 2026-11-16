@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PageHeading } from "@/components/console/page-heading";
 
 const documents = [
+  { name: "Application Runtime v0.5", description: "Manifests, scoped contexts, React hooks and external consumer.", href: "docs/APPLICATION_RUNTIME.md" },
   { name: "Local actions and benchmarks", description: "Reusable action SDK, model evaluation, fixtures and exports.", href: "docs/LOCAL_TOOLS.md" },
   { name: "Architecture", description: "Execution boundaries, runtime selection and threat model.", href: "docs/ARCHITECTURE.md" },
   { name: "Integrations", description: "Server SDK usage, app-owned authorization and tool contracts.", href: "docs/INTEGRATIONS.md" },

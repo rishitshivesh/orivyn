@@ -6,10 +6,12 @@ COPY apps/playground/package.json apps/playground/package.json
 COPY packages/core/package.json packages/core/package.json
 COPY packages/browser/package.json packages/browser/package.json
 COPY packages/actions/package.json packages/actions/package.json
+COPY packages/runtime/package.json packages/runtime/package.json
 RUN pnpm install --no-frozen-lockfile
 COPY packages/core packages/core
 COPY packages/browser packages/browser
 COPY packages/actions packages/actions
+COPY packages/runtime packages/runtime
 COPY apps/playground apps/playground
 ARG NEXT_PUBLIC_ORIVYN_API_URL=http://localhost:8080
 ENV NEXT_PUBLIC_ORIVYN_API_URL=$NEXT_PUBLIC_ORIVYN_API_URL

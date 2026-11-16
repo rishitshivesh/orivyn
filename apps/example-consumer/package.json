@@ -1,0 +1,32 @@
+{
+  "name": "@orivyn/example-consumer",
+  "version": "0.5.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ../../packages/browser/scripts/sync-assets.mjs public/vendor/cactus && next dev --port 3001",
+    "build": "node ../../packages/browser/scripts/sync-assets.mjs public/vendor/cactus && next build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@orivyn/core": "workspace:*",
+    "@orivyn/runtime": "workspace:*",
+    "@orivyn/react": "workspace:*",
+    "@orivyn/browser": "workspace:*",
+    "next": "^16.0.10",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "@radix-ui/react-slot": "^1.2.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.3.1",
+    "lucide-react": "^0.468.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.2.3",
+    "@types/react-dom": "^19.2.3",
+    "tailwindcss": "^4.1.0",
+    "@tailwindcss/postcss": "^4.1.0",
+    "typescript": "^5.9.3"
+  }
+}

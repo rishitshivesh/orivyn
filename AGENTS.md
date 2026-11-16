@@ -95,3 +95,14 @@ Read this file before changing any code. These are binding project rules for peo
 - Benchmark small models against versioned, explicit golden fixtures with exact action names and arguments. Include abstention and disabled-tool cases; don't misrepresent deterministic matches as model inference.
 - Display per-test failures and observed latency, not manufactured performance indicators. Never claim browser/WASM benchmark success without running it on the device.
 - Keep docs/LOCAL_TOOLS.md updated when action contracts, evaluation fixtures or runtime behavior change.
+
+## v0.5 application platform
+- Manifest schemas and routing policy live in `@orivyn/runtime`. React bindings belong in `@orivyn/react`; host business UI is responsible for handlers and visual results.
+- Use `defineApplication` to validate app identity, version, tool names and browser-only read-level risk. Do not place protected payment/auth/identity actions in browser manifests.
+- A model sees only dynamically registered, enabled, context-eligible tools. Recheck the same eligibility immediately before host execution.
+- Never cross-load state or registrations between runtime instances. Context is public minimal UI metadata, never credentials or sensitive record contents.
+- Use the shared `packages/browser/scripts/sync-assets.mjs` for worker/WASM files in every Next consumer. No separate copied model loader scripts.
+- Consumers must import only supported `@orivyn/*` package exports. Do not import modules from another app's `src` folder.
+- Keep a separate consumer app working alongside the Console. Maintain docs/APPLICATION_RUNTIME.md and example-consumer/README.md as integrations evolve.
+- Preserve React Strict Mode compatibility. Keep store snapshots referentially stable between updates and keep callbacks stable across React renders.
+- Don't claim npm publishability until package build outputs, exports, versioning, and npm packaging have been verified.
