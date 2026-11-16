@@ -9,6 +9,7 @@
   "scripts": {
     "dev:web": "pnpm --filter @orivyn/playground dev",
     "dev:api": "uv run --project apps/api uvicorn orivyn_api.main:app --app-dir apps/api/src --reload --port 8080",
+    "dev": "pnpm run dev:web & pnpm run dev:api",
     "build": "turbo build",
     "typecheck": "turbo typecheck",
     "test": "turbo test",
