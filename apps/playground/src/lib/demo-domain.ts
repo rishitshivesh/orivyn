@@ -62,7 +62,11 @@ export function makeProposal(name: string, args: Record<string, unknown>): ToolP
 
 /** Deterministic commands for known demo intents; no model guesswork is needed here. */
 export function matchDemoIntent(input: string, enabled: readonly string[]): ToolProposal[] {
-  const query = input.toLowerCase().trim();
+  const query = input.toLowerCase().trim().replace(/^(please|can you|could you)\s+/, "");
+  const actionVerb = /^(open|navigate(?: to)?|go to|take me to|filter|reset|clear(?: all| filters)?|switch to|show(?: me)?|start over)(?:\s|$)/.test(query);
+  const explanation = /^(what|why|how|when|where|who|which|explain|describe|tell me|show(?: me)? (?:how|why|what|when|where|whether))\b/.test(query);
+  const negated = /^(don.t|do not|never|avoid)\b/.test(query) || /\b(and|then)\s+(explain|describe|compare|summarize|tell me)\b/.test(query);
+  if (!actionVerb || explanation || negated) return [];
   const allowed = new Set(enabled);
   const reset = /\b(reset|clear (?:all|filters)|start over|default view)\b/.test(query);
   if (reset && allowed.has("reset_view")) return [makeProposal("reset_view", {})];

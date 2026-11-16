@@ -58,3 +58,9 @@ test("unsupported questions abstain", () => {
 test("all example tool definitions remain read-only and browser-owned", () => {
   assert.ok(createDemoRequest("Open music", enabled).tools.every((tool) => tool.execution === "browser" && tool.risk === "read"));
 });
+
+test("questions and negations must never trigger UI actions", () => {
+  assert.deepEqual(matchDemoIntent("Explain Kubernetes architecture", enabled), []);
+  assert.deepEqual(matchDemoIntent("Don't open music", enabled), []);
+  assert.deepEqual(matchDemoIntent("Show me how music works", enabled), []);
+});

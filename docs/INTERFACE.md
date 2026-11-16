@@ -69,3 +69,11 @@ Run the full dependency-backed quality gate, check the local app in a real brows
 - No knowledge retrieval, citations, E.D.I.T.H. persona, voice synthesis or multi-step orchestrator are implemented by this first run.
 
 See [CONVERSATION.md](./CONVERSATION.md).
+
+## Local actions and model evaluation
+
+The `/benchmarks` page compares Needle (actual client-side WASM inference) with a deterministic baseline against eight explicit tool-routing fixtures, including multi-tool requests and disabled-tool abstention. It displays actual model proposals and expected proposals, per-case latency, observed accuracy, and exports the current run as JSON. Until you press **Run benchmark**, it reports zero measured results, not a fabricated score. The Stop button stops **between cases**, not mid-WASM inference.
+
+The `/playground` page executes accepted read-only demo actions through `@orivyn/actions`, not a separate ad-hoc validator. It includes an execution trace reporting accepted/rejected action names, reasons and synchronous handler time. It does **not** execute arbitrary scripts, navigation URLs or privileged actions.
+
+See `docs/LOCAL_TOOLS.md`.

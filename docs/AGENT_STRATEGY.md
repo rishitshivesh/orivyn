@@ -38,3 +38,9 @@ Do not equate a fluent model response with a correct or authorized action.
 A conservative local router distinguishes explicit, known demo UI commands from conversational questions. The Agent Lab presents tool proposals before UI execution. For questions, it requests explicit remote consent and uses a server-side OpenAI-compatible chat provider with SSE streaming. No provider is selected automatically and no knowledge sources are connected.
 
 This is the first `Intelligence` run, not a completed E.D.I.T.H. integration or a general-purpose autonomous planner. Knowledge retrieval, citation handling, scoped application manifests and multi-step orchestration remain separate milestones.
+
+## v0.4 local-first action milestone
+
+A shared `@orivyn/actions` package now owns registered UI-action handlers and validates model-proposed arguments against JSON Schema at the moment of execution. The benchmark suite runs exact tool name/argument comparisons with expected results and exports measured outcomes. Model routing quality must be evaluated before promoting a model to a consumer app. The deterministic baseline is a benchmark comparator, not a language model.
+
+No external chat provider is needed to evaluate Needle or execute demo actions. Future provider integrations remain optional and separate from this local path.

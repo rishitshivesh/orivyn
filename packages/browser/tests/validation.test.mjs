@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { assertLocalTools, validateLocalProposals } from "../src/validate.ts";
+import { assertLocalTools, inspectLocalProposals, validateLocalProposals } from "../src/validate.ts";
 
 const tool = {
   name: "navigate",
@@ -34,4 +34,17 @@ test("rejects privileged, non-local or duplicate tool definitions", () => {
   assert.throws(() => assertLocalTools([{ ...tool, risk: "write" }]));
   assert.throws(() => assertLocalTools([tool, tool]));
   assert.throws(() => assertLocalTools([]));
+});
+
+test("reports specific reasons for invalid model proposals", () => {
+  const inspection = inspectLocalProposals([tool], [
+    { name: "missing_tool", arguments: {}, confidence: null },
+    { name: "navigate", arguments: { page: "admin" }, confidence: null },
+    { name: "navigate", arguments: { page: "music" }, confidence: null },
+  ]);
+  assert.deepEqual(inspection.rejected, [
+    { name: "missing_tool", reason: "unknown-tool" },
+    { name: "navigate", reason: "invalid-arguments" },
+  ]);
+  assert.equal(inspection.accepted.length, 1);
 });

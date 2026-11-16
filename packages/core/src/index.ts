@@ -27,6 +27,10 @@ export interface ProposalResponse {
   provider: string;
   status: "proposed" | "no_match";
   proposals: ToolProposal[];
+  diagnostics?: {
+    raw_calls: number;
+    rejected: Array<{ name: string; reason: string }>;
+  };
 }
 
 /** The owning app performs authorization before applying any validated action. */

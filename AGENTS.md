@@ -87,3 +87,11 @@ Read this file before changing any code. These are binding project rules for peo
 - Routing must be conservative: explanation/questions should never be reinterpreted as app navigation because they mention a navigation keyword.
 - Add regression tests for routing, provider auth, disabled configuration, streaming and OpenAPI documentation.
 - Update docs/CONVERSATION.md, docs/API_REFERENCE.md, and docs/DEPLOYMENT.md for any conversational endpoint or provider change.
+
+## Local-first tooling and evaluation
+- The user-facing core of Orivyn is browser tool selection and typed, app-owned action execution. Keep hosted chat and external reasoning out of the critical path.
+- Register host-owned tool handlers in `@orivyn/actions`; never duplicate JSON Schema validation logic across applications.
+- Reject unknown, disabled, privileged and malformed tool calls *at execution time*, even when inference previously validated a proposal.
+- Benchmark small models against versioned, explicit golden fixtures with exact action names and arguments. Include abstention and disabled-tool cases; don't misrepresent deterministic matches as model inference.
+- Display per-test failures and observed latency, not manufactured performance indicators. Never claim browser/WASM benchmark success without running it on the device.
+- Keep docs/LOCAL_TOOLS.md updated when action contracts, evaluation fixtures or runtime behavior change.

@@ -1,6 +1,6 @@
 import type { ProposalRequest, ProposalResponse, ToolProposal } from "@orivyn/core";
 import type { BrowserInferenceRuntime, LocalSpeechRuntime } from "./index";
-import { assertLocalTools, validateLocalProposals } from "./validate";
+import { assertLocalTools, inspectLocalProposals } from "./validate";
 
 /**
  * Community-maintained Cactus Needle/Whistle browser adapter.
@@ -62,12 +62,14 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
       arguments: call.input as Record<string, unknown>,
       confidence: typeof output.confidence === "number" ? output.confidence : null,
     }));
-    const validated = validateLocalProposals(request.tools, proposals);
+    const inspection = inspectLocalProposals(request.tools, proposals);
+    const validated = inspection.accepted;
     return {
       request_id: crypto.randomUUID(),
       provider: this.name,
       status: validated.length ? "proposed" : "no_match",
       proposals: validated,
+      diagnostics: { raw_calls: proposals.length, rejected: inspection.rejected },
     };
   }
 

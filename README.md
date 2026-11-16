@@ -100,3 +100,15 @@ See [Agent strategy](docs/AGENT_STRATEGY.md) and [Interface](docs/INTERFACE.md) 
 ## Agent Lab and conversational inference (v0.3)
 
 The `/agent` console route offers conservative local action routing and opt-in server-side conversation. Configure an OpenAI-compatible backend provider only when desired. `POST /v1/chat` and `POST /v1/chat/stream` are now documented by Scalar. See [Conversation engine](docs/CONVERSATION.md) for the complete setup and security boundaries. There is no provider configured by default, and this release does not yet include retrieval or durable memory.
+
+## Local tools and benchmarking
+
+- **`/playground`**: Run Needle or the deterministic baseline, review proposals and click Apply to demo. The UI displays an action trace from the reusable `@orivyn/actions` package.
+- **`/benchmarks`**: Compare ten golden tool-routing cases against either local Needle/WASM or deterministic rules. Inspect exact expected/actual JSON, measured latency and export a JSON report.
+- Both work without the FastAPI API, external chat providers, accounts or secrets.
+
+Use `pnpm dev:web`; see [Local Tools guide](docs/LOCAL_TOOLS.md).
+
+The benchmark screen is an evaluation harness, not a promise of model accuracy. Any model accuracy percentage is calculated only after an actual browser run.
+
+The previous opt-in chat integration remains available for future work, but is **not required or used** by the v0.4 local tool executor and benchmark screen.

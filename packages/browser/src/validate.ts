@@ -4,18 +4,35 @@ import type { ToolDefinition, ToolProposal } from "@orivyn/core";
 const ajv = new Ajv({ strict: false, allErrors: false });
 
 /** Validate all model output in the browser, never trust inferred arguments. */
-export function validateLocalProposals(tools: readonly ToolDefinition[], proposals: readonly ToolProposal[]): ToolProposal[] {
+export function inspectLocalProposals(tools: readonly ToolDefinition[], proposals: readonly ToolProposal[]) {
   const allowed = new Map(tools.map((tool) => [tool.name, tool]));
-  return proposals.filter((proposal) => {
+  const accepted: ToolProposal[] = [];
+  const rejected: Array<{ name: string; reason: string }> = [];
+  for (const proposal of proposals) {
     const tool = allowed.get(proposal.name);
-    if (!tool || tool.execution !== "browser" || tool.risk !== "read") return false;
-    try {
-      const validate = ajv.compile(tool.parameters);
-      return validate(proposal.arguments);
-    } catch {
-      return false;
+    if (!tool) {
+      rejected.push({ name: proposal.name, reason: "unknown-tool" });
+      continue;
     }
-  });
+    if (tool.execution !== "browser" || tool.risk !== "read") {
+      rejected.push({ name: proposal.name, reason: "disallowed-execution" });
+      continue;
+    }
+    try {
+      if (!ajv.compile(tool.parameters)(proposal.arguments)) {
+        rejected.push({ name: proposal.name, reason: "invalid-arguments" });
+        continue;
+      }
+      accepted.push(proposal);
+    } catch {
+      rejected.push({ name: proposal.name, reason: "invalid-tool-schema" });
+    }
+  }
+  return { accepted, rejected };
+}
+
+export function validateLocalProposals(tools: readonly ToolDefinition[], proposals: readonly ToolProposal[]): ToolProposal[] {
+  return inspectLocalProposals(tools, proposals).accepted;
 }
 
 export function assertLocalTools(tools: readonly ToolDefinition[]): void {

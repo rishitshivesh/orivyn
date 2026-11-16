@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { ActionTrace } from "@orivyn/actions";
 import { ArrowRight, Check, Copy, Cpu, Info, LockKeyhole, RotateCcw, Server, Sparkles, TerminalSquare } from "lucide-react";
 import type { ProposalResponse, ToolProposal } from "@orivyn/core";
 import { Badge } from "@/components/ui/badge";
@@ -34,6 +35,7 @@ export default function Playground() {
   const [copied, setCopied] = useState(false);
   const [enabledTools, setEnabledTools] = useState(demoTools.map((tool) => tool.name));
   const [demoState, setDemoState] = useState(initialDemoState);
+  const [actionTrace, setActionTrace] = useState<ActionTrace[]>([]);
   const local = useLocalRuntime();
 
   async function runServer() {
@@ -87,6 +89,7 @@ export default function Playground() {
   function applyActions(proposals: readonly ToolProposal[]) {
     const applied = executeDemoProposals(demoState, proposals, enabledTools);
     setDemoState(applied.state);
+    setActionTrace(applied.trace);
     setMessage(applied.rejected.length
       ? `Applied ${applied.applied.length}; rejected ${applied.rejected.join(", ")} due to invalid schema or permissions.`
       : applied.applied.join(" · ") || "No eligible actions.");
@@ -109,6 +112,7 @@ export default function Playground() {
     setCopied(false);
     setEnabledTools(demoTools.map((tool) => tool.name));
     setDemoState(initialDemoState);
+    setActionTrace([]);
   }
 
   return (
@@ -157,6 +161,7 @@ export default function Playground() {
             {message && <p role="status" className="rounded-lg border border-[#abaaff]/15 bg-[#abaaff]/[0.05] px-3 py-3 text-xs leading-6 text-slate-300">{message}</p>}
           </CardContent></Card>
           <DemoPreview state={demoState} />
+          {actionTrace.length > 0 && <Card><CardContent className="p-6"><h3 className="mb-4 text-sm font-semibold">Action execution trace</h3><div className="space-y-3">{actionTrace.map((item, index) => <div key={`${item.name}-${index}`} className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-white/[0.08] p-3"><div><p className="font-mono text-xs text-[#c7c8ff]">{item.name}</p>{item.reason && <p className="mt-1 text-xs text-rose-300">Rejected: {item.reason}</p>}</div><div className="text-right"><Badge tone={item.status === "applied" ? "success" : "warning"}>{item.status}</Badge><p className="mt-1 text-[11px] text-slate-500">{item.duration_ms} ms</p></div></div>)}</div></CardContent></Card>}
           <Card><CardContent className="p-6">
             <div className="mb-5 flex items-center justify-between gap-3">
               <span className="flex items-center gap-2 text-sm font-medium"><TerminalSquare className="size-4 text-[#abadff]" /> Structured response</span>
