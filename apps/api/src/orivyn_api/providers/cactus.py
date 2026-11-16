@@ -26,11 +26,11 @@ class CactusProvider:
         with cactus.Cactus(tools=definitions) as agent:
             outcome: dict[str, Any] = agent.complete(text)
         if not isinstance(outcome, dict):
-            raise RuntimeError("Unexpected inference result")
+            raise RuntimeError("Unexpected inference result")  # noqa: TRY004
         allowed = {tool.name for tool in tools}
         calls = outcome.get("function_calls", [])
         if not isinstance(calls, list):
-            raise RuntimeError("Unexpected tool call response")
+            raise RuntimeError("Unexpected tool call response")  # noqa: TRY004
         proposals: list[ToolProposal] = []
         for call in calls:
             if not isinstance(call, dict):

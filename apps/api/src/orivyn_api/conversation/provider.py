@@ -73,7 +73,7 @@ class ConversationProvider:
                 choice = payload["choices"][0]
                 content = choice["message"]["content"]
                 if not isinstance(content, str):
-                    raise ValueError("Provider returned non-text content")
+                    raise TypeError("Provider returned non-text content")
                 return content, choice.get("finish_reason")
             except (httpx.HTTPError, ValueError, KeyError, IndexError, TypeError) as exc:
                 raise ConversationUnavailable("Conversational provider failed; inspect server logs") from exc
@@ -83,24 +83,23 @@ class ConversationProvider:
             raise ConversationUnavailable("Conversational provider is not configured")
         timeout = httpx.Timeout(self.settings.orivyn_chat_timeout_seconds)
         try:
-            async with httpx.AsyncClient(timeout=timeout) as client:
-                async with client.stream(
+            async with httpx.AsyncClient(timeout=timeout) as client, client.stream(
                     "POST", self._endpoint(), headers=self._headers(),
                     json=self._request(request, stream=True),
                 ) as response:
-                    response.raise_for_status()
-                    async for line in response.aiter_lines():
-                        if not line.startswith("data: "):
-                            continue
-                        chunk = line[6:]
-                        if chunk == "[DONE]":
-                            return
-                        try:
-                            payload = json.loads(chunk)
-                            delta = payload["choices"][0].get("delta", {}).get("content")
-                            if isinstance(delta, str) and delta:
-                                yield delta
-                        except (ValueError, KeyError, TypeError, IndexError):
-                            continue
+                response.raise_for_status()
+                async for line in response.aiter_lines():
+                    if not line.startswith("data: "):
+                        continue
+                    chunk = line[6:]
+                    if chunk == "[DONE]":
+                        return
+                    try:
+                        payload = json.loads(chunk)
+                        delta = payload["choices"][0].get("delta", {}).get("content")
+                        if isinstance(delta, str) and delta:
+                            yield delta
+                    except (ValueError, KeyError, TypeError, IndexError):
+                        continue
         except httpx.HTTPError as exc:
             raise ConversationUnavailable("Conversational provider stream failed") from exc

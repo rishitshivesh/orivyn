@@ -1,6 +1,7 @@
 """Server-side API key authentication for initial private deployments."""
-from fastapi import Header, HTTPException, status
 from hmac import compare_digest
+
+from fastapi import Header, HTTPException, status
 
 from orivyn_api.settings import get_settings
 

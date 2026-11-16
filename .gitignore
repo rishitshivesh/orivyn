@@ -25,3 +25,6 @@ apps/example-consumer/public/vendor/cactus/
 **/.turbo/
 *.tsbuildinfo
 .idea/
+
+# Local diagnostics outputs
+/diagnostics/

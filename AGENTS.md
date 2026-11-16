@@ -128,3 +128,10 @@ Read this file before changing any code. These are binding project rules for peo
 - Keep browser lifecycle orchestration in @orivyn/browser, React UI state in hooks, and display components separate. Avoid duplicating progress logic.
 - Track generated logs/caches via .gitignore only; do not commit them.
 - Read and maintain docs/BROWSER_RUNTIME_V06.md when changing local runtime lifecycle or voice preprocessing.
+
+## Diagnostics fixes (2026-11-17)
+- Keep `biome.json` schema in sync with installed Biome CLI and exclude generated `.turbo`, `.next`, lockfiles and diagnostic logs from source checks.
+- Consumer applications importing TypeScript source packages require `allowImportingTsExtensions: true` under the current source-based package export approach. Publishing these packages needs a compiled distribution later.
+- Treat package and build failures separately from lint/format errors. JavaScript tests and Python pytest passing does not certify a Next.js build.
+- Keep Python provider exceptions compatible with FastAPI's existing error boundary. Follow Python Ruff lint and format checks after editing routes.
+- Never commit logs containing credentials or local paths. Keep diagnostics under ignored `diagnostics/`.

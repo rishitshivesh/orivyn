@@ -3,6 +3,7 @@ import json
 import logging
 import uuid
 from collections.abc import AsyncIterator
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
@@ -28,7 +29,7 @@ def get_provider() -> ConversationProvider:
     responses={503: {"description": "No provider configured or provider unavailable"}},
 )
 async def chat(
-    body: ChatRequest, provider: ConversationProvider = Depends(get_provider),
+    body: ChatRequest, provider: Annotated[ConversationProvider, Depends(get_provider)],
 ) -> ChatResponse:
     if not provider.enabled:
         raise HTTPException(status_code=503, detail="Conversational provider is disabled")

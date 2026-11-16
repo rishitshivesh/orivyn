@@ -4,7 +4,7 @@ import uuid
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from scalar_fastapi import add_scalar_reference, Theme
+from scalar_fastapi import Theme, add_scalar_reference
 
 from orivyn_api.conversation.routes import router as conversation_router
 from orivyn_api.providers.factory import create_provider
