@@ -1,7 +1,0 @@
-
-> @orivyn/playground@0.5.0 build /Users/rishitshivesh/Projects/Personal/orivyn/apps/playground
-> node scripts/sync-cactus-assets.mjs && next build
-
-Orivyn asset: /Users/rishitshivesh/Projects/Personal/orivyn/apps/playground/public/vendor/cactus/worker.js
-Orivyn asset: /Users/rishitshivesh/Projects/Personal/orivyn/apps/playground/public/vendor/cactus/needle.wasm
-[41m[30m ELIFECYCLE [39m[49m [31mCommand failed.[39m

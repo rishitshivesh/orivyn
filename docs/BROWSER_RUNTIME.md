@@ -74,3 +74,7 @@ Both requests should return HTTP 200. These assets are build outputs, not commit
 4. Verify mobile browsers and low-memory execution; add adjustable session retention limits.
 5. Add tests for schema validation, unavailable environments, cleanup and abort.
 6. Ship app-owned typed action executor with explicit policy review.
+
+## v0.6 update
+
+The local browser adapter now exposes actual model progress, cancellable operations, a 120-second default deadline and five-minute idle cleanup. The Console normalizes microphone audio to 16 kHz mono before transcription. See [v0.6 reliability notes](./BROWSER_RUNTIME_V06.md) for current behavior, API contracts and verification requirements.

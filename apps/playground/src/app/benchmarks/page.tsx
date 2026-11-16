@@ -53,7 +53,7 @@ export default function Benchmarks() {
   const [results, setResults] = useState<BenchmarkResult[]>([]);
   const [running, setRunning] = useState(false);
   const [status, setStatus] = useState(
-    "Choose an engine, then run the ten local test cases.",
+    "Choose an engine and run the local test cases.",
   );
   const stopRef = useRef(false);
   const local = useLocalRuntime();
@@ -129,7 +129,7 @@ export default function Benchmarks() {
         eyebrow="Workspace / Evaluation"
         title="Model Benchmarks"
         description="Measure whether Needle selects the correct frontend tools. Run real local inference, compare against an explicit baseline, inspect mistakes and export the results."
-        action={<Badge>10 golden cases · local only</Badge>}
+        action={<Badge>{benchmarkCases.length} golden cases · local only</Badge>}
       />
       <Card>
         <CardContent className="flex flex-wrap items-center justify-between gap-5 p-6">

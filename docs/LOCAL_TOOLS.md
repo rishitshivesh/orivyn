@@ -58,7 +58,7 @@ console.log(report.state.page); // "music"
 
 URL: `http://localhost:3000/benchmarks`.
 
-The page contains ten golden cases with explicit expected tool name and JSON arguments, including multi-tool requests, unsupported destinations, explanation-vs-action intent, negation, and disabled-action abstention.
+The page contains twelve golden cases with explicit expected tool name and JSON arguments, including multi-tool requests, unsupported destinations, explanation-vs-action intent, negation, and disabled-action abstention.
 
 - Select **Needle WASM** to run the actual installed local model, sequentially, in your browser. First use can require model download. This sends no prompt to Orivyn's API.
 - Select **Rules baseline** to measure the deterministic matcher. This is not AI inference.
@@ -111,3 +111,5 @@ pnpm test
 ## Needle call diagnostics
 
 The browser adapter returns optional `diagnostics` on its proposal response: `raw_calls` and a list of rejected name/reason pairs. These describe _model output validation_ (unknown tool, invalid arguments, disallowed execution, invalid schema). They do not expose or execute arbitrary model scripts, and only appear in the local result. The benchmark report includes diagnostics when available.
+
+The v0.6 baseline also tests unresolved references such as "Open this song" and conflicting destinations such as "Open music and career". Both must abstain unless the owning app provides a grounded selection or disambiguation flow.

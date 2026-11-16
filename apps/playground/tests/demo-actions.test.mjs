@@ -104,3 +104,8 @@ test("questions and negations must never trigger UI actions", () => {
   assert.deepEqual(matchDemoIntent("Don't open music", enabled), []);
   assert.deepEqual(matchDemoIntent("Show me how music works", enabled), []);
 });
+
+test("ambiguous destinations and unresolved selections must abstain", () => {
+  assert.deepEqual(matchDemoIntent("Open this song", enabled), []);
+  assert.deepEqual(matchDemoIntent("Open music and career", enabled), []);
+});

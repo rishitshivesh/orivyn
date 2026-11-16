@@ -108,7 +108,7 @@ The `/agent` console route offers conservative local action routing and opt-in s
 ## Local tools and benchmarking
 
 - **`/playground`**: Run Needle or the deterministic baseline, review proposals and click Apply to demo. The UI displays an action trace from the reusable `@orivyn/actions` package.
-- **`/benchmarks`**: Compare ten golden tool-routing cases against either local Needle/WASM or deterministic rules. Inspect exact expected/actual JSON, measured latency and export a JSON report.
+- **`/benchmarks`**: Compare twelve golden tool-routing cases against either local Needle/WASM or deterministic rules. Inspect exact expected/actual JSON, measured latency and export a JSON report.
 - Both work without the FastAPI API, external chat providers, accounts or secrets.
 
 Use `pnpm dev:web`; see [Local Tools guide](docs/LOCAL_TOOLS.md).
@@ -128,3 +128,9 @@ pnpm dev:example  # separate catalog consumer on 3001
 ```
 
 No API or chat provider is needed. Start with [Application Runtime documentation](docs/APPLICATION_RUNTIME.md). The source-based workspace package exports require Next.js `transpilePackages`; external npm publishing awaits a proper build/packaging pipeline. Regenerate the pnpm lockfile after installation.
+
+## v0.6 Local Runtime Reliability
+
+Needle/Whistle initialization now exposes model-specific progress, explicit cancellation, bounded inference and idle session cleanup. The Playground also resamples microphone input to the 16 kHz mono PCM required by Whistle. No provider keys or chat backend are required. [v0.6 guide](docs/BROWSER_RUNTIME_V06.md).
+
+The GitHub source changes have **not** been fully built/tested with installed dependencies in this environment; run the release quality gate locally before deployment.

@@ -118,3 +118,12 @@ Read this file before changing any code. These are binding project rules for peo
 - Keep a separate consumer app working alongside the Console. Maintain docs/APPLICATION_RUNTIME.md and example-consumer/README.md as integrations evolve.
 - Preserve React Strict Mode compatibility. Keep store snapshots referentially stable between updates and keep callbacks stable across React renders.
 - Don't claim npm publishability until package build outputs, exports, versioning, and npm packaging have been verified.
+
+## v0.6 local runtime quality
+- Use upstream model progress callbacks rather than inferred completion percentages or fake timers.
+- Normalize microphone audio to 16 kHz mono Float32 PCM before Whistle. Audio stays on-device; never upload it during local mode.
+- Every browser inference operation supports cancellation, a bounded deadline, and an explicit error state. Aborted WASM sessions must not be reused.
+- Reuse warmed sessions while active, then release worker/model resources after idle periods. Do not eagerly load both models.
+- Keep browser lifecycle orchestration in @orivyn/browser, React UI state in hooks, and display components separate. Avoid duplicating progress logic.
+- Track generated logs/caches via .gitignore only; do not commit them.
+- Read and maintain docs/BROWSER_RUNTIME_V06.md when changing local runtime lifecycle or voice preprocessing.

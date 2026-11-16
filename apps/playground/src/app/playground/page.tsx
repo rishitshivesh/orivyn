@@ -25,6 +25,7 @@ import { LocalVoice } from "@/components/console/local-voice";
 import { DemoPreview } from "@/components/console/demo-preview";
 import { PageHeading } from "@/components/console/page-heading";
 import { useLocalRuntime } from "@/hooks/use-local-runtime";
+import { ModelProgress } from "@/components/console/model-progress";
 import {
   createDemoRequest,
   demoTools,
@@ -261,6 +262,7 @@ export default function Playground() {
                   <ArrowRight className="size-4" />
                 </Button>
               </div>
+              {runtime === "browser" && <ModelProgress progress={local.progress} working={loading || local.status === "loading"} onCancel={local.cancel} />}
               {message && (
                 <p
                   role="status"

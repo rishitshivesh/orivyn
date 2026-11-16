@@ -86,6 +86,20 @@ export const benchmarkCases: readonly BenchmarkCase[] = [
     note: "Do not navigate for explanations",
   },
   {
+    id: "NO-SELECTION",
+    input: "Open this song",
+    enabled: all,
+    expected: [],
+    note: "Reject unresolved selection",
+  },
+  {
+    id: "AMBIGUOUS",
+    input: "Open music and career",
+    enabled: all,
+    expected: [],
+    note: "Reject competing destinations",
+  },
+  {
     id: "NEGATION",
     input: "Don\u0027t open music",
     enabled: all,

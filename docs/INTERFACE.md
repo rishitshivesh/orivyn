@@ -85,3 +85,7 @@ See `docs/LOCAL_TOOLS.md`.
 `apps/example-consumer` is a **separate Next.js app on port 3001** that consumes public `@orivyn/*` imports. It registers its own `catalog.open`, `catalog.filter`, `catalog.select` actions through `createOrivynApp()` and can optionally invoke local Needle. It intentionally contains no CMS, API keys, chat or persistence.
 
 See [APPLICATION_RUNTIME.md](./APPLICATION_RUNTIME.md) for the contract, examples, build commands and limitations.
+
+## v0.6 loader and cancel integration
+
+The Playground and benchmark screen display actual Needle model download/initialization/inference progress via a reusable progress component. The cancel control aborts the browser-side operation. Microphone audio is normalized to 16 kHz mono prior to Whistle. The earlier model progress screens that only showed a spinner are superseded. These behaviors still require live browser verification before production claims. See `docs/BROWSER_RUNTIME_V06.md`.
