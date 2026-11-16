@@ -104,3 +104,11 @@ Configure the existing Console proxy values `ORIVYN_API_BASE`, `ORIVYN_API_KEY`,
 The API's `/docs` Scalar page automatically includes `POST /v1/chat` and `POST /v1/chat/stream`. The API status endpoint reports a boolean for conversation availability without revealing credentials. The Console requires upstream access for conversational answers, and local demo actions work without a provider.
 
 **Production gate:** Put the Console behind an access gateway. The current key is shared and has no per-application permissions or quotas. Require tenant identity, rate limits, audit redaction and upstream token budgets before exposing the conversation endpoints to arbitrary visitors.
+
+## v0.5 independent consumer
+
+A second self-contained Next.js service is available in `apps/example-consumer`, with its own Dockerfile and `deploy/compose.example.yml`. Build this as a separate Dokploy Compose project with repo root as build context. Expose internal port **3001**, route its own hostname through Dokploy's reverse proxy, and enable TLS. The build shares `packages/browser/scripts/sync-assets.mjs` to include same-origin WASM/worker files.
+
+The example requires no FastAPI connection, provider key, database, or private environment. It only offers browser read-level UI tools. To test, start locally with `pnpm dev:example` and visit http://localhost:3001. See docs/APPLICATION_RUNTIME.md for full validation and build steps.
+
+The current source `pnpm-lock.yaml` predates these new workspaces; regenerate it with pnpm after installing dependencies and before enforcing `--frozen-lockfile` anywhere.

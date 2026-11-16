@@ -17,3 +17,5 @@ __pycache__/
 
 # Generated Cactus browser worker/WASM assets
 apps/playground/public/vendor/cactus/
+
+apps/example-consumer/public/vendor/cactus/

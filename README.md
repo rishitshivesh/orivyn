@@ -112,3 +112,15 @@ Use `pnpm dev:web`; see [Local Tools guide](docs/LOCAL_TOOLS.md).
 The benchmark screen is an evaluation harness, not a promise of model accuracy. Any model accuracy percentage is calculated only after an actual browser run.
 
 The previous opt-in chat integration remains available for future work, but is **not required or used** by the v0.4 local tool executor and benchmark screen.
+
+## v0.5: Application Runtime & SDK
+
+The Console now includes `/applications` for manifest/context/tool inspection. A separate application, `apps/example-consumer`, runs on port 3001 and imports public Orivyn packages. The new `@orivyn/runtime` package offers manifests, runtime isolation, context-scoped tools, dynamic registration and subscribable execution state. `@orivyn/react` adds `createOrivynApp()` with typed Provider and hooks.
+
+```bash
+pnpm install --no-frozen-lockfile
+pnpm dev:web      # console on 3000
+pnpm dev:example  # separate catalog consumer on 3001
+```
+
+No API or chat provider is needed. Start with [Application Runtime documentation](docs/APPLICATION_RUNTIME.md). The source-based workspace package exports require Next.js `transpilePackages`; external npm publishing awaits a proper build/packaging pipeline. Regenerate the pnpm lockfile after installation.

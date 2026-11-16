@@ -77,3 +77,11 @@ The `/benchmarks` page compares Needle (actual client-side WASM inference) with 
 The `/playground` page executes accepted read-only demo actions through `@orivyn/actions`, not a separate ad-hoc validator. It includes an execution trace reporting accepted/rejected action names, reasons and synchronous handler time. It does **not** execute arbitrary scripts, navigation URLs or privileged actions.
 
 See `docs/LOCAL_TOOLS.md`.
+
+## Application Studio and independent consumer (v0.5)
+
+`/applications` exposes the actual `@orivyn/runtime` manifest and context-aware capability registry. The operator can enable/disable read-only tools, switch route context, copy manifest JSON, apply deterministic local demo commands and inspect execution trace/state. It is ephemeral and requires no API.
+
+`apps/example-consumer` is a **separate Next.js app on port 3001** that consumes public `@orivyn/*` imports. It registers its own `catalog.open`, `catalog.filter`, `catalog.select` actions through `createOrivynApp()` and can optionally invoke local Needle. It intentionally contains no CMS, API keys, chat or persistence.
+
+See [APPLICATION_RUNTIME.md](./APPLICATION_RUNTIME.md) for the contract, examples, build commands and limitations.
