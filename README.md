@@ -86,3 +86,7 @@ uv run --project apps/api pytest apps/api/tests
 - [Deployment](docs/DEPLOYMENT.md)
 
 No GitHub Actions or workflow automation is included.
+
+## Local browser runtime prerequisites
+
+Only Node.js 22.18+, pnpm, an HTTPS/localhost origin and a WebAssembly/module-worker capable browser are required. No Python service, Docker or GPU is needed for the local Playground. The `dev:web` and frontend build scripts copy the bundled Cactus worker/WASM assets to the public directory automatically. Needle and Whistle model weights are downloaded on first use and cached where the browser supports it. See [Browser runtime setup](docs/BROWSER_RUNTIME.md).

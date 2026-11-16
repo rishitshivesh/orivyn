@@ -12,6 +12,21 @@ Source:
 - `apps/playground/src/components/console/local-voice.tsx`: opt-in microphone UI.
 - `apps/playground/src/app/playground/page.tsx`: execution target selection.
 
+## Next.js worker and WASM asset handling
+
+The `cactus-needle` package resolves its default worker and WASM using `import.meta.url`. Next.js may not rewrite these dependency URLs into HTTP asset URLs, which can cause `Failed to construct 'URL': Invalid URL`.
+
+Orivyn now runs `apps/playground/scripts/sync-cactus-assets.mjs` before `next dev` and `next build`. This copies the **exact installed npm package's** `cactus-needle/browser/worker.js` and `cactus-needle/browser/needle.wasm` assets into `apps/playground/public/vendor/cactus/`. The Orivyn adapter passes the resulting **same-origin** `workerUrl` and `wasmUrl` explicitly to both Needle and Whistle. No manual download of the runtime binary is required.
+
+For third-party consumers, use `new CactusBrowserRuntime({ workerUrl: "/your-worker.js", wasmUrl: "/your-needle.wasm" })` when asset paths differ. The host application must expose both URLs. Do not import a worker/wasm from an unstable, deep `node_modules` relative URL.
+
+You can inspect the assets after starting the app:
+```bash
+curl -I http://localhost:3000/vendor/cactus/worker.js
+curl -I http://localhost:3000/vendor/cactus/needle.wasm
+```
+Both requests should return HTTP 200. These assets are build outputs, not committed files. The Dockerfile copies `public/` into the standalone runtime image.
+
 ## How to try
 
 1. `pnpm install`, then `pnpm dev:web`. The local mode does not require the FastAPI backend or API keys.
@@ -33,7 +48,7 @@ Source:
 
 ## Limitations
 
-- This is a browser integration requiring actual Chromium, Firefox and Safari validation. The package documents Chromium as tested; Next.js bundling of worker/WASM may require copied assets or explicit workerUrl/wasmUrl settings.
+- This is a browser integration requiring actual Chromium, Firefox and Safari validation. The package documents Chromium as tested; Orivyn provides the worker/WASM copies and explicit URLs, but real browser validation is still required.
 - WebAssembly workers require a secure context (HTTPS or localhost). Some browsers may block storage or downloads; initial inference may be slow on low-power devices.
 - Whistle's documented supported languages are en, de, fr, es, it, nl and pl. This is not a Hindi transcription solution.
 - This version records up to 20 seconds using MediaRecorder with manual stop and browser audio decoding; it does not provide streaming speech, input-level visualization or silence detection.

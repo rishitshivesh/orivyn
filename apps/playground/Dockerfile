@@ -19,6 +19,7 @@ WORKDIR /app
 RUN addgroup -S app && adduser -S app -G app
 COPY --from=builder /workspace/apps/playground/.next/standalone ./
 COPY --from=builder /workspace/apps/playground/.next/static ./apps/playground/.next/static
+COPY --from=builder /workspace/apps/playground/public ./apps/playground/public
 USER app
 EXPOSE 3000
 CMD ["node", "apps/playground/server.js"]

@@ -66,3 +66,6 @@ Read this file before changing any code. These are binding project rules for peo
 - Keep browser model weights lazy and don't silently fall back to backend or paid providers.
 - Before releasing local runtime, run Next.js production bundling and test both actual WASM tool proposals and speech transcription in Chromium. Follow with Safari/mobile compatibility tests.
 - Read docs/BROWSER_RUNTIME.md when changing model runtime behavior; update it alongside any integration or privacy change.
+
+- For Next.js apps, publish the package's exported WASM/worker assets as same-origin public files and always pass explicit `workerUrl` and `wasmUrl` to Cactus constructors. Never assume dependency-relative `import.meta.url` resolves in Next's bundled client output.
+- The Playground's `sync-cactus-assets.mjs` must run before development and production builds. Verify the standalone Docker image carries `public/vendor/cactus`.

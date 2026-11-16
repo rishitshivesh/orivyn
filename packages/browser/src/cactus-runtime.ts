@@ -1,4 +1,4 @@
-import type { ProposalRequest, ProposalResponse, ToolDefinition, ToolProposal } from "@orivyn/core";
+import type { ProposalRequest, ProposalResponse, ToolProposal } from "@orivyn/core";
 import type { BrowserInferenceRuntime, LocalSpeechRuntime } from "./index";
 import { assertLocalTools, validateLocalProposals } from "./validate";
 
@@ -8,7 +8,21 @@ import { assertLocalTools, validateLocalProposals } from "./validate";
  * Model files are downloaded/cached only after an explicit user interaction.
  * Never call run(), which executes tool callbacks.
  */
+export interface CactusBrowserAssets {
+  workerUrl?: string;
+  wasmUrl?: string;
+}
+
 export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeechRuntime {
+  constructor(private readonly assets: CactusBrowserAssets = {}) {}
+
+  private assetUrls() {
+    return {
+      workerUrl: this.assets.workerUrl ?? "/vendor/cactus/worker.js",
+      wasmUrl: this.assets.wasmUrl ?? "/vendor/cactus/needle.wasm",
+    };
+  }
+
   readonly name = "cactus-browser";
   private needle: import("cactus-needle/browser").Needle | null = null;
   private whistle: import("cactus-needle/browser").Whistle | null = null;
@@ -23,7 +37,7 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
     if (!await this.available()) throw new Error("Local inference requires HTTPS/localhost and WebAssembly workers");
     if (!this.needle) {
       const { Needle } = await import("cactus-needle/browser");
-      this.needle = new Needle({ stateless: true });
+      this.needle = new Needle({ stateless: true, ...this.assetUrls() });
     }
     return this.needle;
   }
@@ -62,7 +76,7 @@ export class CactusBrowserRuntime implements BrowserInferenceRuntime, LocalSpeec
     if (!await this.available()) throw new Error("Local transcription requires HTTPS/localhost");
     if (!this.whistle) {
       const { Whistle } = await import("cactus-needle/browser");
-      this.whistle = new Whistle();
+      this.whistle = new Whistle(this.assetUrls());
     }
     const result = await this.whistle.transcribe(audio, { language: "en" });
     return result.text;

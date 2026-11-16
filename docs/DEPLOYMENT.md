@@ -66,3 +66,17 @@ uv run --project apps/api pytest apps/api/tests
 
 ## Production hardening gate
 Block public use until implemented/tested: per-application identity and key rotation, quotas and request budgets, origin restrictions, audit logging/redaction, model worker bounds/timeouts, versioned tool manifests, HTTPS proxy setup, secret rotation, and denial-of-service testing. The Async API timeout bounds response wait but cannot forcibly terminate native inference already running in a thread.
+
+## Local browser inference asset verification
+
+The frontend's `dev` and `build` commands run `scripts/sync-cactus-assets.mjs` which copies worker.js and needle.wasm from the installed `cactus-needle` npm package into `public/vendor/cactus/`. These are served from the application origin and copied into the standalone Docker image.
+
+```bash
+pnpm install
+pnpm dev:web
+# in another terminal
+curl -I http://localhost:3000/vendor/cactus/worker.js
+curl -I http://localhost:3000/vendor/cactus/needle.wasm
+```
+
+Expect HTTP 200 on both. These files are generated and intentionally ignored by Git. First inference additionally requires downloading the Needle model weights. No Python, FastAPI, GPU, or API key is needed for browser-only mode.
