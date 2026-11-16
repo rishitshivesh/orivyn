@@ -69,3 +69,11 @@ Read this file before changing any code. These are binding project rules for peo
 
 - For Next.js apps, publish the package's exported WASM/worker assets as same-origin public files and always pass explicit `workerUrl` and `wasmUrl` to Cactus constructors. Never assume dependency-relative `import.meta.url` resolves in Next's bundled client output.
 - The Playground's `sync-cactus-assets.mjs` must run before development and production builds. Verify the standalone Docker image carries `public/vendor/cactus`.
+
+## Action quality and regression coverage
+- Treat tiny tool-calling models as routers only, not conversational or knowledge models.
+- Prefer deterministic parsing for known UI commands; return unsupported for unmatched inputs rather than hallucinating action calls.
+- Every UI tool needs a real host-owned handler and a visible outcome. Tool schemas alone are not functional integrations.
+- Explicitly validate model output again immediately before executing the action; never execute model-generated arbitrary URLs or JavaScript.
+- Add regression fixtures for supported commands, disabled tools and malformed parameters whenever tool definitions change.
+- Keep docs/AGENT_STRATEGY.md synchronized with reasoning and routing behavior.
