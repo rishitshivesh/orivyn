@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import { CactusBrowserRuntime, type LocalModelProgress } from "@orivyn/browser";
 import type { ProposalRequest, ProposalResponse } from "@orivyn/core";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useLocalRuntime() {
   const runtime = useRef<CactusBrowserRuntime | null>(null);

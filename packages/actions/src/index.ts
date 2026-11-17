@@ -1,5 +1,5 @@
-import Ajv, { type ValidateFunction } from "ajv";
 import type { ToolDefinition, ToolProposal } from "@orivyn/core";
+import Ajv, { type ValidateFunction } from "ajv";
 
 /** A host application owns handlers and state transitions. Inference supplies proposals only. */
 export interface ActionRegistration<State> {

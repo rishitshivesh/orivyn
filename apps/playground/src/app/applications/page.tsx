@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
 import {
   ArrowRight,
   Braces,
@@ -10,12 +9,13 @@ import {
   PanelTop,
   Settings2,
 } from "lucide-react";
+import { useState, useSyncExternalStore } from "react";
+import { DemoPreview } from "@/components/console/demo-preview";
+import { PageHeading } from "@/components/console/page-heading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { DemoPreview } from "@/components/console/demo-preview";
-import { PageHeading } from "@/components/console/page-heading";
 import { matchDemoIntent } from "@/lib/demo-domain";
 import { createStudioRuntime } from "@/lib/studio-runtime";
 

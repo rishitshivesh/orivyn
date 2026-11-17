@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   Activity,
   ArrowRight,
@@ -19,10 +18,11 @@ import {
   ShieldCheck,
   Waves,
 } from "lucide-react";
+import Link from "next/link";
+import { PageHeading } from "@/components/console/page-heading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { PageHeading } from "@/components/console/page-heading";
 import { useApiStatus } from "@/hooks/use-api-status";
 
 const modules = [

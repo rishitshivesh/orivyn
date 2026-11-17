@@ -1,5 +1,5 @@
 import type { ToolProposal } from "@orivyn/core";
-import { demoTools, matchDemoIntent, makeProposal } from "./demo-domain.ts";
+import { demoTools, makeProposal, matchDemoIntent } from "./demo-domain.ts";
 
 /** Golden fixtures test tool routing, arguments, abstention and disabled capabilities. */
 export interface BenchmarkCase {

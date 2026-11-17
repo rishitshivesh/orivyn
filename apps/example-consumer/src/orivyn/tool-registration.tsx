@@ -1,11 +1,11 @@
 "use client";
 
+import { useOrivynTool } from "./hooks";
 import {
-  catalogManifest,
   type CatalogCategory,
   type CatalogPage,
+  catalogManifest,
 } from "./manifest";
-import { useOrivynTool } from "./hooks";
 
 /** These are consumer-owned handlers, not Orivyn-internal source imports. */
 export function CatalogToolRegistration() {

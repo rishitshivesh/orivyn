@@ -1,5 +1,5 @@
-import Ajv from "ajv";
 import type { ToolDefinition, ToolProposal } from "@orivyn/core";
+import Ajv from "ajv";
 
 const ajv = new Ajv({ strict: false, allErrors: false });
 

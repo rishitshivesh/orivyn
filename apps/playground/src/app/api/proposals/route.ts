@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 /** Private test proxy. Both credentials are server-only environment variables. */
 export async function POST(request: NextRequest) {

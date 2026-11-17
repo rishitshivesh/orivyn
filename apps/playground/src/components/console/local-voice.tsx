@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
 import { Mic, MicOff } from "lucide-react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { recordCommand } from "@/lib/audio-capture";
 

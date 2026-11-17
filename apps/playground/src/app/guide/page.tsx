@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   ArrowUpRight,
   BookOpenText,
@@ -7,9 +6,10 @@ import {
   FileText,
   TerminalSquare,
 } from "lucide-react";
+import Link from "next/link";
+import { PageHeading } from "@/components/console/page-heading";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { PageHeading } from "@/components/console/page-heading";
 
 const documents = [
   {

@@ -1,4 +1,3 @@
-import { useCallback, useState } from "react";
 import type { OrivynClient } from "@orivyn/client";
 import type {
   ChatRequest,
@@ -6,6 +5,7 @@ import type {
   ProposalRequest,
   ProposalResponse,
 } from "@orivyn/core";
+import { useCallback, useState } from "react";
 
 /** Legacy transport hooks. No browser key or external provider configuration is embedded. */
 export function useOrivyn(client: OrivynClient) {

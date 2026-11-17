@@ -1,13 +1,14 @@
 import type { ProposalRequest, ProposalResponse } from "@orivyn/core";
+
+export type { CactusBrowserAssets } from "./cactus-runtime";
+export { CactusBrowserRuntime } from "./cactus-runtime";
 export type {
-  LocalModelProgress,
   LocalModelKind,
+  LocalModelProgress,
   LocalModelStage,
   ProgressListener,
 } from "./progress";
 export { progressLabel } from "./progress";
-export type { CactusBrowserAssets } from "./cactus-runtime";
-export { CactusBrowserRuntime } from "./cactus-runtime";
 
 export interface BrowserInferenceRuntime {
   readonly name: string;

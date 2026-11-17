@@ -1,7 +1,7 @@
 import { BriefcaseBusiness, Disc3, Layers3 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { visibleProjects, type DemoState } from "@/lib/demo-domain";
+import { type DemoState, visibleProjects } from "@/lib/demo-domain";
 
 export function DemoPreview({ state }: { state: DemoState }) {
   const projects = visibleProjects(state);

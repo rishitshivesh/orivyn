@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import type { ProposalResponse } from "@orivyn/core";
 import {
   Activity,
   ArrowDownToLine,
@@ -12,18 +12,18 @@ import {
   Square,
   Zap,
 } from "lucide-react";
-import type { ProposalResponse } from "@orivyn/core";
+import { useRef, useState } from "react";
+import { PageHeading } from "@/components/console/page-heading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { PageHeading } from "@/components/console/page-heading";
 import { useLocalRuntime } from "@/hooks/use-local-runtime";
 import {
+  type BenchmarkResult,
   benchmarkCases,
   benchmarkSummary,
   deterministicBaseline,
   proposalsMatch,
-  type BenchmarkResult,
 } from "@/lib/benchmarks";
 import { createDemoRequest } from "@/lib/demo-domain";
 

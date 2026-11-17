@@ -5,9 +5,9 @@ import {
   ShieldCheck,
   Wrench,
 } from "lucide-react";
+import { PageHeading } from "@/components/console/page-heading";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { PageHeading } from "@/components/console/page-heading";
 import { sampleTools } from "@/lib/capabilities";
 
 export default function Tools() {

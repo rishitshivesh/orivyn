@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import type { ToolProposal } from "@orivyn/core";
 import {
   ArrowRight,
   BrainCircuit,
@@ -9,19 +9,19 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
-import type { ToolProposal } from "@orivyn/core";
+import { useRef, useState } from "react";
+import { DemoPreview } from "@/components/console/demo-preview";
+import { PageHeading } from "@/components/console/page-heading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { DemoPreview } from "@/components/console/demo-preview";
-import { PageHeading } from "@/components/console/page-heading";
+import { routeAgentInput } from "@/lib/agent-router";
 import { consumeChatStream } from "@/lib/chat-stream";
 import { demoTools, initialDemoState } from "@/lib/demo-domain";
 import { executeDemoProposals } from "@/lib/demo-execution";
-import { routeAgentInput } from "@/lib/agent-router";
 
 type Turn = { id: string; role: "user" | "assistant"; content: string };
 const presets = [

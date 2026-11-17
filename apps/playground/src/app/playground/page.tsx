@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import type { ActionTrace } from "@orivyn/actions";
+import type { ProposalResponse, ToolProposal } from "@orivyn/core";
 import {
   ArrowRight,
   Check,
@@ -14,18 +14,18 @@ import {
   Sparkles,
   TerminalSquare,
 } from "lucide-react";
-import type { ProposalResponse, ToolProposal } from "@orivyn/core";
+import { useState } from "react";
+import { DemoPreview } from "@/components/console/demo-preview";
+import { LocalVoice } from "@/components/console/local-voice";
+import { ModelProgress } from "@/components/console/model-progress";
+import { PageHeading } from "@/components/console/page-heading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { LocalVoice } from "@/components/console/local-voice";
-import { DemoPreview } from "@/components/console/demo-preview";
-import { PageHeading } from "@/components/console/page-heading";
 import { useLocalRuntime } from "@/hooks/use-local-runtime";
-import { ModelProgress } from "@/components/console/model-progress";
 import {
   createDemoRequest,
   demoTools,

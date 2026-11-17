@@ -1,9 +1,9 @@
 "use client";
 
-import { progressLabel, type LocalModelProgress } from "@orivyn/browser";
+import { type LocalModelProgress, progressLabel } from "@orivyn/browser";
+import { Activity, CircleAlert, Cpu, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Activity, Download, Cpu, CircleAlert } from "lucide-react";
 
 export function ModelProgress({
   progress,

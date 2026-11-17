@@ -1,11 +1,11 @@
+import type { ActionRegistration, ExecutionReport } from "@orivyn/actions";
+import { createActionExecutor } from "@orivyn/actions";
 import type {
   ProposalRequest,
   ToolDefinition,
   ToolProposal,
 } from "@orivyn/core";
-import type { ActionRegistration, ExecutionReport } from "@orivyn/actions";
-import { createActionExecutor } from "@orivyn/actions";
-import { normalizeContext, type ApplicationContext } from "./context.ts";
+import { type ApplicationContext, normalizeContext } from "./context.ts";
 import type { ApplicationManifest } from "./manifest.ts";
 
 export type RuntimeRegistration<State> = ActionRegistration<State> & {

@@ -1,13 +1,13 @@
-import type { ToolProposal } from "@orivyn/core";
 import { createActionExecutor } from "@orivyn/actions";
+import type { ToolProposal } from "@orivyn/core";
 import type { RuntimeRegistration } from "@orivyn/runtime";
 import {
+  type DemoCategory,
+  type DemoPage,
+  type DemoState,
+  type DemoTechnology,
   demoTools,
   initialDemoState,
-  type DemoState,
-  type DemoPage,
-  type DemoCategory,
-  type DemoTechnology,
 } from "./demo-domain.ts";
 
 const tool = (name: string) => {

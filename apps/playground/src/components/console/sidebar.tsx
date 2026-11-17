@@ -1,20 +1,20 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   Activity,
+  AppWindow,
   ArrowUpRight,
   BookOpenText,
   Boxes,
-  FlaskConical,
-  MessageSquareText,
   ChartNoAxesCombined,
-  AppWindow,
+  FlaskConical,
   LayoutDashboard,
+  MessageSquareText,
   Network,
   Orbit,
 } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const navigation = [

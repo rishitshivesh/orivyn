@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 /** Private gateway: browser credential is distinct from upstream service secret. */
 export async function POST(request: NextRequest) {

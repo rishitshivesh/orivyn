@@ -2,15 +2,15 @@
 
 Source: `orivyn-diagnostics-20261117-051330.log`, git HEAD `4084964b3fa2b7a78306b86a231ed36139a17ced`.
 
-| Check | Observed | Action |
-| --- | --- | --- |
-| Biome format/check | 22 format errors; 879 lint errors, 672 warnings, largely generated Turbo cache and CLI schema mismatch | Update schema from 2.2.7 to 2.6.8; exclude generated caches and diagnostics |
-| TypeScript | Six TS5097 consumer source import errors | Enable TS source extension imports for the independent consumer |
-| JavaScript tests | All tests passed | No test logic changed |
-| Next.js build | Both compile; consumer fails TypeScript; Playground aborted as collateral | Fix consumer TS config and rerun builds |
-| Python Ruff lint | Eight diagnostic violations | Fix import order, dependency annotations, contract-safe exceptions and context-manager shape |
-| Python Ruff format | 15 files require formatting | Run Ruff formatter and format check locally; formatting is not complete by source edits alone |
-| Python pytest | 23 passed | No test logic changed |
+| Check              | Observed                                                                                               | Action                                                                                        |
+| ------------------ | ------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| Biome format/check | 22 format errors; 879 lint errors, 672 warnings, largely generated Turbo cache and CLI schema mismatch | Update schema from 2.2.7 to 2.6.8; exclude generated caches and diagnostics                   |
+| TypeScript         | Six TS5097 consumer source import errors                                                               | Enable TS source extension imports for the independent consumer                               |
+| JavaScript tests   | All tests passed                                                                                       | No test logic changed                                                                         |
+| Next.js build      | Both compile; consumer fails TypeScript; Playground aborted as collateral                              | Fix consumer TS config and rerun builds                                                       |
+| Python Ruff lint   | Eight diagnostic violations                                                                            | Fix import order, dependency annotations, contract-safe exceptions and context-manager shape  |
+| Python Ruff format | 15 files require formatting                                                                            | Run Ruff formatter and format check locally; formatting is not complete by source edits alone |
+| Python pytest      | 23 passed                                                                                              | No test logic changed                                                                         |
 
 ## Run after updating
 

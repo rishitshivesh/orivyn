@@ -1,5 +1,5 @@
 import { createOrivynApp } from "@orivyn/react";
-import { catalogManifest, type CatalogState } from "./manifest";
+import { type CatalogState, catalogManifest } from "./manifest";
 
 export const {
   Provider: CatalogProvider,

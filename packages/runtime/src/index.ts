@@ -1,9 +1,9 @@
-export { defineApplication, type ApplicationManifest } from "./manifest.ts";
-export { normalizeContext, type ApplicationContext } from "./context.ts";
+export { type ApplicationContext, normalizeContext } from "./context.ts";
+export { type ApplicationManifest, defineApplication } from "./manifest.ts";
 export {
   ApplicationRuntime,
   createApplicationRuntime,
-  type RuntimeRegistration,
   type RuntimeOptions,
+  type RuntimeRegistration,
   type RuntimeSnapshot,
 } from "./store.ts";

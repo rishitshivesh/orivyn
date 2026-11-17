@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { CactusBrowserRuntime } from "@orivyn/browser";
+import type { ToolProposal } from "@orivyn/core";
 import {
   ArrowRight,
   BrainCircuit,
@@ -11,8 +12,7 @@ import {
   RotateCcw,
   SlidersHorizontal,
 } from "lucide-react";
-import { CactusBrowserRuntime } from "@orivyn/browser";
-import type { ToolProposal } from "@orivyn/core";
+import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
