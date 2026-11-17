@@ -96,7 +96,10 @@ export default function AgentLab() {
     stopRef.current = controller;
     setBusy(true);
     setPrompt("");
-    setTurns([...history, { id: crypto.randomUUID(), role: "assistant", content: "" }]);
+    setTurns([
+      ...history,
+      { id: crypto.randomUUID(), role: "assistant", content: "" },
+    ]);
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -203,7 +206,10 @@ export default function AgentLab() {
                   </Button>
                 ))}
               </div>
-              <label htmlFor="agent-remote-consent" className="flex items-start gap-3 rounded-lg border border-white/[0.08] p-4">
+              <label
+                htmlFor="agent-remote-consent"
+                className="flex items-start gap-3 rounded-lg border border-white/[0.08] p-4"
+              >
                 <Checkbox
                   id="agent-remote-consent"
                   checked={remoteConsent}

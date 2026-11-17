@@ -63,7 +63,9 @@ export async function recordCommand(
     const rendered = await offline.startRendering();
     return { samples: rendered.getChannelData(0).slice(), sampleRate: 16000 };
   } finally {
-    stream.getTracks().forEach((track) => { track.stop(); });
+    stream.getTracks().forEach((track) => {
+      track.stop();
+    });
     if (decoding) await decoding.close();
   }
 }

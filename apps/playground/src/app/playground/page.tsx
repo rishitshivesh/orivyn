@@ -54,7 +54,9 @@ export default function Playground() {
     demoTools.map((tool) => tool.name),
   );
   const [demoState, setDemoState] = useState(initialDemoState);
-  const [actionTrace, setActionTrace] = useState<(ActionTrace & { id: string })[]>([]);
+  const [actionTrace, setActionTrace] = useState<
+    (ActionTrace & { id: string })[]
+  >([]);
   const local = useLocalRuntime();
 
   async function runServer() {
@@ -123,7 +125,9 @@ export default function Playground() {
   function applyActions(proposals: readonly ToolProposal[]) {
     const applied = executeDemoProposals(demoState, proposals, enabledTools);
     setDemoState(applied.state);
-    setActionTrace(applied.trace.map((entry) => ({ ...entry, id: crypto.randomUUID() })));
+    setActionTrace(
+      applied.trace.map((entry) => ({ ...entry, id: crypto.randomUUID() })),
+    );
     setMessage(
       applied.rejected.length
         ? `Applied ${applied.applied.length}; rejected ${applied.rejected.join(", ")} due to invalid schema or permissions.`
@@ -167,7 +171,10 @@ export default function Playground() {
                 <div className="flex items-center gap-2 text-sm font-medium">
                   <Sparkles className="size-4 text-[#abadff]" /> Input studio
                 </div>
-                <fieldset className="flex flex-wrap gap-2" aria-label="Select inference runtime">
+                <fieldset
+                  className="flex flex-wrap gap-2"
+                  aria-label="Select inference runtime"
+                >
                   <Button
                     size="sm"
                     variant={runtime === "reliable" ? "default" : "outline"}
@@ -232,7 +239,10 @@ export default function Playground() {
               </div>
               <div className="flex flex-wrap items-end justify-between gap-4 border-t border-white/[0.07] pt-5">
                 {runtime === "server" && (
-                  <label htmlFor="playground-token" className="block min-w-56 flex-1 space-y-2">
+                  <label
+                    htmlFor="playground-token"
+                    className="block min-w-56 flex-1 space-y-2"
+                  >
                     <span className="flex items-center gap-1.5 text-xs text-slate-400">
                       <LockKeyhole className="size-3.5" /> Private Playground
                       access token

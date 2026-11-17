@@ -237,7 +237,10 @@ export function CatalogWorkspace() {
                 <BrainCircuit className="size-4 text-violet-300" /> Orivyn
                 Runtime
               </h2>
-              <label htmlFor="catalog-local-instruction" className="block space-y-2">
+              <label
+                htmlFor="catalog-local-instruction"
+                className="block space-y-2"
+              >
                 <span className="text-xs text-slate-400">
                   Local instruction
                 </span>

@@ -99,7 +99,9 @@ export class ApplicationRuntime<State> {
       available: this.available(),
       revision: this.snapshot.revision + 1,
     };
-    this.listeners.forEach((listener) => { listener(); });
+    this.listeners.forEach((listener) => {
+      listener();
+    });
   }
 
   getSnapshot = (): RuntimeSnapshot<State> => this.snapshot;
