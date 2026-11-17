@@ -89,18 +89,22 @@ const manifest = defineApplication({
   name: "Portfolio Navigation",
   version: "0.7.0",
   runtime: "browser",
-  tools: [{
-    name: "portfolio.open",
-    description: "Open a supported portfolio section",
-    execution: "browser",
-    risk: "read",
-    parameters: {
-      type: "object",
-      properties: { section: { type: "string", enum: ["projects", "music"] } },
-      required: ["section"],
-      additionalProperties: false,
+  tools: [
+    {
+      name: "portfolio.open",
+      description: "Open a supported portfolio section",
+      execution: "browser",
+      risk: "read",
+      parameters: {
+        type: "object",
+        properties: {
+          section: { type: "string", enum: ["projects", "music"] },
+        },
+        required: ["section"],
+        additionalProperties: false,
+      },
     },
-  }],
+  ],
 });
 
 type State = { section: "projects" | "music" };
