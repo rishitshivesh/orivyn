@@ -136,3 +136,7 @@ Needle/Whistle initialization now exposes model-specific progress, explicit canc
 The GitHub source changes have **not** been fully built/tested with installed dependencies in this environment; run the release quality gate locally before deployment.
 
 Quality follow-up: React hook factories, accessibility labels, stable row keys and callback-return lint violations were corrected in the November 17 Biome cleanup. Run the full local checks before declaring the release green.
+
+## npm package publishing
+
+The six SDK packages can be compiled into npm-ready ESM JavaScript and TypeScript declarations with `pnpm release:npm --scope @your-org --version X.Y.Z` (dry run). Actual publication requires `--publish`, npm login and 2FA. See [npm release guide](docs/NPM_PUBLISHING.md). The publisher stages build artifacts under ignored `.release/npm` and does not publish raw TypeScript source exports.

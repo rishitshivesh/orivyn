@@ -28,3 +28,6 @@ apps/example-consumer/public/vendor/cactus/
 
 # Local diagnostics outputs
 /diagnostics/
+
+# Generated npm publishing staging
+.release/

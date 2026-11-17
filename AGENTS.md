@@ -158,3 +158,13 @@ Read this file before changing any code. These are binding project rules for peo
 - React components must accept a single props argument. Never bind a second positional argument to a component that uses hooks: Biome will correctly reject the hook call.
 - Keep `ApplicationProvider` module scoped and pass `manifest={manifest}` explicitly from consumer JSX.
 - Maintain `createOrivynApp<State>()` hooks without nested component/hook declarations. Update all consumers when Provider props change.
+
+## npm SDK distribution
+
+- Read `docs/NPM_PUBLISHING.md` before releasing SDK packages.
+- The six publishable SDK packages must ship ESM JavaScript and TypeScript declarations, not `src/index.ts` exports.
+- Keep React as a peer dependency, and preserve the `"use client"` directive in the published React entrypoint.
+- Translate workspace dependencies to immutable published versions. Publish dependencies before dependents.
+- Default to dry-run; explicit `--publish`, npm login and permission checks are required to make packages public.
+- Never print/store npm credentials, put CI secrets in source, or assume published packages are private. Do not add GitHub Actions.
+- Confirm tarball contents via `npm pack` and run the repo quality gate before release. A published npm version is immutable.
