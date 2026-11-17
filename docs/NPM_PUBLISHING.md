@@ -32,7 +32,7 @@ pnpm release:npm --scope @my-org --version 0.7.0
 
 This runs `pnpm check`, `pnpm typecheck`, `pnpm test`, and `pnpm build`, then builds the six publishable packages using tsup, generates `.d.ts` files, rewrites scoped imports and workspace dependency versions, and checks each npm tarball through `npm pack --dry-run --json`.
 
-Stage output is written to **`.release/npm/<package>`** and is ignored by Git. Inspect `package.json`, `dist/index.js` and `dist/index.d.ts` before release.
+Stage output is written to **`.release/npm/<package>`** and is ignored by Git. Inspect `package.json`, `dist/index.mjs` and `dist/index.d.mts` before release.
 
 If you are iterating only on the publishing script, you may use `--skip-checks` for a **dry run**. The script refuses `--publish --skip-checks`.
 
@@ -132,3 +132,7 @@ If `pnpm exec tsup` is missing, run `pnpm install` after pulling and check that 
 If `npm whoami` fails, run `npm login`. If npm rejects publication, verify membership and 2FA permissions for the organization. For an existing package version, increment the semver version before publishing.
 
 If the browser can't find `worker.js` or `needle.wasm`, rerun the asset CLI from the Portfolio OS root before building. Inspect the actual Network requests for `/vendor/cactus/worker.js` and `/vendor/cactus/needle.wasm`.
+
+## ESM filenames (tsup 8)
+
+`tsup --format esm` in this workspace emits `dist/index.mjs` and `dist/index.d.mts`. The publisher stages those exact files and declares the same filenames in `main`, `module`, `types`, and `exports`. A previous version incorrectly required `index.js` and `index.d.ts` and exited after a successful build. Use the corrected publishing script. The npm warning about `_jsr-registry` comes from a local npm config and is not the cause of this build failure.

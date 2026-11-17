@@ -87,7 +87,7 @@ function verifyTarball(stageDir, name) {
   let pack;
   try { pack = JSON.parse(result.stdout)[0]; } catch { fail(`Invalid npm pack JSON for ${name}`); }
   const files = new Set(pack.files.map((item) => item.path));
-  for (const required of ["package.json", "README.md", "dist/index.js", "dist/index.d.ts"]) {
+  for (const required of ["package.json", "README.md", "dist/index.mjs", "dist/index.d.mts"]) {
     if (!files.has(required)) fail(`Missing file in ${name} tarball: ${required}`);
   }
   if ([...files].some((item) => item.startsWith("src/") || /(^|\/)\.env|\.tsbuildinfo|\.map$/.test(item))) {
@@ -97,8 +97,8 @@ function verifyTarball(stageDir, name) {
   if (manifest.name !== `${options.scope}/${name}` || manifest.version !== options.version) {
     fail(`Incorrect package identity in ${name} tarball`);
   }
-  const js = readFileSync(join(stageDir, "dist", "index.js"), "utf8");
-  const dts = readFileSync(join(stageDir, "dist", "index.d.ts"), "utf8");
+  const js = readFileSync(join(stageDir, "dist", "index.mjs"), "utf8");
+  const dts = readFileSync(join(stageDir, "dist", "index.d.mts"), "utf8");
   if (options.scope !== baseScope && (js.includes(`${baseScope}/`) || dts.includes(`${baseScope}/`))) {
     fail(`Unrewritten Orivyn import in ${name}`);
   }
@@ -123,10 +123,10 @@ function buildPackage(name) {
     type: "module",
     description: `Orivyn ${name} SDK package`,
     license: "UNLICENSED",
-    main: "./dist/index.js",
-    module: "./dist/index.js",
-    types: "./dist/index.d.ts",
-    exports: { ".": { types: "./dist/index.d.ts", import: "./dist/index.js", default: "./dist/index.js" } },
+    main: "./dist/index.mjs",
+    module: "./dist/index.mjs",
+    types: "./dist/index.d.mts",
+    exports: { ".": { types: "./dist/index.d.mts", import: "./dist/index.mjs", default: "./dist/index.mjs" } },
     files: ["dist", "README.md", ...(name === "browser" ? ["scripts/sync-assets.mjs"] : [])],
     publishConfig: { access: "public", registry: "https://registry.npmjs.org/" },
     repository: { type: "git", url: "git+https://github.com/rishitshivesh/orivyn.git", directory: `packages/${name}` },
@@ -150,17 +150,17 @@ function buildPackage(name) {
   writeFileSync(join(stageDir, "package.json"), JSON.stringify(manifest, null, 2) + "\n");
   // tsup's bundled .d.ts can include imports from the original workspace scope.
   // Re-scope *only the staged artifacts*, never the source monorepo.
-  for (const file of ["index.js", "index.d.ts"]) {
+  for (const file of ["index.mjs", "index.d.mts"]) {
     const location = join(outDir, file);
     if (!existsSync(location)) fail(`tsup did not produce ${location}`);
     let content = replaceScope(readFileSync(location, "utf8"));
     // Next.js App Router must identify the published React module as a client entry.
-    if (name === "react" && file === "index.js" && !/^["']use client["'];/.test(content.trimStart())) {
+    if (name === "react" && file === "index.mjs" && !/^["']use client["'];/.test(content.trimStart())) {
       content = '"use client";\n' + content;
     }
     writeFileSync(location, content);
   }
-  run("node", ["--check", join(outDir, "index.js")]);
+  run("node", ["--check", join(outDir, "index.mjs")]);
   verifyTarball(stageDir, name);
 }
 
