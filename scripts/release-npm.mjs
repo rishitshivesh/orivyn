@@ -261,7 +261,7 @@ function buildPackage(name) {
   );
   writeFileSync(
     join(stageDir, "package.json"),
-    JSON.stringify(manifest, null, 2) + "\n",
+    `${JSON.stringify(manifest, null, 2)}\n`,
   );
   // tsup's bundled .d.ts can include imports from the original workspace scope.
   // Re-scope *only the staged artifacts*, never the source monorepo.
@@ -275,7 +275,7 @@ function buildPackage(name) {
       file === "index.js" &&
       !/^["']use client["'];/.test(content.trimStart())
     ) {
-      content = '"use client";\n' + content;
+      content = `"use client";\n${content}`;
     }
     writeFileSync(location, content);
   }
