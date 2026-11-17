@@ -168,3 +168,7 @@ Read this file before changing any code. These are binding project rules for peo
 - Default to dry-run; explicit `--publish`, npm login and permission checks are required to make packages public.
 - Never print/store npm credentials, put CI secrets in source, or assume published packages are private. Do not add GitHub Actions.
 - Confirm tarball contents via `npm pack` and run the repo quality gate before release. A published npm version is immutable.
+
+## npm ESM output check
+
+- The release script's `tsup --format esm` output is `index.mjs` plus `index.d.mts` under the current configuration. Keep package entrypoints, tarball checks, React client directive insertion, syntax checking and documentation aligned with actual generated filenames.
