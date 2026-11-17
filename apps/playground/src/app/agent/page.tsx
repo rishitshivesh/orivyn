@@ -89,7 +89,7 @@ export default function AgentLab() {
     }
     const history: Turn[] = [
       ...turns.filter((turn) => turn.content.trim()),
-      { role: "user", content: input },
+      { role: "user" as const, content: input },
     ].slice(-12);
     const assistantIndex = history.length;
     const controller = new AbortController();

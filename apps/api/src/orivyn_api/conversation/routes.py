@@ -66,7 +66,7 @@ def event(name: str, payload: dict) -> str:
 )
 async def chat_stream(
     body: ChatRequest,
-    provider: ConversationProvider = Depends(get_provider),
+    provider: Annotated[ConversationProvider, Depends(get_provider)],
 ) -> StreamingResponse:
     if not provider.enabled:
         raise HTTPException(status_code=503, detail="Conversational provider is disabled")

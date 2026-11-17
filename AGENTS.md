@@ -130,8 +130,17 @@ Read this file before changing any code. These are binding project rules for peo
 - Read and maintain docs/BROWSER_RUNTIME_V06.md when changing local runtime lifecycle or voice preprocessing.
 
 ## Diagnostics fixes (2026-11-17)
+
 - Keep `biome.json` schema in sync with installed Biome CLI and exclude generated `.turbo`, `.next`, lockfiles and diagnostic logs from source checks.
 - Consumer applications importing TypeScript source packages require `allowImportingTsExtensions: true` under the current source-based package export approach. Publishing these packages needs a compiled distribution later.
 - Treat package and build failures separately from lint/format errors. JavaScript tests and Python pytest passing does not certify a Next.js build.
 - Keep Python provider exceptions compatible with FastAPI's existing error boundary. Follow Python Ruff lint and format checks after editing routes.
 - Never commit logs containing credentials or local paths. Keep diagnostics under ignored `diagnostics/`.
+
+## Latest quality-gate findings (2026-11-17 second run)
+
+- Run Biome on source only. Generated Cactus worker/WASM and pytest cache files must be excluded, not reformatted.
+- Keep React state literal unions narrow when adding array entries. Use `as const` or typed constructors rather than widening `role` to `string`.
+- FastAPI dependency injection should use `Annotated[Type, Depends(factory)]`, not function calls in default parameters.
+- Use `pnpm exec biome check --write .` to apply safe lint fixes and import organization, then rerun `pnpm check`; review changes before committing.
+- A cancelled Turbo sibling build is not proof that the sibling itself failed; rerun both Next apps separately.

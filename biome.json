@@ -18,12 +18,11 @@
       "!**/.venv",
       "!**/pnpm-lock.yaml",
       "!**/.turbo",
-      "!**/.turbo/**",
       "!**/.git",
-      "!**/.git/**",
       "!**/diagnostics",
-      "!**/diagnostics/**",
-      "!**/*.tsbuildinfo"
+      "!**/*.tsbuildinfo",
+      "!**/.pytest_cache",
+      "!**/public/vendor/cactus"
     ]
   }
 }
