@@ -144,3 +144,11 @@ Read this file before changing any code. These are binding project rules for peo
 - FastAPI dependency injection should use `Annotated[Type, Depends(factory)]`, not function calls in default parameters.
 - Use `pnpm exec biome check --write .` to apply safe lint fixes and import organization, then rerun `pnpm check`; review changes before committing.
 - A cancelled Turbo sibling build is not proof that the sibling itself failed; rerun both Next apps separately.
+
+## Biome 2.6 remaining fixes (November 17)
+
+- React components and hooks must have stable module-level definitions. `createOrivynApp()` now binds a module-level Provider and returns module-level generic hooks; do not reintroduce nested Provider/hook declarations.
+- Give each React trace row and conversation turn a stable ID when constructing state; never use array indexes as keys.
+- Explicitly associate labels with shadcn controls using matching `htmlFor` and `id`. Use semantic `fieldset` for runtime selection.
+- For `forEach` callbacks that call APIs returning a value, use block bodies so the callback returns `void`.
+- This revision targets the pasted Biome diagnostics but still requires local `pnpm check`, `pnpm typecheck`, `pnpm test`, and separate Next builds; never claim verification without executing them.

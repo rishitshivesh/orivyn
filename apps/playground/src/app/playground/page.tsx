@@ -54,7 +54,7 @@ export default function Playground() {
     demoTools.map((tool) => tool.name),
   );
   const [demoState, setDemoState] = useState(initialDemoState);
-  const [actionTrace, setActionTrace] = useState<ActionTrace[]>([]);
+  const [actionTrace, setActionTrace] = useState<(ActionTrace & { id: string })[]>([]);
   const local = useLocalRuntime();
 
   async function runServer() {
@@ -123,7 +123,7 @@ export default function Playground() {
   function applyActions(proposals: readonly ToolProposal[]) {
     const applied = executeDemoProposals(demoState, proposals, enabledTools);
     setDemoState(applied.state);
-    setActionTrace(applied.trace);
+    setActionTrace(applied.trace.map((entry) => ({ ...entry, id: crypto.randomUUID() })));
     setMessage(
       applied.rejected.length
         ? `Applied ${applied.applied.length}; rejected ${applied.rejected.join(", ")} due to invalid schema or permissions.`
@@ -167,11 +167,7 @@ export default function Playground() {
                 <div className="flex items-center gap-2 text-sm font-medium">
                   <Sparkles className="size-4 text-[#abadff]" /> Input studio
                 </div>
-                <div
-                  className="flex flex-wrap gap-2"
-                  role="group"
-                  aria-label="Select inference runtime"
-                >
+                <fieldset className="flex flex-wrap gap-2" aria-label="Select inference runtime">
                   <Button
                     size="sm"
                     variant={runtime === "reliable" ? "default" : "outline"}
@@ -193,7 +189,7 @@ export default function Playground() {
                   >
                     <Server className="size-3.5" /> Backend
                   </Button>
-                </div>
+                </fieldset>
               </div>
               <div className="rounded-lg border border-[#a2a3ff]/15 bg-[#aaaaff]/[0.045] p-4 text-xs leading-6 text-[#c5c6e7]">
                 {runtime === "reliable"
@@ -202,11 +198,12 @@ export default function Playground() {
                     ? "Needle selects tools with a small local WebAssembly model. It may produce incorrect or empty proposals. Inference stays on your device and never automatically falls back to a server."
                     : "Backend requests send your prompt and tool schemas through an authenticated private proxy. Orivyn only returns proposals; the owning app decides what to execute."}
               </div>
-              <label className="block space-y-2">
+              <label htmlFor="playground-prompt" className="block space-y-2">
                 <span className="text-xs text-slate-400">
                   Natural language instruction
                 </span>
                 <Textarea
+                  id="playground-prompt"
                   className="min-h-32 resize-y text-base leading-7"
                   value={prompt}
                   maxLength={2000}
@@ -235,12 +232,13 @@ export default function Playground() {
               </div>
               <div className="flex flex-wrap items-end justify-between gap-4 border-t border-white/[0.07] pt-5">
                 {runtime === "server" && (
-                  <label className="block min-w-56 flex-1 space-y-2">
+                  <label htmlFor="playground-token" className="block min-w-56 flex-1 space-y-2">
                     <span className="flex items-center gap-1.5 text-xs text-slate-400">
                       <LockKeyhole className="size-3.5" /> Private Playground
                       access token
                     </span>
                     <Input
+                      id="playground-token"
                       type="password"
                       autoComplete="off"
                       value={token}
@@ -287,9 +285,9 @@ export default function Playground() {
                   Action execution trace
                 </h3>
                 <div className="space-y-3">
-                  {actionTrace.map((item, index) => (
+                  {actionTrace.map((item) => (
                     <div
-                      key={`${item.name}-${index}`}
+                      key={item.id}
                       className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-white/[0.08] p-3"
                     >
                       <div>
@@ -377,10 +375,12 @@ export default function Playground() {
               <div className="space-y-3">
                 {demoTools.map((tool) => (
                   <label
+                    htmlFor={`playground-tool-${tool.name}`}
                     key={tool.name}
                     className="flex cursor-pointer items-start gap-3 rounded-lg border border-white/[0.075] bg-white/[0.018] p-4"
                   >
                     <Checkbox
+                      id={`playground-tool-${tool.name}`}
                       className="mt-0.5 shrink-0"
                       checked={enabledTools.includes(tool.name)}
                       onCheckedChange={(checked) =>

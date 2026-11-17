@@ -11,7 +11,7 @@ test("parses SSE when frames span chunks", async () => {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     start(controller) {
-      fragments.forEach((part) => controller.enqueue(encoder.encode(part)));
+      fragments.forEach((part) => { controller.enqueue(encoder.encode(part)); });
       controller.close();
     },
   });

@@ -23,7 +23,7 @@ import { demoTools, initialDemoState } from "@/lib/demo-domain";
 import { executeDemoProposals } from "@/lib/demo-execution";
 import { routeAgentInput } from "@/lib/agent-router";
 
-type Turn = { role: "user" | "assistant"; content: string };
+type Turn = { id: string; role: "user" | "assistant"; content: string };
 const presets = [
   "Open the music section",
   "Show my Kubernetes projects",
@@ -89,14 +89,14 @@ export default function AgentLab() {
     }
     const history: Turn[] = [
       ...turns.filter((turn) => turn.content.trim()),
-      { role: "user" as const, content: input },
+      { id: crypto.randomUUID(), role: "user" as const, content: input },
     ].slice(-12);
     const assistantIndex = history.length;
     const controller = new AbortController();
     stopRef.current = controller;
     setBusy(true);
     setPrompt("");
-    setTurns([...history, { role: "assistant", content: "" }]);
+    setTurns([...history, { id: crypto.randomUUID(), role: "assistant", content: "" }]);
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -106,7 +106,7 @@ export default function AgentLab() {
         },
         body: JSON.stringify({
           app_id: "orivyn-agent-lab",
-          messages: history,
+          messages: history.map(({ role, content }) => ({ role, content })),
           instructions:
             "You are Orivyn Agent Lab, a helpful engineering assistant. Be concise and accurate. Do not claim to have visited documents, executed tools, or verified facts without evidence. You have no access to a portfolio knowledge base in this version.",
         }),
@@ -178,11 +178,12 @@ export default function AgentLab() {
                 </h2>
                 <Badge>Local-first routing</Badge>
               </div>
-              <label className="block space-y-2">
+              <label htmlFor="agent-prompt" className="block space-y-2">
                 <span className="text-xs text-slate-400">
                   Command or question
                 </span>
                 <Textarea
+                  id="agent-prompt"
                   value={prompt}
                   onChange={(event) => setPrompt(event.target.value)}
                   maxLength={2000}
@@ -202,8 +203,9 @@ export default function AgentLab() {
                   </Button>
                 ))}
               </div>
-              <label className="flex items-start gap-3 rounded-lg border border-white/[0.08] p-4">
+              <label htmlFor="agent-remote-consent" className="flex items-start gap-3 rounded-lg border border-white/[0.08] p-4">
                 <Checkbox
+                  id="agent-remote-consent"
                   checked={remoteConsent}
                   onCheckedChange={(value) => setRemoteConsent(value === true)}
                 />
@@ -214,11 +216,12 @@ export default function AgentLab() {
                 </span>
               </label>
               {remoteConsent && (
-                <label className="block space-y-2">
+                <label htmlFor="agent-token" className="block space-y-2">
                   <span className="text-xs text-slate-400">
                     Private Playground token
                   </span>
                   <Input
+                    id="agent-token"
                     type="password"
                     value={accessToken}
                     autoComplete="off"
@@ -288,9 +291,9 @@ export default function AgentLab() {
                   or persistent memory; answers are general model knowledge.
                 </p>
               )}
-              {turns.map((turn, index) => (
+              {turns.map((turn) => (
                 <div
-                  key={index}
+                  key={turn.id}
                   className={`rounded-lg border p-4 text-sm leading-7 whitespace-pre-wrap ${turn.role === "assistant" ? "border-[#a5a5ff]/15 bg-[#9b9bff]/[0.045]" : "border-white/10 bg-[#0b1019]"}`}
                 >
                   <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-500">

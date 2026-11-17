@@ -30,7 +30,7 @@ export default function Applications() {
   const [message, setMessage] = useState(
     "Choose a tool, change context, or run a supported local command.",
   );
-  const [trace, setTrace] = useState<string[]>([]);
+  const [trace, setTrace] = useState<{ id: string; text: string }[]>([]);
 
   function setRoute(page: "projects" | "music" | "career") {
     runtime.updateContext({ route: `/${page}` });
@@ -52,10 +52,10 @@ export default function Applications() {
     const report = runtime.execute(proposals);
     runtime.updateContext({ route: `/${report.state.page}` });
     setTrace(
-      report.trace.map(
-        (item) =>
-          `${item.name}: ${item.status}${item.reason ? ` (${item.reason})` : ""}`,
-      ),
+      report.trace.map((item) => ({
+        id: crypto.randomUUID(),
+        text: `${item.name}: ${item.status}${item.reason ? ` (${item.reason})` : ""}`,
+      })),
     );
     setMessage(
       report.applied.length
@@ -185,9 +185,9 @@ export default function Applications() {
               <p role="status" className="text-xs leading-6 text-slate-400">
                 {message}
               </p>
-              {trace.map((item, i) => (
-                <p key={i} className="font-mono text-xs text-[#b7b9ff]">
-                  {item}
+              {trace.map((item) => (
+                <p key={item.id} className="font-mono text-xs text-[#b7b9ff]">
+                  {item.text}
                 </p>
               ))}
             </CardContent>

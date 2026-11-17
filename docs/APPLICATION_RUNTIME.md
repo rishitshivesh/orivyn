@@ -175,3 +175,7 @@ Then check:
 6. Check the browser Network tab: no model prompt leaves the browser during local inference.
 
 **Verification status:** Source was authored via GitHub connector; a real dependency install, Biome, typecheck, Node tests, both Next.js builds and browser QA have not run in this environment. Do not call this production-verified.
+
+## React SDK stability fix
+
+The v0.5 `createOrivynApp` API still returns `Provider`, `useOrivyn`, `useOrivynTool` and `useRuntime`, but those React components and hooks are now defined at module scope and the manifest is bound to the Provider when the factory is called. Call `createOrivynApp` **once at module scope** in each consumer, not within a rendering component. This gives React stable identities and conforms to hook factory rules. The Provider runtime remains isolated per mounted instance.

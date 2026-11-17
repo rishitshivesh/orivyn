@@ -134,3 +134,5 @@ No API or chat provider is needed. Start with [Application Runtime documentation
 Needle/Whistle initialization now exposes model-specific progress, explicit cancellation, bounded inference and idle session cleanup. The Playground also resamples microphone input to the 16 kHz mono PCM required by Whistle. No provider keys or chat backend are required. [v0.6 guide](docs/BROWSER_RUNTIME_V06.md).
 
 The GitHub source changes have **not** been fully built/tested with installed dependencies in this environment; run the release quality gate locally before deployment.
+
+Quality follow-up: React hook factories, accessibility labels, stable row keys and callback-return lint violations were corrected in the November 17 Biome cleanup. Run the full local checks before declaring the release green.

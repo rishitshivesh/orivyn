@@ -30,7 +30,7 @@ export function CatalogWorkspace() {
     "Choose a sample action, or ask local Needle to propose one.",
   );
   const [busy, setBusy] = useState(false);
-  const [trace, setTrace] = useState<string[]>([]);
+  const [trace, setTrace] = useState<{ id: string; text: string }[]>([]);
 
   useEffect(() => {
     app.updateContext({
@@ -77,10 +77,10 @@ export function CatalogWorkspace() {
   function apply() {
     const result = app.apply(proposals);
     setTrace(
-      result.trace.map(
-        (item) =>
-          `${item.name}: ${item.status}${item.reason ? ` (${item.reason})` : ""}`,
-      ),
+      result.trace.map((item) => ({
+        id: crypto.randomUUID(),
+        text: `${item.name}: ${item.status}${item.reason ? ` (${item.reason})` : ""}`,
+      })),
     );
     setMessage(
       result.applied.length
@@ -237,11 +237,12 @@ export function CatalogWorkspace() {
                 <BrainCircuit className="size-4 text-violet-300" /> Orivyn
                 Runtime
               </h2>
-              <label className="block space-y-2">
+              <label htmlFor="catalog-local-instruction" className="block space-y-2">
                 <span className="text-xs text-slate-400">
                   Local instruction
                 </span>
                 <Input
+                  id="catalog-local-instruction"
                   value={prompt}
                   onChange={(event) => setPrompt(event.target.value)}
                   maxLength={2000}
@@ -309,12 +310,12 @@ export function CatalogWorkspace() {
             <Card>
               <CardContent>
                 <h3 className="mb-3 text-sm font-semibold">Execution trace</h3>
-                {trace.map((entry, index) => (
+                {trace.map((entry) => (
                   <p
-                    key={index}
+                    key={entry.id}
                     className="py-1 font-mono text-xs text-slate-400"
                   >
-                    {entry}
+                    {entry.text}
                   </p>
                 ))}
                 <Button
