@@ -152,3 +152,9 @@ Read this file before changing any code. These are binding project rules for peo
 - Explicitly associate labels with shadcn controls using matching `htmlFor` and `id`. Use semantic `fieldset` for runtime selection.
 - For `forEach` callbacks that call APIs returning a value, use block bodies so the callback returns `void`.
 - This revision targets the pasted Biome diagnostics but still requires local `pnpm check`, `pnpm typecheck`, `pnpm test`, and separate Next builds; never claim verification without executing them.
+
+## Hook-rule repair
+
+- React components must accept a single props argument. Never bind a second positional argument to a component that uses hooks: Biome will correctly reject the hook call.
+- Keep `ApplicationProvider` module scoped and pass `manifest={manifest}` explicitly from consumer JSX.
+- Maintain `createOrivynApp<State>()` hooks without nested component/hook declarations. Update all consumers when Provider props change.

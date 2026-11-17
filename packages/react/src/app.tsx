@@ -34,6 +34,7 @@ export interface ProposalAdapter {
 }
 
 interface ProviderProps<State> {
+  manifest: ApplicationManifest;
   children: ReactNode;
   initialState: State;
   context: ApplicationContext;
@@ -42,14 +43,17 @@ interface ProviderProps<State> {
 
 /**
  * Module-scoped React components/hooks preserve their identity across renders.
- * createOrivynApp binds a manifest once at module initialization.
+ * The Provider receives the manifest as a normal React prop.
  */
 const RuntimeContext = createContext<ApplicationRuntime<unknown> | null>(null);
 
-function ApplicationProvider<State>(
-  manifest: ApplicationManifest,
-  { children, initialState, context, registrations }: ProviderProps<State>,
-) {
+function ApplicationProvider<State>({
+  manifest,
+  children,
+  initialState,
+  context,
+  registrations,
+}: ProviderProps<State>) {
   const [runtime] = useState(() =>
     createApplicationRuntime({
       manifest,
@@ -153,14 +157,12 @@ function useApplicationTool<State>(registration: RuntimeRegistration<State>) {
 }
 
 /**
- * Call once at module scope. Binding gives each manifest a stable Provider,
- * without declaring React components or hooks inside a factory.
+ * Call once at module scope. The Provider and hooks are module-level functions.
+ * Pass the manifest explicitly to Provider to preserve React hook semantics.
  */
-export function createOrivynApp<State>(manifest: ApplicationManifest) {
+export function createOrivynApp<State>(_manifest: ApplicationManifest) {
   return {
-    Provider: ApplicationProvider.bind(null, manifest) as (
-      props: ProviderProps<State>,
-    ) => ReactNode,
+    Provider: ApplicationProvider<State>,
     useOrivyn: useApplication<State>,
     useOrivynTool: useApplicationTool<State>,
     useRuntime: useApplicationRuntime<State>,

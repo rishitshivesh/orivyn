@@ -105,6 +105,7 @@ function Workspace() {
 export default function App() {
   return (
     <Provider
+      manifest={manifest}
       initialState={{ page: "catalog" }}
       context={{ route: "/catalog" }}
     >
@@ -179,3 +180,5 @@ Then check:
 ## React SDK stability fix
 
 The v0.5 `createOrivynApp` API still returns `Provider`, `useOrivyn`, `useOrivynTool` and `useRuntime`, but those React components and hooks are now defined at module scope and the manifest is bound to the Provider when the factory is called. Call `createOrivynApp` **once at module scope** in each consumer, not within a rendering component. This gives React stable identities and conforms to hook factory rules. The Provider runtime remains isolated per mounted instance.
+
+**Hook-rule compatibility:** `Provider` now receives `manifest={manifest}` as a normal React prop. The previous binding of a two-parameter component was rejected by Biome and did not follow React component conventions. `createOrivynApp` still exports the same typed hooks and Provider but the Provider requires the manifest prop. This is a deliberate v0.5 source API correction; update all consumer mounts accordingly.
